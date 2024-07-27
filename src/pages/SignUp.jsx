@@ -121,6 +121,7 @@ export default function SignUp() {
 
   const handleSubmit = () => {
     if (!notAllow) {
+      alert("회원가입이 완료되었습니다!");
       navigate("/");
     }
   };
@@ -270,6 +271,16 @@ export default function SignUp() {
               >
                 {phoneMessage}
               </p>
+            </div>
+            <div className="flex flex-col mt-5 ">
+              <span className="text-base ml-1">직업</span>
+              <select className="border mt-1 p-3 rounded-lg">
+                <option value="">직업 선택</option>
+                <option value="">학생</option>
+                <option value="">주부</option>
+                <option value="">직장인</option>
+                <option value="">기타</option>
+              </select>
             </div>
           </div>
           <button

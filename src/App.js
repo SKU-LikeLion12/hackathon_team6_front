@@ -12,21 +12,7 @@ import ChatBot from "./pages/ChatBot";
 import EQ from "./pages/EQ";
 import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
-
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date().getTime(),
-    emotionId: 1,
-    content: "1번 일기 내용",
-  },
-  {
-    id: 2,
-    createdDate: new Date().getTime(),
-    emotionId: 2,
-    content: "2번 일기 내용",
-  },
-];
+import Producer from "./pages/Producer";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -50,7 +36,7 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
+  const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
   // 새로운 일기 추가
@@ -113,10 +99,11 @@ function App() {
               <Route path="/calendar/edit/:id" element={<Edit />} />
               <Route path="/chatbot" element={<ChatBot />} />
               <Route path="/eq" element={<EQ />} />
+              <Route path="/producer" element={<Producer />} />
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
