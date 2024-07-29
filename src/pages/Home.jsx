@@ -1,5 +1,6 @@
-import React from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
+import React from 'react';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { NavLink } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -12,10 +13,12 @@ export default function Home() {
             <span className="mb-8 text-3xl font-medium">
               오늘의 감정을 기록해보세요
             </span>
-            <button className="border-0 rounded-full py-3 px-8 flex flex-row justify-center items-center bg-amber-100 hover:shadow-md">
-              챗봇과 상담하기
-              <FaArrowRightLong className="ml-2" />
-            </button>
+            <NavLink to="ChatMain">
+              <button className="border-0 rounded-full py-3 px-8 flex flex-row justify-center items-center bg-amber-100 hover:shadow-md">
+                챗봇과 상담하기
+                <FaArrowRightLong className="ml-2" />
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

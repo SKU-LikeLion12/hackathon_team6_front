@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export default function Nav() {
+export default function HomeNav() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleLogin = () => {
@@ -24,7 +24,7 @@ export default function Nav() {
 
           <div className="flex mr-24 ml-24">
             <NavLink
-              to="/ChatMain"
+              to="/chatmain"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
                   isActive ? 'text-teal-500' : 'text-black'
@@ -48,7 +48,7 @@ export default function Nav() {
               </span>
             </NavLink>
             <NavLink
-              to="/Calendar"
+              to="/EmotionAnal"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
                   isActive ? 'text-teal-500' : 'text-black'
@@ -61,9 +61,16 @@ export default function Nav() {
             </NavLink>
           </div>
 
-          <NavLink to="/">
-            <div className="flex text-sm font-semibold lgBtn">Logout</div>
-          </NavLink>
+          <div className="flex">
+            <NavLink to="/Login">
+              <div className="flex text-sm font-semibold LoBtn mr-[20px]">
+                Login
+              </div>
+            </NavLink>
+            <NavLink to="/SignUp">
+              <div className="flex text-sm font-semibold JnBtn">Join</div>
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>

@@ -1,42 +1,49 @@
-// import "./App.css";
-import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
-import { useReducer, useRef, createContext } from "react";
+import { BrowserRouter, Route, Routes, useActionData } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useReducer, useRef, createContext } from 'react';
 
-import Nav from "./component/Nav";
-import Footer from "./component/Footer";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Home from "./pages/Home";
-import Calendar from "./pages/Calendar";
-import ChatBot from "./pages/ChatBot";
-import EQ from "./pages/EQ";
-import Edit from "./pages/Edit";
-import Diary from "./pages/Diary";
+import Nav from './component/Nav';
+import HomeNav from './component/HomeNav';
+import Footer from './component/Footer';
+
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import Calendar from './pages/Calendar';
+import ChatBot from './pages/ChatBot';
+import EqMain from './pages/EqMain';
+import Edit from './pages/Edit';
+import Diary from './pages/Diary';
+import ChatMain from './pages/ChatMain';
+import ChatStart from './pages/ChatStart';
+import ChatEnd from './pages/ChatEnd';
+import DiaryStart from './pages/DiaryStart';
+import EmotionAnal from './pages/EmotionAnal';
 
 const mockData = [
   {
     id: 1,
     createdDate: new Date().getTime(),
     emotionId: 1,
-    content: "1번 일기 내용",
+    content: '1번 일기 내용',
   },
   {
     id: 2,
     createdDate: new Date().getTime(),
     emotionId: 2,
-    content: "2번 일기 내용",
+    content: '2번 일기 내용',
   },
 ];
 
 function reducer(state, action) {
   switch (action.type) {
-    case "CREATE":
+    case 'CREATE':
       return [action.data, ...state];
-    case "UPDATE":
+    case 'UPDATE':
       return state.map((item) =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
-    case "DELETE":
+    case 'DELETE':
       return state.filter(
         (item) => String(item.id) !== String(useActionData.id)
       );
@@ -56,7 +63,7 @@ function App() {
   // 새로운 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
-      type: "CREATE",
+      type: 'CREATE',
       date: {
         id: idRef.current++,
         createdDate,
@@ -69,7 +76,7 @@ function App() {
   // 기존 일기 수정
   const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: "UPDATE",
+      type: 'UPDATE',
       data: {
         id,
         createdDate,
@@ -82,7 +89,7 @@ function App() {
   // 기존 일기 삭제
   const onDelete = (id) => {
     dispatch({
-      type: "DELETE",
+      type: 'DELETE',
       id,
     });
   };
@@ -90,21 +97,13 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Nav />
-        {/* <button onClick={() => onCreate(new Date().getTime(), 1, "hello")}>
-          일기 추가
-        </button>
-        <button
-          onClick={() => onUpdate(1, new Date().getTime(), 3, "수정된 일기")}
-        >
-          일기 수정
-        </button>
-        <button onClick={() => onDelete(1)}>일기 삭제</button> */}
         <DiaryStateContext.Provider value={data}>
           <DiaryDispatchContext.Provider
             value={{ onCreate, onUpdate, onDelete }}
           >
+            <Content />
             <Routes>
+              {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/" element={<Home />} />
@@ -112,7 +111,12 @@ function App() {
               <Route path="/calendar/diary/:id" element={<Diary />} />
               <Route path="/calendar/edit/:id" element={<Edit />} />
               <Route path="/chatbot" element={<ChatBot />} />
-              <Route path="/eq" element={<EQ />} />
+              <Route path="/EqMain" element={<EqMain />} />
+              <Route path="/ChatMain" element={<ChatMain />} />
+              <Route path="/ChatStart" element={<ChatStart />} />
+              <Route path="/ChatEnd" element={<ChatEnd />} />
+              <Route path="/DiaryStart" element={<DiaryStart />} />
+              <Route path="/EmotionAnal" element={<EmotionAnal />} />
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
@@ -121,5 +125,9 @@ function App() {
     </div>
   );
 }
+function Content() {
+  const location = useLocation();
 
+  return <>{location.pathname === '/' ? <HomeNav /> : <Nav />}</>;
+}
 export default App;
