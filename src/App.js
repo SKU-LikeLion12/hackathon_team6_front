@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, useActionData } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useReducer, useRef, createContext } from 'react';
 
+
 import Nav from './component/Nav';
 import HomeNav from './component/HomeNav';
 import Footer from './component/Footer';
@@ -20,6 +21,9 @@ import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
 
+import Producer from "./pages/Producer";
+import SignUpCompleted from "./pages/SignUpCompleted";
+
 const mockData = [
   {
     id: 1,
@@ -34,6 +38,7 @@ const mockData = [
     content: '2번 일기 내용',
   },
 ];
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -57,7 +62,7 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
+  const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
   // 새로운 일기 추가
@@ -111,16 +116,21 @@ function App() {
               <Route path="/calendar/diary/:id" element={<Diary />} />
               <Route path="/calendar/edit/:id" element={<Edit />} />
               <Route path="/chatbot" element={<ChatBot />} />
+
               <Route path="/EqMain" element={<EqMain />} />
               <Route path="/ChatMain" element={<ChatMain />} />
               <Route path="/ChatStart" element={<ChatStart />} />
               <Route path="/ChatEnd" element={<ChatEnd />} />
               <Route path="/DiaryStart" element={<DiaryStart />} />
               <Route path="/EmotionAnal" element={<EmotionAnal />} />
+
+              <Route path="/producer" element={<Producer />} />
+              <Route path="/signupcompleted" element={<SignUpCompleted />} />
+
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
