@@ -1,6 +1,10 @@
-import React from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
+
+import React from 'react';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { NavLink } from 'react-router-dom';
+
 import Footer from "../component/Footer";
+
 
 export default function Home() {
   return (
@@ -16,10 +20,15 @@ export default function Home() {
               당신은 당신의 감정을 제대로 마주하고 있나요?
               <br /> 감정을 파악하고 직면하는 것만으로도 감정지수가 높아집니다.
             </span>
-            <button className="border-0 rounded-full py-3 px-12 flex flex-row justify-center items-center bg-amber-100 hover:shadow-md">
-              챗봇과 상담하기
-              <FaArrowRightLong className="ml-2" />
-            </button>
+
+            <NavLink to="ChatMain">
+              <button className="border-0 rounded-full py-3 px-8 flex flex-row justify-center items-center bg-amber-100 hover:shadow-md">
+                챗봇과 상담하기
+                <FaArrowRightLong className="ml-2" />
+              </button>
+            </NavLink>
+
+
           </div>
         </div>
 
