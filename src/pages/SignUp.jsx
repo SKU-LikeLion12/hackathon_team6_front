@@ -121,8 +121,7 @@ export default function SignUp() {
 
   const handleSubmit = () => {
     if (!notAllow) {
-      alert("회원가입이 완료되었습니다!");
-      navigate("/");
+      navigate("/signupcompleted");
     }
   };
 

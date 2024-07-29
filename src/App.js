@@ -13,6 +13,7 @@ import EQ from "./pages/EQ";
 import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 import Producer from "./pages/Producer";
+import SignUpCompleted from "./pages/SignUpCompleted";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -100,6 +101,7 @@ function App() {
               <Route path="/chatbot" element={<ChatBot />} />
               <Route path="/eq" element={<EQ />} />
               <Route path="/producer" element={<Producer />} />
+              <Route path="/signupcompleted" element={<SignUpCompleted />} />
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
