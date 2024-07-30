@@ -14,7 +14,7 @@ export default function DiaryStart() {
             <img src="../img/ball.png" className="h-48 w-48" />
           </div>
           <div>
-            <NavLink to="/">
+            <NavLink to="/EmotionAnal">
               <button className="flex items-center justify-between mt-[100px] bg-[#5BCBAB] h-[52px] w-[200px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)]">
                 일기 확인하기
                 <img src="../img/diaryIcon.png" className="w-[17px]" />

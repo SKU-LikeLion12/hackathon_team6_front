@@ -36,7 +36,7 @@ export default function Nav() {
               </span>
             </NavLink>
             <NavLink
-              to="/EqMain"
+              to="/EQ"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
                   isActive ? 'text-teal-500' : 'text-black'

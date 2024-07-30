@@ -78,57 +78,9 @@
   z-index: -1;
 }
 
-.scrollTest {
-  overflow-y: scroll;
-  height: 1300px;
-}
-
-.scrollTest::-webkit-scrollbar {
-  width: 9px;
-}
-
-.scrollTest::-webkit-scrollbar-thumb {
-  background: #ffa07a;
-  border-radius: 12px;
-  border: 0.2px solid #495057;
-  /* height: 10px; */
-}
-
-.scrollTest::-webkit-scrollbar-track {
-  background: #f8f9fa;
-}
-
-.scrollTest::-webkit-scrollbar-thumb:hover {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.scrollable {
-  overflow-y: auto;
-  height: 50%; /* Adjust this value to fit within the diaryBox image */
-}
-
 .일기내용 {
   padding-right: 10px;
   padding-left: 10px;
-}
-
-.circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 55%;
-  height: 85%;
-  background-color: rgb(255, 206, 229);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 15px; /* Optional: Font size for text */
-}
-
-.bb {
-  position: relative;
 }
 
 @keyframes bounce {

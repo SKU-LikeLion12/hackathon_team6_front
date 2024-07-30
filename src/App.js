@@ -11,7 +11,6 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import ChatBot from './pages/ChatBot';
-import EqMain from './pages/EqMain';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import ChatMain from './pages/ChatMain';
@@ -19,6 +18,7 @@ import ChatStart from './pages/ChatStart';
 import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
+import EQ from './pages/EQ';
 
 const mockData = [
   {
@@ -111,12 +111,12 @@ function App() {
               <Route path="/calendar/diary/:id" element={<Diary />} />
               <Route path="/calendar/edit/:id" element={<Edit />} />
               <Route path="/chatbot" element={<ChatBot />} />
-              <Route path="/EqMain" element={<EqMain />} />
               <Route path="/ChatMain" element={<ChatMain />} />
               <Route path="/ChatStart" element={<ChatStart />} />
               <Route path="/ChatEnd" element={<ChatEnd />} />
               <Route path="/DiaryStart" element={<DiaryStart />} />
               <Route path="/EmotionAnal" element={<EmotionAnal />} />
+              <Route path="EQ" element={<EQ />} />
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
