@@ -1,16 +1,12 @@
-
-import React from 'react';
+import React from "react";
 
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
-
 
 export default function Footer() {
   return (
     <>
       <div className="flex justify-center text-center">
-
-
         <div className="container flex flex-col items-center w-[150%] py-8">
           <img src="/img/FeelInsight.png" className="w-[150px] mb-4" />
           <div className="span text-sm text-slate-500 mb-16">
@@ -37,9 +33,9 @@ export default function Footer() {
                 제작자
               </button>
             </Link>
-
           </div>
         </div>
+      </div>
     </>
   );
 }
