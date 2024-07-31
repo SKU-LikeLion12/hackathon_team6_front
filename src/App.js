@@ -20,6 +20,9 @@ import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
 
+import Producer from './pages/Producer';
+import SignUpCompleted from './pages/SignUpCompleted';
+
 const mockData = [
   {
     id: 1,
@@ -57,7 +60,7 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
+  const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
   // 새로운 일기 추가
@@ -117,10 +120,13 @@ function App() {
               <Route path="/DiaryStart" element={<DiaryStart />} />
               <Route path="/EmotionAnal" element={<EmotionAnal />} />
               <Route path="EQ" element={<EQ />} />
+
+              <Route path="/producer" element={<Producer />} />
+              <Route path="/signupcompleted" element={<SignUpCompleted />} />
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
