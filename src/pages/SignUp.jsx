@@ -8,7 +8,9 @@ export default function SignUp() {
   const [pwConfirm, setPwConfirm] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birthYear, setBirthYear] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthDay, setBirthDay] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [job, setJob] = useState("");
@@ -47,7 +49,7 @@ export default function SignUp() {
   const handlePw = (e) => {
     setPw(e.target.value);
     const regex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{7,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
     if (regex.test(e.target.value)) {
       setPwMessage("사용 가능한 비밀번호 입니다.");
@@ -119,20 +121,21 @@ export default function SignUp() {
 
   const handleSubmit = async () => {
     if (!notAllow) {
+      const birth_date = `${birthYear}-${birthMonth}-${birthDay}`;
       const userData = {
         user_name: name,
         id: id,
         email: email,
         password: pw,
         phone_number: phone,
-        birth_date: birth,
+        birth_date: birth_date,
         gender: gender,
         job: job,
       };
 
       try {
         const response = await axios.post(
-          `https://team6back.sku-sku.com/transcribe/user/signup`,
+          `http://team6back.sku-sku.com/user/signup`,
           userData
         );
         if (response.status === 201) {
@@ -246,11 +249,15 @@ export default function SignUp() {
                 <input
                   className="border mt-1 p-3 rounded-lg w-[30%]"
                   placeholder="년(4자)"
-                  value={birth}
-                  onChange={(e) => setBirth(e.target.value)}
+                  value={birthYear}
+                  onChange={(e) => setBirthYear(e.target.value)}
                 />
-                <select className="w-[30%] border mt-1 p-3 rounded-lg">
-                  <option>월</option>
+                <select
+                  className="w-[30%] border mt-1 p-3 rounded-lg"
+                  value={birthMonth}
+                  onChange={(e) => setBirthMonth(e.target.value)}
+                >
+                  <option value="">월</option>
                   <option value="01">1</option>
                   <option value="02">2</option>
                   <option value="03">3</option>
@@ -267,6 +274,8 @@ export default function SignUp() {
                 <input
                   className="border mt-1 p-3 rounded-lg w-[30%]"
                   placeholder="일"
+                  value={birthDay}
+                  onChange={(e) => setBirthDay(e.target.value)}
                 />
               </div>
             </div>
@@ -318,7 +327,7 @@ export default function SignUp() {
             disabled={notAllow}
             onClick={handleSubmit}
             className="
-            submit border mt-10 w-[100%] h-14 rounded-full bg-teal-500	text-white 
+            submit border mt-10 w-[100%] h-14 rounded-full bg-teal-500   text-white 
             disabled:bg-[#dadada] disabled:text-white
             "
           >
