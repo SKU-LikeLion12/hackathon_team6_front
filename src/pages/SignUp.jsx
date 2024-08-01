@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function SignUp() {
-  // 초기값 세팅
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
@@ -12,25 +11,20 @@ export default function SignUp() {
   const [birth, setBirth] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
+  const [job, setJob] = useState("");
 
-  // 오류 메세지 전달 세팅
   const [idMessage, setIdMessage] = useState("");
   const [pwMessage, setPwMessage] = useState("");
   const [pwConfirmMessage, setPwConfirmMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
-  const [birthMessage, setBirthMessage] = useState("");
-  const [genderMessage, setGenderMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
 
-  // 유효성 검사를 위한 세팅
   const [isId, setIsId] = useState(false);
   const [isPw, setIsPw] = useState(false);
   const [isPwConfirm, setIsPwConfirm] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [isName, setIsName] = useState(false);
-  const [isBirth, setIsBirth] = useState(false);
-  const [isGender, setIsGender] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
 
   const [notAllow, setNotAllow] = useState(true);
@@ -90,7 +84,7 @@ export default function SignUp() {
 
   const handleName = (e) => {
     setName(e.target.value);
-    if (e.target.value.length < 2 || e.target.length > 5) {
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
       setNameMessage("이름은 2글자 이상, 5글자 이하로 입력해주세요");
       setIsName(false);
     } else {
@@ -111,6 +105,10 @@ export default function SignUp() {
     }
   };
 
+  const handleJob = (e) => {
+    setJob(e.target.value);
+  };
+
   useEffect(() => {
     if (isId && isPw && isPwConfirm && isEmail && isName && isPhone) {
       setNotAllow(false);
@@ -119,9 +117,33 @@ export default function SignUp() {
     setNotAllow(true);
   }, [isId, isPw, isPwConfirm, isEmail, isName, isPhone]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!notAllow) {
-      navigate("/signupcompleted");
+      const userData = {
+        user_name: name,
+        id: id,
+        email: email,
+        password: pw,
+        phone_number: phone,
+        birth_date: birth,
+        gender: gender,
+        job: job,
+      };
+
+      try {
+        const response = await axios.post(
+          `https://team6back.sku-sku.com/transcribe/user/signup`,
+          userData
+        );
+        if (response.status === 201) {
+          navigate("/signupcompleted");
+        } else if (response.status === 409) {
+          alert("중복된 아이디입니다.");
+        }
+      } catch (error) {
+        console.error("There was an error submitting the form!", error);
+        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
@@ -224,6 +246,8 @@ export default function SignUp() {
                 <input
                   className="border mt-1 p-3 rounded-lg w-[30%]"
                   placeholder="년(4자)"
+                  value={birth}
+                  onChange={(e) => setBirth(e.target.value)}
                 />
                 <select className="w-[30%] border mt-1 p-3 rounded-lg">
                   <option>월</option>
@@ -248,10 +272,14 @@ export default function SignUp() {
             </div>
             <div className="mt-5 flex flex-col">
               <span className="ml-1 text-base">성별</span>
-              <select className="border mt-1 p-4 rounded-lg">
+              <select
+                className="border mt-1 p-4 rounded-lg"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
                 <option value="">성별</option>
-                <option value="">남</option>
-                <option value="">여</option>
+                <option value="M">남</option>
+                <option value="F">여</option>
               </select>
             </div>
             <div className="flex flex-col mt-5">
@@ -273,12 +301,16 @@ export default function SignUp() {
             </div>
             <div className="flex flex-col mt-5 ">
               <span className="text-base ml-1">직업</span>
-              <select className="border mt-1 p-3 rounded-lg">
+              <select
+                className="border mt-1 p-3 rounded-lg"
+                value={job}
+                onChange={handleJob}
+              >
                 <option value="">직업 선택</option>
-                <option value="">학생</option>
-                <option value="">주부</option>
-                <option value="">직장인</option>
-                <option value="">기타</option>
+                <option value="학생">학생</option>
+                <option value="주부">주부</option>
+                <option value="직장인">직장인</option>
+                <option value="기타">기타</option>
               </select>
             </div>
           </div>
