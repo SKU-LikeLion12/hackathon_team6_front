@@ -1,24 +1,55 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 
 export default function Attendance() {
+  const data = [
+    { name: '행복', value: 10 },
+    { name: '불안', value: 10 },
+    { name: '중립', value: 10 },
+    { name: '슬픔', value: 10 },
+    { name: '분노', value: 10 },
+  ];
+
+  const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
+
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="custom-tooltip"
+          style={{
+            borderRadius: '10px',
+            backgroundColor: '#fff',
+            padding: '10px',
+            border: '1px solid #ccc',
+          }}
+        >
+          <p>{`${payload[0].name} : ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   const nav = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const months = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
   ];
-  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
   const handlePreviousMonth = () => {
     setCurrentDate(
@@ -69,10 +100,10 @@ export default function Attendance() {
             <span
               className={`w-8 h-8 rounded-full flex items-center justify-center ${
                 isToday
-                  ? "text-sky-500 font-bold"
+                  ? 'text-sky-500 font-bold'
                   : isWeekend
-                  ? "text-sky-500"
-                  : "text-black"
+                  ? 'text-sky-500'
+                  : 'text-black'
               }`}
             >
               {date}
@@ -109,8 +140,8 @@ export default function Attendance() {
                 key={day}
                 className={`flex items-center justify-center h-10 font-bold ${
                   index % 7 === 0 || index % 7 === 6
-                    ? "text-sky-500"
-                    : "text-gray-500"
+                    ? 'text-sky-500'
+                    : 'text-gray-500'
                 }`}
               >
                 {day}
@@ -140,15 +171,33 @@ export default function Attendance() {
       >
         <div className="rounded-3xl p-5 bg-sky-100 w-full">
           <div className="rounded-2xl p-10 bg-[white]">
-            <div className="block text-center underline decoration-1.3">
+            <div className="block text-center underline underline-offset-4 decoration-1.3">
               <span className="block text-gray-500 text-xl">
                 김금쪽님의 월별
               </span>
               <span className="block text-gray-500 text-xl">감정 보고서</span>
             </div>
             <div className="mt-5">
-              <div className="rounded-xl bg-gray-100 py-2 h-auto">
-                <div className="rounded-full bg-red-200 w-36 h-36 mx-auto my-2"></div>
+              <div className="rounded-xl bg-gray-100 w-[400px] mx-auto py-6 h-auto flex justify-center items-center">
+                <PieChart width={175} height={175}>
+                  <Pie
+                    data={data}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={85}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {data.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
               </div>
               <div className="my-5">
                 <span className="text-black">

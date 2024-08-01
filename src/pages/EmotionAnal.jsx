@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import InvitePopupField from '../component/InvitePopupField';
 import './style.css';
 
 export default function EmotionAnal() {
@@ -10,6 +10,16 @@ export default function EmotionAnal() {
   const date = String(now.getDate()).padStart(2, '0');
   const days = ['일', '월', '화', '수', '목', '금', '토'];
   const day = days[now.getDay()];
+
+  const [InvitePopup, setInvitePopup] = useState(false);
+
+  const handleInviteUser = (event) => {
+    setInvitePopup(true);
+  };
+
+  const handleCloseInvitePopup = (event) => {
+    setInvitePopup(false);
+  };
 
   return (
     <>
@@ -131,16 +141,50 @@ export default function EmotionAnal() {
 
                 <div className="flex justify-between mr-[10%] mb-12">
                   <NavLink to="">
-                    <button className="bg-[#5BCBAB] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] flex items-center justify-around">
+                    <button
+                      className="bg-[#5BCBAB] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] flex items-center justify-around"
+                      onClick={handleInviteUser}
+                    >
                       일기 저장
                       <img src="../img/diaryIcon.png" className="w-[17px]" />
                     </button>
                   </NavLink>
                   <NavLink to="">
-                    <button className="bg-[rgba(180,54,58,0.85)] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(180,54,58,0.4)] flex items-center justify-around">
+                    <button
+                      className="bg-[rgba(180,54,58,0.85)] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(180,54,58,0.4)] flex items-center justify-around"
+                      onClick={handleInviteUser}
+                    >
                       일기 삭제
                       <img src="../img/bin.png" className="w-[17px]" />
                     </button>
+                    <InvitePopupField
+                      show={InvitePopup}
+                      onClose={handleCloseInvitePopup}
+                    >
+                      <div className="p-4 text-center">
+                        <p className="text-2xl font-bold text-[#5BCBAB] mb-10">
+                          저장하시겠습니까?
+                        </p>
+                        <div className="text-lg text-gray-500">
+                          <p>저장 후 수정이 가능합니다.</p>
+                          <p>
+                            저장된 일기장은 {''}
+                            <span className="underline">
+                              사용자 감정 분석에 사용
+                            </span>
+                            됩니다.
+                          </p>
+                        </div>
+                        <div className="flex justify-around h-12 mt-8">
+                          <button className="bg-[#D9D9D9] font-bold text-xl w-[50%] h-[20%] absolute left-0 bottom-0 rounded-bl-3xl ">
+                            취소
+                          </button>
+                          <button className="bg-[#5BCBAB] font-bold text-xl text-white w-[50%] h-[20%] absolute right-0 bottom-0 rounded-br-3xl">
+                            게시
+                          </button>
+                        </div>
+                      </div>
+                    </InvitePopupField>
                   </NavLink>
                 </div>
               </div>

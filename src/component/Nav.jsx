@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 export default function Nav() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // 1. 로컬 저장소에서 토큰 삭제
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken'); // 필요한 경우 추가적으로 삭제
+
+    // 2. 상태 업데이트
+    setIsLoggedIn(false);
+
+    // 3. 리디렉션
+    navigate('/');
+
+    console.log('정상 로그아웃 되었습니다.');
+  };
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
   };
 
   return (
@@ -61,9 +72,12 @@ export default function Nav() {
             </NavLink>
           </div>
 
-          <NavLink to="/">
-            <div className="flex text-sm font-semibold lgBtn">Logout</div>
-          </NavLink>
+          <button
+            onClick={handleLogout}
+            className="flex text-sm font-semibold lgBtn"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
