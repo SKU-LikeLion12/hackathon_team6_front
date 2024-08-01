@@ -1,6 +1,7 @@
 import { React, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaMicrophone } from 'react-icons/fa';
+import axios from 'axios';
 import './style.css';
 
 export default function ChatStart() {
@@ -29,22 +30,15 @@ export default function ChatStart() {
       const formData = new FormData();
       formData.append('file', audioBlob);
 
-      fetch('http://127.0.0.1:8000/transcribe/', {
-        method: 'POST',
-        body: formData,
-      })
+      axios
+        .post('https://team6ai.sku-sku.com/transcribe/', formData)
         .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log('음성 인식 결과:', data);
+          console.log('음성 인식 결과:', response.data);
         })
         .catch((error) => {
           console.error('오류가 발생했습니다:', error);
         });
+
       audioChunksRef.current = [];
       setRecording(false);
     });

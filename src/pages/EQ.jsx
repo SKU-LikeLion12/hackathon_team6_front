@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// import YouTube from 'react-youtube';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import './style.css';
+import programs from '../programs.json';
 
 export default function ThirdEQ() {
+  const [emotionType, setEmotionType] = useState('happiness'); // 현재 감정 유형을 설정합니다.
+  const [randomPrograms, setRandomPrograms] = useState([]);
+
+  useEffect(() => {
+    // 감정 유형에 맞는 프로그램을 필터링
+    const filterPrograms = programs.filter(
+      (program) => program.emotionType === emotionType
+    );
+    const selectedPrograms = [];
+
+    // 필터링된 프로그램 중에서 랜덤으로 3개를 선택
+    while (selectedPrograms.length < 3 && filterPrograms.length > 0) {
+      const randomIndex = Math.floor(Math.random() * filterPrograms.length);
+      selectedPrograms.push(filterPrograms.splice(randomIndex, 1)[0]);
+    }
+    setRandomPrograms(selectedPrograms);
+  }, [emotionType]);
+
+  // const extractVideoId = (url) => {
+  //   const videoIdMatch = url.match(
+  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\?v=|embed\/|v\/|.+\/)|youtu\.be\/)([^&]+)/
+  //   );
+  //   return videoIdMatch ? videoIdMatch[1] : null;
+  // };
+
   const data = [
     { name: '행복', value: 10 },
     { name: '불안', value: 10 },
@@ -30,6 +57,7 @@ export default function ThirdEQ() {
 
     return null;
   };
+
   return (
     <div className="eqbg flex flex-col">
       <div className="text-center font-thin text-[#495057] text-[30px] z-1 relative">
@@ -170,55 +198,60 @@ export default function ThirdEQ() {
         </div>
 
         <div className="w-[55%] flex flex-col">
-          <div className="font-bold text-center text-[#262626] text-[26px] mt-[5px] mr-[12%]">
+          <div className="font-bold text-center text-[#262626] text-[24px] mt-[5px] mr-[12%]">
             김금쪽님을 위한 추천 활동
           </div>
           <div className="flex flex-col justify-center items-center mr-[10%] relative">
-            <div className="relative w-[70%] mt-[10px]">
-              <img src="../img/box.png" className="w-full h-[90%]" />
-              <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
-                <div className="w-[90%] p-4 text-[#495057]">
-                  <strong className="text-[22px] text-[#262626]">
-                    규칙적인 운동
-                  </strong>
-                  <br />
-                  <br />
-                  운동은 신체 건강 뿐만 아니라 정신 건강에도 좋습니다. 운동을
-                  통해 엔도르핀을 분비시켜 기분을 좋게 만들 수 있습니다.
+            {randomPrograms.map((program, index) => {
+              // const videoId = extractVideoId(program.content);
+              return (
+                <div className="relative w-[70%] mt-[10px]" key={index}>
+                  <img src="../img/box.png" className="w-[110%]" />
+                  <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
+                    <div className="w-[90%] p-4 text-[#495057]">
+                      <strong className="text-[16px] text-[#262626] mt-4">
+                        {program.title}
+                      </strong>
+                      <br />
+                      <br />
+                      {/* {videoId ? (
+                        <YouTube
+                          // videoId={videoId}
+                          opts={{ height: '200', width: '340' }}
+                        />
+                      ) : (
+                        <p>{program.content}</p>
+                      )}                         */}
+                      <p>{program.content}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
 
-            <div className="relative w-[70%]">
+            {/* <div className="relative w-[70%]">
               <img src="../img/box.png" className="w-full h-[90%]" />
               <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
                 <div className="w-[90%] p-4 text-[#495057]">
-                  <strong className="text-[22px] text-[#262626]">
-                    균형 잡힌 식단
-                  </strong>
+                  <strong className="text-[22px] text-[#262626]">제목</strong>
                   <br />
                   <br />
-                  영양가 있는 음식을 섭취하면 기분이 좋아질 수 있습니다. 특히
-                  오메가-3 지방산, 비타민 D, 항산화제가 풍부한 음식이 감정
-                  안정에 도움을 줍니다.
+                  내용
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div className="relative w-[70%]">
+            {/* <div className="relative w-[70%]">
               <img src="../img/box.png" className="w-full h-[90%]" />
               <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
                 <div className="w-[90%] p-4 text-[#495057]">
-                  <strong className="text-[22px] text-[#262626]">
-                    사회적 연결 유지
-                  </strong>
+                  <strong className="text-[22px] text-[#262626]">제목</strong>
                   <br />
                   <br />
-                  친구나 가족과의 긍정적인 교류는 감정지수를 높이는 데 도움이
-                  됩니다. 자주 연락하고 만나서 시간을 보내는 것이 좋습니다.
+                  내용
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

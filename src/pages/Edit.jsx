@@ -1,7 +1,7 @@
-import { FaCaretRight } from "react-icons/fa";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import InvitePopupField from "../component/InvitePopupField";
+import { FaCaretRight } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import InvitePopupField from '../component/InvitePopupField';
 
 export default function Edit() {
   const params = useParams();
@@ -80,8 +80,8 @@ export default function Edit() {
                       <h1 className="mb-2 font-bold	">수정후</h1>
                       <span>
                         오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다.
-                        혼자 할 때는 어려웠는데 다 같이{" "}
-                        <spna className="text-red-700 font-bold">열심히</spna>{" "}
+                        혼자 할 때는 어려웠는데 다 같이{' '}
+                        <spna className="text-red-700 font-bold">열심히</spna>{' '}
                         하니 금방 끝났다. 뿌듯했다.
                       </span>
                     </div>
@@ -104,7 +104,7 @@ export default function Edit() {
                         <div className="text-lg text-gray-500">
                           <p>게시 후 수정이 가능합니다.</p>
                           <p>
-                            게시된 일기장은{" "}
+                            게시된 일기장은{' '}
                             <span className="underline">
                               사용자 감정 분석에 사용
                             </span>

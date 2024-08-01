@@ -98,3 +98,7 @@
 .animate-bounce {
   animation: bounce 1s infinite;
 }
+
+.youtube-video {
+  margin-right: -20px; /* 예: 20px만큼 왼쪽으로 이동 */
+}
