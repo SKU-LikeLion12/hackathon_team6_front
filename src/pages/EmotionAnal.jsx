@@ -1,9 +1,8 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import InvitePopupField from "../component/InvitePopupField";
-import { useState } from "react";
 
-import "./style.css";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import InvitePopupField from '../component/InvitePopupField';
+import './style.css';
 
 export default function EmotionAnal() {
   const now = new Date();
@@ -143,7 +142,10 @@ export default function EmotionAnal() {
 
                 <div className="flex justify-between mr-[10%] mb-12">
                   <NavLink to="">
-                    <button className="bg-[#5BCBAB] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] flex items-center justify-around">
+                    <button
+                      className="bg-[#5BCBAB] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] flex items-center justify-around"
+                      onClick={handleInviteUser}
+                    >
                       일기 저장
                       <img src="../img/diaryIcon.png" className="w-[17px]" />
                     </button>

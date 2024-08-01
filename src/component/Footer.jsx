@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React from "react";
 
 import { FiMail } from "react-icons/fi";
 import { Link } from "react-router-dom";
+=======
+import React from 'react';
+
+import { FiMail } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+>>>>>>> feature_haseo
 
 export default function Footer() {
   return (

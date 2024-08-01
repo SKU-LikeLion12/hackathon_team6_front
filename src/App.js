@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes, useActionData } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useReducer, useRef, createContext } from 'react';
 
-
 import Nav from './component/Nav';
 import HomeNav from './component/HomeNav';
 import Footer from './component/Footer';
@@ -12,7 +11,6 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Calendar from './pages/Calendar';
 import ChatBot from './pages/ChatBot';
-import EqMain from './pages/EqMain';
 import Edit from './pages/Edit';
 import Diary from './pages/Diary';
 import ChatMain from './pages/ChatMain';
@@ -20,9 +18,10 @@ import ChatStart from './pages/ChatStart';
 import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
+import EQ from './pages/EQ';
 
-import Producer from "./pages/Producer";
-import SignUpCompleted from "./pages/SignUpCompleted";
+import Producer from './pages/Producer';
+import SignUpCompleted from './pages/SignUpCompleted';
 
 const mockData = [
   {
@@ -38,7 +37,6 @@ const mockData = [
     content: '2번 일기 내용',
   },
 ];
-
 
 function reducer(state, action) {
   switch (action.type) {
@@ -116,17 +114,15 @@ function App() {
               <Route path="/calendar/diary/:id" element={<Diary />} />
               <Route path="/calendar/edit/:id" element={<Edit />} />
               <Route path="/chatbot" element={<ChatBot />} />
-
-              <Route path="/EqMain" element={<EqMain />} />
               <Route path="/ChatMain" element={<ChatMain />} />
               <Route path="/ChatStart" element={<ChatStart />} />
               <Route path="/ChatEnd" element={<ChatEnd />} />
               <Route path="/DiaryStart" element={<DiaryStart />} />
               <Route path="/EmotionAnal" element={<EmotionAnal />} />
+              <Route path="EQ" element={<EQ />} />
 
               <Route path="/producer" element={<Producer />} />
               <Route path="/signupcompleted" element={<SignUpCompleted />} />
-
             </Routes>
           </DiaryDispatchContext.Provider>
         </DiaryStateContext.Provider>
