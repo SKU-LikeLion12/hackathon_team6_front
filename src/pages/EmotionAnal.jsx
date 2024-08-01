@@ -1,15 +1,27 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import InvitePopupField from "../component/InvitePopupField";
+import { useState } from "react";
 
-import './style.css';
+import "./style.css";
 
 export default function EmotionAnal() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const date = String(now.getDate()).padStart(2, '0');
-  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
   const day = days[now.getDay()];
+
+  const [InvitePopup, setInvitePopup] = useState(false);
+
+  const handleInviteUser = (event) => {
+    setInvitePopup(true);
+  };
+
+  const handleCloseInvitePopup = (event) => {
+    setInvitePopup(false);
+  };
 
   return (
     <>
@@ -42,7 +54,7 @@ export default function EmotionAnal() {
                     <img src="../img/happy.png" className="w-[45px]" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#FFF1B2]"
-                      style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.8) ' }}
+                      style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.8) " }}
                     >
                       행복 40%
                     </div>
@@ -60,7 +72,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#F1E4FF]"
                       style={{
                         textShadow:
-                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
+                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
                       불안 25%
@@ -79,7 +91,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#5ACBAB]"
                       style={{
                         textShadow:
-                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
+                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
                       중립 7%
@@ -98,7 +110,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#A9D6E5]"
                       style={{
                         textShadow:
-                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
+                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
                       슬픔 3%
@@ -117,7 +129,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#FF9F7A]"
                       style={{
                         textShadow:
-                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
+                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
                       분노 25%
@@ -136,12 +148,39 @@ export default function EmotionAnal() {
                       <img src="../img/diaryIcon.png" className="w-[17px]" />
                     </button>
                   </NavLink>
-                  <NavLink to="">
-                    <button className="bg-[rgba(180,54,58,0.85)] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(180,54,58,0.4)] flex items-center justify-around">
-                      일기 삭제
-                      <img src="../img/bin.png" className="w-[17px]" />
-                    </button>
-                  </NavLink>
+
+                  <button
+                    onClick={handleInviteUser}
+                    className="bg-[rgba(180,54,58,0.85)] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(180,54,58,0.4)] flex items-center justify-around"
+                  >
+                    일기 삭제
+                    <img src="../img/bin.png" className="w-[17px]" />
+                  </button>
+
+                  <InvitePopupField
+                    show={InvitePopup}
+                    onClose={handleCloseInvitePopup}
+                  >
+                    <div className="p-4 flex flex-col justify-center items-center h-[230px] w-[550px]">
+                      <p className="text-2xl font-bold text-[#D64A38] mb-10">
+                        삭제하시겠습니까?
+                      </p>
+                      <div className="text-lg text-gray-500">
+                        <span>
+                          삭제 후 복원이{" "}
+                          <span className="underline">불가능합니다.</span>
+                        </span>
+                      </div>
+                      <div className="flex justify-around h-12 mt-8">
+                        <button className="bg-[#D9D9D9] font-bold text-xl w-[50%] h-[20%] absolute left-0 bottom-0 rounded-bl-3xl ">
+                          취소
+                        </button>
+                        <button className="bg-[#D64A38] font-bold text-xl text-white w-[50%] h-[20%] absolute right-0 bottom-0 rounded-br-3xl">
+                          게시
+                        </button>
+                      </div>
+                    </div>
+                  </InvitePopupField>
                 </div>
               </div>
             </div>

@@ -97,8 +97,8 @@ export default function Edit() {
                       show={InvitePopup}
                       onClose={handleCloseInvitePopup}
                     >
-                      <div className="p-4">
-                        <p className="text-2xl font-bold text-[#5BCBAB] mb-10">
+                      <div className="p-4 w-[550px] h-[230px]">
+                        <p className="text-2xl font-bold text-[#5BCBAB] mb-8">
                           게시하시겠습니까?
                         </p>
                         <div className="text-lg text-gray-500">
