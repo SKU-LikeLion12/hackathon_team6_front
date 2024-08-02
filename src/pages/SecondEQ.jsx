@@ -1,42 +1,17 @@
 import React, { useState, useEffect } from 'react';
-// import YouTube from 'react-youtube';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import './style.css';
 import programs from '../programs.json';
 
-export default function EQ() {
-  const [emotionType, setEmotionType] = useState('happiness'); // 현재 감정 유형을 설정합니다.
-  const [randomPrograms, setRandomPrograms] = useState([]);
-
-  useEffect(() => {
-    // 감정 유형에 맞는 프로그램을 필터링
-    const filterPrograms = programs.filter(
-      (program) => program.emotionType === emotionType
-    );
-    const selectedPrograms = [];
-
-    // 필터링된 프로그램 중에서 랜덤으로 3개를 선택
-    while (selectedPrograms.length < 3 && filterPrograms.length > 0) {
-      const randomIndex = Math.floor(Math.random() * filterPrograms.length);
-      selectedPrograms.push(filterPrograms.splice(randomIndex, 1)[0]);
-    }
-    setRandomPrograms(selectedPrograms);
-  }, [emotionType]);
-
-  // const extractVideoId = (url) => {
-  //   const videoIdMatch = url.match(
-  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\?v=|embed\/|v\/|.+\/)|youtu\.be\/)([^&]+)/
-  //   );
-  //   return videoIdMatch ? videoIdMatch[1] : null;
-  // };
-
+export default function SecondEQ() {
   const data = [
-    { name: '행복', value: 10 },
-    { name: '불안', value: 10 },
+    { name: 'happiness', value: 10 },
+    { name: 'anxiety', value: 10 },
     { name: '중립', value: 10 },
-    { name: '슬픔', value: 10 },
-    { name: '분노', value: 10 },
+    { name: 'sadness', value: 10 },
+    { name: 'anger', value: 10 },
   ];
+
   const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -57,6 +32,24 @@ export default function EQ() {
 
     return null;
   };
+
+  const [emotionType, setEmotionType] = useState('sadness'); // 현재 감정 유형을 설정합니다.
+  const [randomPrograms, setRandomPrograms] = useState([]);
+
+  useEffect(() => {
+    // 감정 유형에 맞는 프로그램을 필터링
+    const filterPrograms = programs.filter(
+      (program) => program.emotionType === emotionType
+    );
+    const selectedPrograms = [];
+
+    // 필터링된 프로그램 중에서 랜덤으로 3개를 선택
+    while (selectedPrograms.length < 3 && filterPrograms.length > 0) {
+      const randomIndex = Math.floor(Math.random() * filterPrograms.length);
+      selectedPrograms.push(filterPrograms.splice(randomIndex, 1)[0]);
+    }
+    setRandomPrograms(selectedPrograms);
+  }, [emotionType]);
 
   return (
     <div className="eqbg flex flex-col">
@@ -80,7 +73,7 @@ export default function EQ() {
           <br />
         </div>
         <div className="mt-[5px] pb-12 text-center">
-          FeelInsight 는 항상 당신을 응원합니다.
+          FeelInsight 는 항상 당신을 응원합니다 !!!!!!!!!!!
         </div>
       </div>
 

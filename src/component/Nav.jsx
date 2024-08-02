@@ -16,7 +16,7 @@ export default function Nav() {
     // 3. 리디렉션
     navigate('/');
 
-    console.log('정상 로그아웃 되었습니다.');
+    console.log('로그아웃 되었습니다.');
   };
 
   const handleLogin = () => {

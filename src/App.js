@@ -19,6 +19,7 @@ import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
+import SecondEQ from './pages/SecondEQ';
 
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
@@ -120,6 +121,7 @@ function App() {
               <Route path="/DiaryStart" element={<DiaryStart />} />
               <Route path="/EmotionAnal" element={<EmotionAnal />} />
               <Route path="EQ" element={<EQ />} />
+              <Route path="SecondEQ" element={<SecondEQ />} />
 
               <Route path="/producer" element={<Producer />} />
               <Route path="/signupcompleted" element={<SignUpCompleted />} />
