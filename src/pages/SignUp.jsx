@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 
 export default function SignUp() {
   const [id, setId] = useState("");
@@ -134,10 +135,7 @@ export default function SignUp() {
       };
 
       try {
-        const response = await axios.post(
-          `http://team6back.sku-sku.com/user/signup`,
-          userData
-        );
+        const response = await axios.post(`${API_URL}/user/signup`, userData);
         if (response.status === 201) {
           navigate("/signupcompleted");
         } else if (response.status === 409) {
