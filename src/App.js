@@ -109,7 +109,7 @@ function App() {
             <Routes>
               {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/SignUp" element={<SignUp />} />
               <Route path="/" element={<Home />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/calendar/diary/:id" element={<Diary />} />

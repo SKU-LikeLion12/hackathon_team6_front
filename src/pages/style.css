@@ -1,5 +1,5 @@
 .chatbg {
-  background-image: url('../img/chatbg.png');
+  background-image: url("../img/chatbg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -8,7 +8,7 @@
 }
 
 .diarybg {
-  background-image: url('../img/diary.png');
+  background-image: url("../img/diary.png");
   background-size: cover;
   /* background-position: bottom; */
   background-repeat: no-repeat;
@@ -17,7 +17,7 @@
 }
 
 .eqbg {
-  background-image: url('../img/eqbg.png');
+  background-image: url("../img/eqbg.png");
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -86,17 +86,39 @@
 @keyframes bounce {
   0%,
   100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    transform: translateY(25px);
   }
   50% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    transform: translateY(-25px);
+  }
+}
+
+@keyframes shadow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(0.7);
+    opacity: 0.3;
   }
 }
 
 .animate-bounce {
   animation: bounce 1s infinite;
+}
+
+.shadow-circle {
+  position: absolute;
+  bottom: 5px;
+  /* left: 21%; */
+  /* transform: translateX(-50%); */
+  width: 115px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  animation: shadow 1s infinite;
 }
 
 .youtube-video {

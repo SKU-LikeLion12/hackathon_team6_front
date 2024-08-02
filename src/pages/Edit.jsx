@@ -17,7 +17,7 @@ export default function Edit() {
   };
 
   return (
-    <div className="flex justify-around items-center bg-[url('./img/edit_back.png')] bg-[length:3000px_1000px] h-[700px] bg-no-repeat ">
+    <div className="flex justify-center items-center bg-[url('./img/edit_back.png')] bg-[length:3000px_1000px] h-[700px] bg-no-repeat ">
       {/* 왼 */}
       <div className="w-[45%]">
         <span className="flex justify-center mb-4 text-xl">
@@ -97,8 +97,8 @@ export default function Edit() {
                       show={InvitePopup}
                       onClose={handleCloseInvitePopup}
                     >
-                      <div className="p-4">
-                        <p className="text-2xl font-bold text-[#5BCBAB] mb-10">
+                      <div className="p-4 w-[550px] h-[230px]">
+                        <p className="text-2xl font-bold text-[#5BCBAB] mb-8">
                           게시하시겠습니까?
                         </p>
                         <div className="text-lg text-gray-500">

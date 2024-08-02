@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { FiMail } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiMail } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (

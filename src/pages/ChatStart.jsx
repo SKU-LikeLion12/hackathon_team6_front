@@ -51,8 +51,9 @@ export default function ChatStart() {
           <div className="mt-[90px] font-extralight text-[#495057] text-[45px]">
             이야기를 시작해 볼까요 ?
           </div>
-          <div className="animate-bounce mt-[90px]">
-            <img src="../img/ball.png" className="h-48 w-48" />
+          <div className="relative mt-[90px] flex flex-col items-center justify-center">
+            <img src="../img/ball_2.png" className="h-60 w-60 animate-bounce" />
+            <div className="shadow-circle"></div>
           </div>
           <div>
             <div className="flex flex-row">
