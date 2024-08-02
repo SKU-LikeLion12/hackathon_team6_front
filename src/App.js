@@ -1,17 +1,26 @@
-// import "./App.css";
 import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useReducer, useRef, createContext } from "react";
 
 import Nav from "./component/Nav";
-import Footer from "./component/Footer";
+
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import ChatBot from "./pages/ChatBot";
-import EQ from "./pages/EQ";
 import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
+import ChatMain from "./pages/ChatMain";
+import ChatStart from "./pages/ChatStart";
+import ChatEnd from "./pages/ChatEnd";
+import DiaryStart from "./pages/DiaryStart";
+import EmotionAnal from "./pages/EmotionAnal";
+import EQ from "./pages/EQ";
+import Producer from "./pages/Producer";
+import SignUpCompleted from "./pages/SignUpCompleted";
+
+import { AuthProvider } from "./context/AuthContext";
 
 const mockData = [
   {
@@ -50,7 +59,7 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
+  const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
   // 새로운 일기 추가
@@ -89,37 +98,43 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Nav />
-        {/* <button onClick={() => onCreate(new Date().getTime(), 1, "hello")}>
-          일기 추가
-        </button>
-        <button
-          onClick={() => onUpdate(1, new Date().getTime(), 3, "수정된 일기")}
-        >
-          일기 수정
-        </button>
-        <button onClick={() => onDelete(1)}>일기 삭제</button> */}
-        <DiaryStateContext.Provider value={data}>
-          <DiaryDispatchContext.Provider
-            value={{ onCreate, onUpdate, onDelete }}
-          >
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/calendar/diary/:id" element={<Diary />} />
-              <Route path="/calendar/edit/:id" element={<Edit />} />
-              <Route path="/chatbot" element={<ChatBot />} />
-              <Route path="/eq" element={<EQ />} />
-            </Routes>
-          </DiaryDispatchContext.Provider>
-        </DiaryStateContext.Provider>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <DiaryStateContext.Provider value={data}>
+            <DiaryDispatchContext.Provider
+              value={{ onCreate, onUpdate, onDelete }}
+            >
+              <Nav />
+              {/* <Content /> */}
+              <Routes>
+                {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/SignUp" element={<SignUp />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/calendar/diary/:id" element={<Diary />} />
+                <Route path="/calendar/edit/:id" element={<Edit />} />
+                <Route path="/chatbot" element={<ChatBot />} />
+                <Route path="/ChatMain" element={<ChatMain />} />
+                <Route path="/ChatStart" element={<ChatStart />} />
+                <Route path="/ChatEnd" element={<ChatEnd />} />
+                <Route path="/DiaryStart" element={<DiaryStart />} />
+                <Route path="/EmotionAnal" element={<EmotionAnal />} />
+                <Route path="EQ" element={<EQ />} />
+
+                <Route path="/producer" element={<Producer />} />
+                <Route path="/signupcompleted" element={<SignUpCompleted />} />
+              </Routes>
+            </DiaryDispatchContext.Provider>
+          </DiaryStateContext.Provider>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
+// function Content() {
+//   const location = useLocation();
 
+//   return <>{location.pathname === "/" ? <HomeNav /> : <Nav />}</>;
+// }
 export default App;

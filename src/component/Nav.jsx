@@ -1,122 +1,88 @@
-import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Nav() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
+    navigate("/");
+    console.log("정상 로그아웃 되었습니다.");
   };
 
   return (
     <div>
       <div className="flex justify-center">
-        <div className="container flex justify-between w-[100%] h-24 pb-3 items-center border-b">
+        <div className="container flex justify-evenly w-[100%] h-28 items-center">
           <Link to="/">
-            <div className="left flex ml-2 mt-5">
-              <img
-                src="/img/FeelInsight.png"
-                alt="멋사로고"
-                className="logo w-52"
-              />
-              <div className="title font-semibold flex items-center text-2xl ml-2"></div>
+            <div className="left flex ml-2">
+              <img src="./img/mainLogo.png" className="w-48" />
             </div>
           </Link>
-          <div className="right flex mr-2 mt-5">
-            {isLoggedIn ? (
-              <>
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/chatbot"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">챗봇과 상담하기</span>
-                  </NavLink>
-                </div>
 
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/eq"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">EQ 높이기</span>
-                  </NavLink>
-                </div>
-
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/calendar"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">캘린더</span>
-                  </NavLink>
-                </div>
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/mypage"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">MyPage</span>
-                  </NavLink>
-                </div>
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <button
-                    onClick={handleLogout}
-                    className="text-black flex flex-col items-center"
-                  >
-                    <span className="text-xs">Logout</span>
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/login"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">LogIn</span>
-                  </NavLink>
-                </div>
-                <div className="icon flex flex-col items-center justify-center ml-5">
-                  <NavLink
-                    to="/signup"
-                    className={({ isActive }) =>
-                      `flex flex-col items-center ${
-                        isActive ? "text-teal-500" : "text-black"
-                      }`
-                    }
-                  >
-                    <span className="text-xs">SignUp</span>
-                  </NavLink>
-                </div>
-              </>
-            )}
+          <div className="flex mr-24 ml-24">
+            <NavLink
+              to="/ChatMain"
+              className={({ isActive }) =>
+                `flex flex-col items-center ${
+                  isActive ? "text-teal-500" : "text-black"
+                }`
+              }
+            >
+              <span className="text-base font-medium tracking-[.005em] px-[20px]">
+                챗봇 상담하기
+              </span>
+            </NavLink>
+            <NavLink
+              to="/EQ"
+              className={({ isActive }) =>
+                `flex flex-col items-center ${
+                  isActive ? "text-teal-500" : "text-black"
+                }`
+              }
+            >
+              <span className="text-base font-medium tracking-[.005em] px-[20px]">
+                EQ 높이기
+              </span>
+            </NavLink>
+            <NavLink
+              to="/Calendar"
+              className={({ isActive }) =>
+                `flex flex-col items-center ${
+                  isActive ? "text-teal-500" : "text-black"
+                }`
+              }
+            >
+              <span className="text-base font-medium tracking-[.005em] px-[20px]">
+                캘린더
+              </span>
+            </NavLink>
           </div>
+
+          {isLoggedIn ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="flex text-sm font-semibold LoBtn mr-[20px]"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <div className="flex">
+              <NavLink to="/Login">
+                <div className="flex text-sm font-semibold LoBtn mr-[20px]">
+                  Login
+                </div>
+              </NavLink>
+              <NavLink to="/SignUp">
+                <div className="flex text-sm font-semibold JnBtn">Join</div>
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </div>

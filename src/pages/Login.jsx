@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -11,22 +14,7 @@ export default function Login() {
   const [notAllow, setNotAllow] = useState(true);
 
   const navigate = useNavigate();
-
-  const User = {
-    id: "test1234",
-    pw: "test1234@@",
-  };
-
-  const confirmMessage = () => {
-    if (id === User.id && pw === User.pw) {
-      alert("로그인에 성공했습니다.");
-      navigate("/");
-    } else {
-      alert("등록되지 않은 회원입니다.");
-    }
-  };
-
-  // const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleId = (e) => {
     setId(e.target.value);
@@ -39,12 +27,12 @@ export default function Login() {
     }
   };
 
-  const handlePw = (a) => {
-    setPw(a.target.value);
+  const handlePw = (e) => {
+    setPw(e.target.value);
     const regex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{7,}$/;
 
-    if (regex.test(a.target.value)) {
+    if (regex.test(e.target.value)) {
       setPwValid(true);
     } else {
       setPwValid(false);
@@ -59,9 +47,26 @@ export default function Login() {
     setNotAllow(true);
   }, [idValid, pwValid]);
 
-  // const goToMain = () => {
-  //   navigate("/Home");
-  // };
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(`${API_URL}/user/login`, {
+        id: id,
+        password: pw,
+      });
+
+      if (response.status === 200) {
+        login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
+        alert("로그인에 성공했습니다.");
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        alert("아이디 또는 비밀번호 오류");
+      } else {
+        alert("서버 오류 발생");
+      }
+    }
+  };
 
   return (
     <>
@@ -72,14 +77,14 @@ export default function Login() {
             <br />
             입력해주세요
           </span>
-          <div className="inputbox mt-7">
+          <form className="inputbox mt-7">
             <div className="idbox flex flex-col">
               <span className="id text-base ml-1">ID</span>
               <input
                 type="text"
                 value={id}
                 onChange={handleId}
-                className="idinput border mt-1 p-3 rounded-lg	"
+                className="idinput border mt-1 p-3 rounded-lg"
                 placeholder="test1234"
               />
               {!idValid && id.length > 0 && (
@@ -94,7 +99,7 @@ export default function Login() {
                 type="password"
                 value={pw}
                 onChange={handlePw}
-                className="pwinput border mt-1 p-3 rounded-lg	"
+                className="pwinput border mt-1 p-3 rounded-lg"
                 placeholder="영문, 숫자, 특수문자 포함 8자 이상"
               />
               {!pwValid && pw.length > 0 && (
@@ -103,12 +108,12 @@ export default function Login() {
                 </div>
               )}
             </div>
-          </div>
+          </form>
           <button
-            onClick={confirmMessage}
+            onClick={handleLogin}
             disabled={notAllow}
             className="
-            submit border mt-10 w-[100%] h-14 rounded-full bg-teal-500	text-white 
+            submit border mt-10 w-[100%] h-14 rounded-full bg-teal-500 text-white 
             disabled:bg-[#dadada] disabled:text-white
             "
           >
