@@ -47,8 +47,7 @@ export default function Login() {
     setNotAllow(true);
   }, [idValid, pwValid]);
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleLogin = async () => {
     try {
       const response = await axios.post(`${API_URL}/user/login`, {
         id: id,
@@ -56,7 +55,7 @@ export default function Login() {
       });
 
       if (response.status === 200) {
-        login();
+        login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
         alert("로그인에 성공했습니다.");
         navigate("/");
       }
