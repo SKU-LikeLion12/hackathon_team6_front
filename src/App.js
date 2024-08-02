@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useReducer, useRef, createContext } from 'react';
 
 import Nav from './component/Nav';
-import HomeNav from './component/HomeNav';
-import Footer from './component/Footer';
 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -19,10 +17,10 @@ import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
-import SecondEQ from './pages/SecondEQ';
-
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
+
+import { AuthProvider } from './context/AuthContext';
 
 const mockData = [
   {
@@ -100,42 +98,43 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <DiaryStateContext.Provider value={data}>
-          <DiaryDispatchContext.Provider
-            value={{ onCreate, onUpdate, onDelete }}
-          >
-            <Content />
-            <Routes>
-              {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/SignUp" element={<SignUp />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/calendar/diary/:id" element={<Diary />} />
-              <Route path="/calendar/edit/:id" element={<Edit />} />
-              <Route path="/chatbot" element={<ChatBot />} />
-              <Route path="/ChatMain" element={<ChatMain />} />
-              <Route path="/ChatStart" element={<ChatStart />} />
-              <Route path="/ChatEnd" element={<ChatEnd />} />
-              <Route path="/DiaryStart" element={<DiaryStart />} />
-              <Route path="/EmotionAnal" element={<EmotionAnal />} />
-              <Route path="EQ" element={<EQ />} />
-              <Route path="SecondEQ" element={<SecondEQ />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <DiaryStateContext.Provider value={data}>
+            <DiaryDispatchContext.Provider
+              value={{ onCreate, onUpdate, onDelete }}
+            >
+              <Nav />
+              {/* <Content /> */}
+              <Routes>
+                {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/SignUp" element={<SignUp />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/calendar/diary/:id" element={<Diary />} />
+                <Route path="/calendar/edit/:id" element={<Edit />} />
+                <Route path="/chatbot" element={<ChatBot />} />
+                <Route path="/ChatMain" element={<ChatMain />} />
+                <Route path="/ChatStart" element={<ChatStart />} />
+                <Route path="/ChatEnd" element={<ChatEnd />} />
+                <Route path="/DiaryStart" element={<DiaryStart />} />
+                <Route path="/EmotionAnal" element={<EmotionAnal />} />
+                <Route path="EQ" element={<EQ />} />
 
-              <Route path="/producer" element={<Producer />} />
-              <Route path="/signupcompleted" element={<SignUpCompleted />} />
-            </Routes>
-          </DiaryDispatchContext.Provider>
-        </DiaryStateContext.Provider>
-        {/* <Footer /> */}
-      </BrowserRouter>
+                <Route path="/producer" element={<Producer />} />
+                <Route path="/signupcompleted" element={<SignUpCompleted />} />
+              </Routes>
+            </DiaryDispatchContext.Provider>
+          </DiaryStateContext.Provider>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
-function Content() {
-  const location = useLocation();
+// function Content() {
+//   const location = useLocation();
 
-  return <>{location.pathname === '/' ? <HomeNav /> : <Nav />}</>;
-}
+//   return <>{location.pathname === "/" ? <HomeNav /> : <Nav />}</>;
+// }
 export default App;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -13,6 +14,7 @@ export default function Login() {
   const [notAllow, setNotAllow] = useState(true);
 
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleId = (e) => {
     setId(e.target.value);
@@ -53,6 +55,7 @@ export default function Login() {
       });
 
       if (response.status === 200) {
+        login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
         alert("로그인에 성공했습니다.");
         navigate("/");
       }
@@ -74,7 +77,7 @@ export default function Login() {
             <br />
             입력해주세요
           </span>
-          <div className="inputbox mt-7">
+          <form className="inputbox mt-7">
             <div className="idbox flex flex-col">
               <span className="id text-base ml-1">ID</span>
               <input
@@ -105,7 +108,7 @@ export default function Login() {
                 </div>
               )}
             </div>
-          </div>
+          </form>
           <button
             onClick={handleLogin}
             disabled={notAllow}
