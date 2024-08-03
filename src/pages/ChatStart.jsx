@@ -1,4 +1,4 @@
-import { React, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaMicrophone } from 'react-icons/fa';
 import axios from 'axios';
@@ -67,7 +67,7 @@ export default function ChatStart() {
                   대화하기
                 </button>
               </NavLink>
-              <NavLink to="">
+              <NavLink to="/ChatEnd">
                 <button
                   className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[188px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)]"
                   onClick={handleStopRecording}
