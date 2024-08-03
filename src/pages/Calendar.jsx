@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Attendance() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '');
-  const username = localStorage.getItem('username') || 'guest';
+  const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   const data = [

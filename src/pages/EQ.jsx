@@ -7,7 +7,7 @@ import programs from '../programs.json';
 export default function EQ() {
   const [emotionType, setEmotionType] = useState('happiness'); // 현재 감정 유형을 설정합니다.
   const [randomPrograms, setRandomPrograms] = useState([]);
-  const username = localStorage.getItem('username') || 'guest';
+  const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   useEffect(() => {

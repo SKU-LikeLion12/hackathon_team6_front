@@ -62,10 +62,6 @@ export default function Login() {
         login(token, username); // 토큰과 사용자 데이터 모두 저장
         alert('로그인에 성공했습니다.');
         navigate('/');
-
-        // login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
-        // alert("로그인에 성공했습니다.");
-        // navigate("/");
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -39,6 +39,11 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const signup = (userData) => {
+    localStorage.setItem('user_name', JSON.stringify(userData));
+    setUser(userData);
+  };
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
       {children}

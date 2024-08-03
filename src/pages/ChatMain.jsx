@@ -4,7 +4,7 @@ import './style.css';
 import { AuthContext } from '../context/AuthContext';
 
 export default function ChatMain() {
-  const username = localStorage.getItem('username') || 'guest';
+  const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   return (
