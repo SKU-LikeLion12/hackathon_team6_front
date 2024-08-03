@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Attendance() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '');
+  const username = localStorage.getItem('username') || 'guest';
 
   const data = [
     { name: '행복', value: 10 },
@@ -175,7 +176,7 @@ export default function Attendance() {
         <div className="rounded-3xl p-5 bg-sky-100 w-full">
           <div className="rounded-2xl p-10 bg-[white]">
             <div className="block text-center underline underline-offset-4 decoration-1.3 text-2xl">
-              <span className="block text-gray-500">김금쪽님의 월별</span>
+              <span className="block text-gray-500">{username}님의 월별</span>
               <span className="block text-gray-500">감정 보고서</span>
             </div>
             <div className="mt-5">
@@ -202,7 +203,7 @@ export default function Attendance() {
               </div>
               <div className="my-5">
                 <span className="text-black">
-                  {month}월의 김금쪽님의 대표 감정은 '행복'이 75%에요!{' '}
+                  {month}월의 {username}님의 대표 감정은 '행복'이 75%에요!{' '}
                 </span>
                 <span className="text-black">
                   이외에 분노와 불안이 25%씩 나타났어요.
