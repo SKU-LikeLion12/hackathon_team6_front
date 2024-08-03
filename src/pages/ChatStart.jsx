@@ -52,7 +52,11 @@ export default function ChatStart() {
             이야기를 시작해 볼까요 ?
           </div>
           <div className="relative mt-[90px] flex flex-col items-center justify-center">
-            <img src="../img/ball_2.png" className="h-60 w-60 animate-bounce" />
+            <img
+              src="../img/ball_2.png"
+              className="h-60 w-60 animate-bounce"
+              alt=""
+            />
             <div className="shadow-circle"></div>
           </div>
           <div>
@@ -73,7 +77,7 @@ export default function ChatStart() {
                   onClick={handleStopRecording}
                   disabled={!recording}
                 >
-                  <img src="../img/end.png" className="w-[25px]" />
+                  <img src="../img/end.png" className="w-[25px]" alt="" />
                   종료하기
                 </button>
               </NavLink>

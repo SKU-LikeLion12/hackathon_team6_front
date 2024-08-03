@@ -9,18 +9,8 @@ export default function Nav() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 1. 로컬 저장소에서 토큰 삭제
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('user_name');
-    // 2. 상태 업데이트
-    // isLoggedIn(false);
-
-    // AuthContext의 logout 함수 호출
     logout();
-
-    // 3. 리디렉션
     navigate('/');
-
     console.log('로그아웃 되었습니다.');
   };
 
@@ -34,7 +24,7 @@ export default function Nav() {
         <div className="container flex justify-evenly w-[100%] h-28 items-center">
           <Link to="/">
             <div className="left flex ml-2">
-              <img src="../img/mainLogo.png" className="w-48" />
+              <img src="../img/mainLogo.png" className="w-48" alt="" />
             </div>
           </Link>
 

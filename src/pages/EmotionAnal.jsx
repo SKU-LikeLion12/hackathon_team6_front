@@ -24,13 +24,24 @@ export default function EmotionAnal() {
 
   const [image, setImage] = useState(null);
 
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   const file = acceptedFiles[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setImage(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // }, []);
+
   const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(file);
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -66,15 +77,6 @@ export default function EmotionAnal() {
                                   alt="Uploaded"
                                   className="rounded-xl py-2 h-auto"
                                 />
-                                {/* <button
-                                  className="mt-2 "
-                                  onClick={() => setImage(null)}
-                                >
-                                  <img
-                                    src="../img/changeImage.png"
-                                    className="w-[40px]"
-                                  />
-                                </button> */}
                               </div>
                             ) : (
                               <div
@@ -90,19 +92,12 @@ export default function EmotionAnal() {
                               </div>
                             )}
                           </div>
-                          <img
-                            src="../img/line.png"
-                            className="w-[100%] h-[1px]"
-                          />
                         </div>
-                        <div className="my-[6%]">
-                          <span>
+                        <div className="border-t-2 py-5 mt-5">
+                          <span className="text-[#495057]">
                             오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을
-                            하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰라으쌰
-                            하니 금방 끝났다. 뿌듯했다. 오늘은 성결대학교 6팀
-                            팀원들과 함께 앱 개발을 하였다. 혼자 할 때는
-                            어려웠는데 다 같이 으쌰라으쌰 하니 금방 끝났다.
-                            뿌듯했다.
+                            하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰으쌰
+                            하니 금방 끝났다. 뿌듯했다.
                           </span>
                         </div>
                         <button
@@ -112,6 +107,7 @@ export default function EmotionAnal() {
                           <img
                             src="../img/changeImage.png"
                             className="w-[40px] absolute right-10 bottom-10"
+                            alt=""
                           />
                         </button>
                       </div>
@@ -127,7 +123,7 @@ export default function EmotionAnal() {
               <div className="mt-[15%] mr-[10%] ml-[10%]">
                 <div>
                   <div className="flex flex-row justify-between">
-                    <img src="../img/happy.png" className="w-[45px]" />
+                    <img src="../img/happy.png" className="w-[45px]" alt="" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#FFF1B2]"
                       style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.8) ' }}
@@ -143,7 +139,7 @@ export default function EmotionAnal() {
 
                 <div>
                   <div className="flex flex-row justify-between">
-                    <img src="../img/anxiety.png" className="w-[45px]" />
+                    <img src="../img/anxiety.png" className="w-[45px]" alt="" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#F1E4FF]"
                       style={{
@@ -162,7 +158,7 @@ export default function EmotionAnal() {
 
                 <div>
                   <div className="flex flex-row justify-between">
-                    <img src="../img/hmm.png" className="w-[45px]" />
+                    <img src="../img/hmm.png" className="w-[45px]" alt="" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#5ACBAB]"
                       style={{
@@ -181,7 +177,7 @@ export default function EmotionAnal() {
 
                 <div>
                   <div className="flex flex-row justify-between">
-                    <img src="../img/sad.png" className="w-[45px]" />
+                    <img src="../img/sad.png" className="w-[45px]" alt="" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#A9D6E5]"
                       style={{
@@ -200,7 +196,7 @@ export default function EmotionAnal() {
 
                 <div>
                   <div className="flex flex-row justify-between">
-                    <img src="../img/mad.png" className="w-[45px]" />
+                    <img src="../img/mad.png" className="w-[45px]" alt="" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#FF9F7A]"
                       style={{
@@ -224,7 +220,11 @@ export default function EmotionAnal() {
                       onClick={handleInviteUser}
                     >
                       일기 저장
-                      <img src="../img/diaryIcon.png" className="w-[17px]" />
+                      <img
+                        src="../img/diaryIcon.png"
+                        className="w-[17px]"
+                        alt=""
+                      />
                     </button>
                   </NavLink>
 
@@ -233,7 +233,7 @@ export default function EmotionAnal() {
                     className="bg-[rgba(180,54,58,0.85)] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(180,54,58,0.4)] flex items-center justify-around"
                   >
                     일기 삭제
-                    <img src="../img/bin.png" className="w-[17px]" />
+                    <img src="../img/bin.png" className="w-[17px]" alt="" />
                   </button>
 
                   <InvitePopupField

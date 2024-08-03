@@ -5,6 +5,13 @@ import InvitePopupField from '../component/InvitePopupField';
 import { useDropzone } from 'react-dropzone';
 
 export default function Edit() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const date = String(now.getDate()).padStart(2, '0');
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  const day = days[now.getDay()];
+
   const [image, setImage] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -44,29 +51,10 @@ export default function Edit() {
           <div className="w-[75%] h-auto">
             <div className="rounded-3xl p-5 bg-zinc-300 w-full h-full drop-shadow-md">
               <div className="rounded-2xl p-8 bg-white h-full drop-shadow-md">
-                <span className="block text-gray-500 text-xl">{params.id}</span>
+                <span className="block text-gray-500 text-xl">
+                  {year}. {month}. {date} ({day})
+                </span>
                 <div className="mt-3">
-                  {/* <div>
-                    {image ? (
-                      <img
-                        src={image}
-                        alt="Uploaded"
-                        className="rounded-xl py-2 h-auto"
-                      />
-                    ) : (
-                      <div
-                        {...getRootProps()}
-                        style={{
-                          border: '2px dashed #ccc',
-                          padding: '20px',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <input {...getInputProps()} />
-                        <p>첨부하고 싶은 사진을 올려주세요 !</p>
-                      </div>
-                    )}
-                  </div> */}
                   <div className="my-6">
                     {image ? (
                       <div>
@@ -75,12 +63,6 @@ export default function Edit() {
                           alt="Uploaded"
                           className="rounded-xl py-2 h-auto"
                         />
-                        {/* <button onClick={() => setImage(null)}>
-                          <img
-                            src="../img/changeImage.png"
-                            className="w-[40px]"
-                          />
-                        </button> */}
                       </div>
                     ) : (
                       <div
@@ -103,10 +85,11 @@ export default function Edit() {
                       뿌듯했다.
                     </span>
                   </div>
-                  <button className="mt-2 " onClick={() => setImage(null)}>
+                  <button className="mt-2" onClick={() => setImage(null)}>
                     <img
                       src="../img/changeImage.png"
                       className="w-[40px] absolute right-10 bottom-10"
+                      alt=""
                     />
                   </button>
                 </div>
@@ -138,7 +121,7 @@ export default function Edit() {
                       <span>
                         오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다.
                         혼자 할 때는 어려웠는데 다 같이{' '}
-                        <spna className="text-red-700 font-bold">으쌰으쌰</spna>{' '}
+                        <span className="text-red-700 font-bold">으쌰으쌰</span>{' '}
                         하니 금방 끝났다. 뿌듯했다.
                       </span>
                     </div>
@@ -147,7 +130,7 @@ export default function Edit() {
                       <span>
                         오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다.
                         혼자 할 때는 어려웠는데 다 같이{' '}
-                        <spna className="text-red-700 font-bold">열심히</spna>{' '}
+                        <span className="text-red-700 font-bold">열심히</span>{' '}
                         하니 금방 끝났다. 뿌듯했다.
                       </span>
                     </div>

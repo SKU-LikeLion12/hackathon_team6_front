@@ -7,8 +7,8 @@ import { IoArrowForward } from 'react-icons/io5';
 
 export default function SignUpCompleted() {
   const navigate = useNavigate();
-  const username = localStorage.getItem('username') || '"guest"';
-  const displayName = username.length > 2 ? username.slice(1, -1) : username;
+  // const username = localStorage.getItem('username') || '"guest"';
+  // const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   const onLogin = () => {
     navigate('/login');

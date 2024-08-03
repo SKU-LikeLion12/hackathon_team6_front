@@ -25,13 +25,6 @@ export default function EQ() {
     setRandomPrograms(selectedPrograms);
   }, [emotionType]);
 
-  // const extractVideoId = (url) => {
-  //   const videoIdMatch = url.match(
-  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\?v=|embed\/|v\/|.+\/)|youtu\.be\/)([^&]+)/
-  //   );
-  //   return videoIdMatch ? videoIdMatch[1] : null;
-  // };
-
   const data = [
     { name: '행복', value: 10 },
     { name: '불안', value: 10 },
@@ -69,6 +62,7 @@ export default function EQ() {
             <img
               src="../img/hilight.png"
               className="highlight2 absolute w-[180px] h-[70px] top-[-17px] left-[-155px]"
+              alt=""
             />
             <span>하는 것만으로도 </span>
           </span>
@@ -77,6 +71,7 @@ export default function EQ() {
             <img
               src="../img/hilight.png"
               className="highlight2 z-0 absolute w-[215px] h-[70px] top-[-17px] left-[-25px]"
+              alt=""
             />
           </span>
           <br />
@@ -92,6 +87,7 @@ export default function EQ() {
             <img
               src="../img/emotionBox.png"
               className="w-[80%] h-[1180px] mx-auto mt-[10px]"
+              alt=""
             ></img>
           </div>
 
@@ -127,7 +123,7 @@ export default function EQ() {
               {displayName}님의 주요 감정은 '행복'이에요!
             </div>
             <div className="w-[75%] flex justify-center items-center ">
-              <img src="../img/line.png" className="w-[70%] my-[15px]" />
+              <img src="../img/line.png" className="w-[70%] my-[15px]" alt="" />
             </div>
             <div>
               <div>• 여기</div>
@@ -138,6 +134,7 @@ export default function EQ() {
               <img
                 src="../img/line.png"
                 className="w-[70%] my-[15px] h-[1px]"
+                alt=""
               />
             </div>
             <div>
@@ -145,6 +142,7 @@ export default function EQ() {
                 <img
                   src="../img/happy.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
+                  alt=""
                 />
                 <div>{displayName}님이 행복할 때는 이런 경우였어요.</div>
                 <div className="내용">
@@ -159,6 +157,7 @@ export default function EQ() {
                 <img
                   src="../img/anxiety.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
+                  alt=""
                 />
                 <div>{displayName}님이 불안할 때는 이런 경우였어요.</div>
                 <div className="내용">
@@ -173,6 +172,7 @@ export default function EQ() {
                 <img
                   src="../img/sad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
+                  alt=""
                 />
                 <div>{displayName}님이 슬플 때는 이런 경우였어요.</div>
                 <div className="내용">
@@ -187,6 +187,7 @@ export default function EQ() {
                 <img
                   src="../img/mad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
+                  alt=""
                 />
                 <div>{displayName}님이 분노할 때는 이런 경우였어요.</div>
                 <div className="내용">
@@ -208,7 +209,7 @@ export default function EQ() {
               // const videoId = extractVideoId(program.content);
               return (
                 <div className="relative w-[70%] mt-[10px]" key={index}>
-                  <img src="../img/box.png" className="w-[110%]" />
+                  <img src="../img/box.png" className="w-[110%]" alt="" />
                   <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
                     <div className="w-[90%] p-4 text-[#495057]">
                       <strong className="text-[16px] text-[#262626] mt-4">
@@ -230,30 +231,6 @@ export default function EQ() {
                 </div>
               );
             })}
-
-            {/* <div className="relative w-[70%]">
-              <img src="../img/box.png" className="w-full h-[90%]" />
-              <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
-                <div className="w-[90%] p-4 text-[#495057]">
-                  <strong className="text-[22px] text-[#262626]">제목</strong>
-                  <br />
-                  <br />
-                  내용
-                </div>
-              </div>
-            </div> */}
-
-            {/* <div className="relative w-[70%]">
-              <img src="../img/box.png" className="w-full h-[90%]" />
-              <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black p-4 z-10">
-                <div className="w-[90%] p-4 text-[#495057]">
-                  <strong className="text-[22px] text-[#262626]">제목</strong>
-                  <br />
-                  <br />
-                  내용
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

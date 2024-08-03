@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './style.css';
-import { AuthContext } from '../context/AuthContext';
 
 export default function ChatMain() {
   const username = localStorage.getItem('username') || '"guest"';
@@ -15,7 +14,11 @@ export default function ChatMain() {
             안녕하세요, {displayName}님 오늘의 감정을 들려주세요!
           </div>
           <div className="relative mt-[90px] flex flex-col items-center justify-center">
-            <img src="../img/ball_2.png" className="h-60 w-60 animate-bounce" />
+            <img
+              src="../img/ball_2.png"
+              className="h-60 w-60 animate-bounce"
+              alt=""
+            />
             <div className="shadow-circle"></div>
           </div>
           <div>
