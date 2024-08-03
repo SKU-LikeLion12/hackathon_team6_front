@@ -20,7 +20,7 @@ export default function ChatMain() {
           </div>
           <div>
             <NavLink to="/ChatStart">
-              <button className="mt-[100px] bg-white h-[52px] w-[188px] font-semibold text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB]">
+              <button className="mt-[100px] bg-white h-[52px] w-[188px] font-semibold text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer">
                 시작하기
               </button>
             </NavLink>

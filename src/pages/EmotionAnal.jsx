@@ -1,15 +1,15 @@
-
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import InvitePopupField from '../component/InvitePopupField';
 import './style.css';
+import { useDropzone } from 'react-dropzone';
 
 export default function EmotionAnal() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const date = String(now.getDate()).padStart(2, "0");
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const date = String(now.getDate()).padStart(2, '0');
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
   const day = days[now.getDay()];
 
   const [InvitePopup, setInvitePopup] = useState(false);
@@ -22,38 +22,115 @@ export default function EmotionAnal() {
     setInvitePopup(false);
   };
 
+  const [image, setImage] = useState(null);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: 'image/*',
+  });
+
   return (
     <>
       <div className="min-h-[900px]">
         <div className="diarybg text-[#495057]">
           <div className="flex flex-row">
-            <div className="w-[55%]">
+            <div className="w-[45%]">
               <NavLink to="/Calendar">
-                <div className="text-[20px] font-medium ml-[12%] mt-[60px] mb-[20px] mr-0 hover:underline">
+                <div className="text-[20px] font-medium ml-[15%] mt-[60px] mb-[20px] mr-0 hover:underline">
                   ← 캘린더로 돌아가기
                 </div>
               </NavLink>
-              <div className="">
-                <div className="relative">
-                  <img src="../img/diaryBox.png" className="w-[80%] mx-auto" />
-                </div>
-                <div>
-                  <div className="text-[20px] font-medium absolute top-[340px] left-[10%] ">
-                    {year}. {month}. {date} ({day})
-                    <div>이부분호여니언니가함</div>
+              <div className="flex justify-center ">
+                <div className="w-[80%] h-auto ml-[30px] mt-[4%]">
+                  <div className="rounded-3xl p-5 bg-sky-100 w-full h-full drop-shadow-md">
+                    <div className="rounded-2xl p-5 bg-white h-full drop-shadow-md">
+                      <div className="p-4 h-auto">
+                        <div className="text-[20px] font-semibold">
+                          {year}. {month}. {date} ({day})
+                        </div>
+                        <div>
+                          <div className="my-6">
+                            {image ? (
+                              <div>
+                                <img
+                                  src={image}
+                                  alt="Uploaded"
+                                  className="rounded-xl py-2 h-auto"
+                                />
+                                {/* <button
+                                  className="mt-2 "
+                                  onClick={() => setImage(null)}
+                                >
+                                  <img
+                                    src="../img/changeImage.png"
+                                    className="w-[40px]"
+                                  />
+                                </button> */}
+                              </div>
+                            ) : (
+                              <div
+                                {...getRootProps()}
+                                style={{
+                                  border: '2px dashed #ccc',
+                                  padding: '20px',
+                                  cursor: 'pointer',
+                                }}
+                              >
+                                <input {...getInputProps()} />
+                                <p>원하는 사진을 선택해주세요!</p>
+                              </div>
+                            )}
+                          </div>
+                          <img
+                            src="../img/line.png"
+                            className="w-[100%] h-[1px]"
+                          />
+                        </div>
+                        <div className="my-[6%]">
+                          <span>
+                            오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을
+                            하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰라으쌰
+                            하니 금방 끝났다. 뿌듯했다. 오늘은 성결대학교 6팀
+                            팀원들과 함께 앱 개발을 하였다. 혼자 할 때는
+                            어려웠는데 다 같이 으쌰라으쌰 하니 금방 끝났다.
+                            뿌듯했다.
+                          </span>
+                        </div>
+                        <button
+                          className="mt-2 "
+                          onClick={() => setImage(null)}
+                        >
+                          <img
+                            src="../img/changeImage.png"
+                            className="w-[40px] absolute right-10 bottom-10"
+                          />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div className="relative"></div>
             </div>
 
             <div className="w-[50%] ">
-              <div className="mt-[20%] mr-[10%] ml-[10%]">
+              <div className="mt-[15%] mr-[10%] ml-[10%]">
                 <div>
                   <div className="flex flex-row justify-between">
                     <img src="../img/happy.png" className="w-[45px]" />
                     <div
                       className="mr-[10%] text-[22px] font-black text-[#FFF1B2]"
-                      style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.8) " }}
+                      style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.8) ' }}
                     >
                       행복 40%
                     </div>
@@ -71,7 +148,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#F1E4FF]"
                       style={{
                         textShadow:
-                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
+                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
                       }}
                     >
                       불안 25%
@@ -90,7 +167,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#5ACBAB]"
                       style={{
                         textShadow:
-                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
+                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
                       }}
                     >
                       중립 7%
@@ -109,7 +186,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#A9D6E5]"
                       style={{
                         textShadow:
-                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
+                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
                       }}
                     >
                       슬픔 3%
@@ -128,7 +205,7 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#FF9F7A]"
                       style={{
                         textShadow:
-                          "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
+                          '2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)',
                       }}
                     >
                       분노 25%
@@ -169,7 +246,7 @@ export default function EmotionAnal() {
                       </p>
                       <div className="text-lg text-gray-500">
                         <span>
-                          삭제 후 복원이{" "}
+                          삭제 후 복원이{' '}
                           <span className="underline">불가능합니다.</span>
                         </span>
                       </div>
