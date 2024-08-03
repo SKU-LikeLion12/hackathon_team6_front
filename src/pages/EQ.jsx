@@ -8,6 +8,7 @@ export default function EQ() {
   const [emotionType, setEmotionType] = useState('happiness'); // 현재 감정 유형을 설정합니다.
   const [randomPrograms, setRandomPrograms] = useState([]);
   const username = localStorage.getItem('username') || 'guest';
+  const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   useEffect(() => {
     // 감정 유형에 맞는 프로그램을 필터링
@@ -96,7 +97,7 @@ export default function EQ() {
 
           <div className="relative top-[-1140px] left-[10px] text-center flex flex-col justify-center items-center mx-auto text-[#495057]">
             <div className="font-normal text-[24px] mb-[25px] underline underline-offset-4">
-              {username}님의 감정 보고서
+              {displayName}님의 감정 보고서
             </div>
             <div className="분석박스 flex flex-col justify-center items-center relative">
               <div className="rounded-lg h-[200px] w-[300px] bg-[#D1E7EF] relative" />
@@ -123,7 +124,7 @@ export default function EQ() {
               </div>
             </div>
             <div className="mt-[15px]">
-              {username}님의 주요 감정은 '행복'이에요!
+              {displayName}님의 주요 감정은 '행복'이에요!
             </div>
             <div className="w-[75%] flex justify-center items-center ">
               <img src="../img/line.png" className="w-[70%] my-[15px]" />
@@ -145,7 +146,7 @@ export default function EQ() {
                   src="../img/happy.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                 />
-                <div>{username}님이 행복할 때는 이런 경우였어요.</div>
+                <div>{displayName}님이 행복할 때는 이런 경우였어요.</div>
                 <div className="내용">
                   <div>• 여기</div>
                   <div>• 넣을거</div>
@@ -159,7 +160,7 @@ export default function EQ() {
                   src="../img/anxiety.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                 />
-                <div>{username}님이 불안할 때는 이런 경우였어요.</div>
+                <div>{displayName}님이 불안할 때는 이런 경우였어요.</div>
                 <div className="내용">
                   <div>• 여기</div>
                   <div>• 넣을거</div>
@@ -173,7 +174,7 @@ export default function EQ() {
                   src="../img/sad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                 />
-                <div>{username}님이 슬플 때는 이런 경우였어요.</div>
+                <div>{displayName}님이 슬플 때는 이런 경우였어요.</div>
                 <div className="내용">
                   <div>• 여기</div>
                   <div>• 넣을거</div>
@@ -187,7 +188,7 @@ export default function EQ() {
                   src="../img/mad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                 />
-                <div>{username}님이 분노할 때는 이런 경우였어요.</div>
+                <div>{displayName}님이 분노할 때는 이런 경우였어요.</div>
                 <div className="내용">
                   <div>• 여기</div>
                   <div>• 넣을거</div>
@@ -200,7 +201,7 @@ export default function EQ() {
 
         <div className="w-[55%] flex flex-col">
           <div className="font-bold text-center text-[#262626] text-[24px] mt-[5px] mr-[12%]">
-            {username}님을 위한 추천 활동
+            {displayName}님을 위한 추천 활동
           </div>
           <div className="flex flex-col justify-center items-center mr-[10%] relative">
             {randomPrograms.map((program, index) => {
