@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
@@ -7,8 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const userData = localStorage.getItem("user");
+    const token = localStorage.getItem('authToken');
+    const userData = localStorage.getItem('username');
 
     if (token && userData) {
       try {
@@ -16,22 +16,25 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(true);
         setUser(parsedUserData);
       } catch (error) {
-        console.error("Failed to parse user data:", error);
-        localStorage.removeItem("user");
+        console.error('Failed to parse user data:', error);
+        localStorage.removeItem('username');
       }
     }
   }, []);
 
   const login = (token, userData) => {
-    localStorage.setItem("authToken", token);
-    localStorage.setItem("user", JSON.stringify(userData));
+    // console.log('로그인 데이터:', token, userData);
+
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('username', JSON.stringify(userData));
     setIsLoggedIn(true);
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user_name');
     setIsLoggedIn(false);
     setUser(null);
   };

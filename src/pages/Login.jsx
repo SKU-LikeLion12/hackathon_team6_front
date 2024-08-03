@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { API_URL } from "../config";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { API_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
   const [idValid, setIdValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
@@ -55,15 +55,23 @@ export default function Login() {
       });
 
       if (response.status === 200) {
-        login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
-        alert("로그인에 성공했습니다.");
-        navigate("/");
+        // 로그인 성공 시 서버에서 받은 토큰과 사용자 데이터 저장
+        const { token, username } = response.data;
+        // console.log('로그인 성공:', token, username);
+
+        login(token, username); // 토큰과 사용자 데이터 모두 저장
+        alert('로그인에 성공했습니다.');
+        navigate('/');
+
+        // login(response.data.token, response.data.user); //토큰을 AuthContext에 저장
+        // alert("로그인에 성공했습니다.");
+        // navigate("/");
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        alert("아이디 또는 비밀번호 오류");
+        alert('아이디 또는 비밀번호 오류');
       } else {
-        alert("서버 오류 발생");
+        alert('서버 오류 발생');
       }
     }
   };

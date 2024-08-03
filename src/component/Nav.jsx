@@ -3,17 +3,20 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export default function Nav() {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  // const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, user, logout } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     // 1. 로컬 저장소에서 토큰 삭제
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken'); // 필요한 경우 추가적으로 삭제
-
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('user_name');
     // 2. 상태 업데이트
-    setIsLoggedIn(false);
+    // isLoggedIn(false);
+
+    // AuthContext의 logout 함수 호출
+    logout();
 
     // 3. 리디렉션
     navigate('/');
@@ -22,7 +25,7 @@ export default function Nav() {
   };
 
   const handleLogin = () => {
-    setIsLoggedIn(true);
+    isLoggedIn(true);
   };
 
   return (
