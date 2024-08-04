@@ -25,7 +25,9 @@ export default function Edit() {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: {
+      'image/png': ['.png', '.jpeg'],
+    },
   });
 
   const params = useParams();

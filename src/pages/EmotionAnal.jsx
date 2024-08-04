@@ -24,15 +24,6 @@ export default function EmotionAnal() {
 
   const [image, setImage] = useState(null);
 
-  // const onDrop = useCallback((acceptedFiles) => {
-  //   const file = acceptedFiles[0];
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setImage(reader.result);
-  //   };
-  //   reader.readAsDataURL(file);
-  // }, []);
-
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
@@ -46,8 +37,16 @@ export default function EmotionAnal() {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: {
+      'image/png': ['.png', '.jpeg'],
+    },
   });
+
+  // useDropzone({
+  //   accept: {
+  //     'image/png': ['.png', '.jpeg'],
+  //   },
+  // });
 
   return (
     <>
