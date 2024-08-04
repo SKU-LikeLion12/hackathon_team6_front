@@ -20,6 +20,7 @@ import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
 import VoiceTextDisplay from './pages/VoiceTextDisplay';
 import { AuthProvider } from './context/AuthContext';
+
 // const mockData = [
 //   {
 //     id: 1,
@@ -117,12 +118,17 @@ function App() {
                 <Route path="/ChatStart" element={<ChatStart />} />
                 <Route path="/ChatEnd" element={<ChatEnd />} />
                 <Route path="/DiaryStart" element={<DiaryStart />} />
-                <Route path="/EmotionAnal" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
-
+                <Route path="/Edit" element={<Edit />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
                 <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
+                <Route path="EmotionAnal" element={<EmotionAnal />} />
+
+                <Route
+                  path="/calendar/EmotionAnal/:year-:month-:day"
+                  element={<EmotionAnal />}
+                />
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>

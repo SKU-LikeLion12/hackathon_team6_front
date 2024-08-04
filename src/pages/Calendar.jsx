@@ -76,7 +76,8 @@ export default function Attendance() {
     const formattedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
-    nav(`/calendar/edit/${formattedDate}`);
+    // nav(`/calendar/edit/${formattedDate}`);
+    nav(`/calendar/EmotionAnal/${formattedDate}`);
   };
 
   const renderDays = () => {

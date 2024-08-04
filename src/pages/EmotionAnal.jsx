@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import InvitePopupField from '../component/InvitePopupField';
 import './style.css';
 import { useDropzone } from 'react-dropzone';
@@ -42,11 +42,8 @@ export default function EmotionAnal() {
     },
   });
 
-  // useDropzone({
-  //   accept: {
-  //     'image/png': ['.png', '.jpeg'],
-  //   },
-  // });
+  const params = useParams();
+  // const { year, month, day } = useParams();
 
   return (
     <>
@@ -65,7 +62,7 @@ export default function EmotionAnal() {
                     <div className="rounded-2xl p-5 bg-white h-full drop-shadow-md">
                       <div className="p-4 h-auto">
                         <div className="text-[20px] font-semibold">
-                          {year}. {month}. {date} ({day})
+                          {params.id} {year}. {month}. {date} ({day})
                         </div>
                         <div>
                           <div className="my-6">
