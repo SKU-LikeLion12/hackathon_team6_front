@@ -18,8 +18,9 @@ import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
-import VoiceTextDisplay from './pages/VoiceTextDisplay';
+import ApiEx from './pages/ApiEx';
 import { AuthProvider } from './context/AuthContext';
+import Chat from './pages/Chat';
 
 // const mockData = [
 //   {
@@ -122,13 +123,9 @@ function App() {
                 <Route path="/Edit" element={<Edit />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
-                <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
+                <Route path="ApiEx" element={<ApiEx />} />
                 <Route path="EmotionAnal" element={<EmotionAnal />} />
-
-                <Route
-                  path="/calendar/EmotionAnal/:year-:month-:day"
-                  element={<EmotionAnal />}
-                />
+                <Route path="Chat" element={<Chat />} />
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>

@@ -178,10 +178,8 @@ export default function Attendance() {
         <div className="rounded-3xl p-5 bg-sky-100 w-full">
           <div className="rounded-2xl p-10 bg-[white]">
             <div className="block text-center underline underline-offset-4 decoration-1.3 text-2xl">
-              <span className="block text-gray-500">
-                {displayName}님의 월별
-              </span>
-              <span className="block text-gray-500">감정 보고서</span>
+              <span className="block">{displayName}님의 월별</span>
+              <span className="block">감정 보고서</span>
             </div>
             <div className="mt-5">
               <div className="rounded-xl bg-gray-100 w-[400px] mx-auto py-6 h-auto flex justify-center items-center">

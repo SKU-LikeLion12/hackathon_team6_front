@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
-// import YouTube from 'react-youtube';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import './style.css';
 import programs from '../programs.json';
+// import { getEmotionSituation } from '../api/situationApi';
 
 export default function EQ() {
+  const [program, setProgram] = useState(null);
   const [emotionType, setEmotionType] = useState('happiness'); // 현재 감정 유형을 설정합니다.
   const [randomPrograms, setRandomPrograms] = useState([]);
+
   const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
+
+  function extractVideoId(url) {
+    const regExp =
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regExp);
+    return match && match[1] ? match[1] : null;
+  }
 
   useEffect(() => {
     // 감정 유형에 맞는 프로그램을 필터링
@@ -16,7 +27,6 @@ export default function EQ() {
       (program) => program.emotionType === emotionType
     );
     const selectedPrograms = [];
-
     // 필터링된 프로그램 중에서 랜덤으로 3개를 선택
     while (selectedPrograms.length < 3 && filterPrograms.length > 0) {
       const randomIndex = Math.floor(Math.random() * filterPrograms.length);
@@ -86,12 +96,12 @@ export default function EQ() {
           <div className="relative">
             <img
               src="../img/emotionBox.png"
-              className="w-[80%] h-[1180px] mx-auto mt-[10px]"
+              className="w-[80%] h-[1300px] mx-auto mt-[10px]"
               alt=""
             ></img>
           </div>
 
-          <div className="relative top-[-1140px] left-[10px] text-center flex flex-col justify-center items-center mx-auto text-[#495057]">
+          <div className="relative top-[-1250px] left-[10px] text-center flex flex-col justify-center items-center mx-auto text-[#495057]">
             <div className="font-normal text-[24px] mb-[25px] underline underline-offset-4">
               {displayName}님의 감정 보고서
             </div>
@@ -122,21 +132,17 @@ export default function EQ() {
             <div className="mt-[15px]">
               {displayName}님의 주요 감정은 '행복'이에요!
             </div>
-            <div className="w-[75%] flex justify-center items-center ">
+            {/* <div className="w-[75%] flex justify-center items-center ">
               <img src="../img/line.png" className="w-[70%] my-[15px]" alt="" />
-            </div>
+            </div> */}
+            <div className="border-[1.5px] w-[55%] my-6"></div>
             <div>
               <div>• 여기</div>
               <div>• 넣을거</div>
               <div>• 생각</div>
             </div>
-            <div className="w-[75%] flex justify-center items-center ">
-              <img
-                src="../img/line.png"
-                className="w-[70%] my-[15px] h-[1px]"
-                alt=""
-              />
-            </div>
+            <div className="border-[1.5px] w-[55%] my-6"></div>
+
             <div>
               <div className="relative rounded-lg mt-[30px] h-[130px] w-[350px] bg-[#FFF2B2] p-[15px]">
                 <img
@@ -146,7 +152,7 @@ export default function EQ() {
                 />
                 <div>{displayName}님이 행복할 때는 이런 경우였어요.</div>
                 <div className="내용">
-                  <div>• 여기</div>
+                  {/* <div>• {emotionData.happinessAt}</div> */}
                   <div>• 넣을거</div>
                   <div>• 생각</div>
                 </div>
@@ -161,7 +167,7 @@ export default function EQ() {
                 />
                 <div>{displayName}님이 불안할 때는 이런 경우였어요.</div>
                 <div className="내용">
-                  <div>• 여기</div>
+                  {/* <div>• {emotionData.anxietyAt}</div> */}
                   <div>• 넣을거</div>
                   <div>• 생각</div>
                 </div>
@@ -176,7 +182,7 @@ export default function EQ() {
                 />
                 <div>{displayName}님이 슬플 때는 이런 경우였어요.</div>
                 <div className="내용">
-                  <div>• 여기</div>
+                  {/* <div>• {emotionData.sadnessAt}</div> */}
                   <div>• 넣을거</div>
                   <div>• 생각</div>
                 </div>
@@ -191,7 +197,7 @@ export default function EQ() {
                 />
                 <div>{displayName}님이 분노할 때는 이런 경우였어요.</div>
                 <div className="내용">
-                  <div>• 여기</div>
+                  {/* <div>• {emotionData.angerAt}</div> */}
                   <div>• 넣을거</div>
                   <div>• 생각</div>
                 </div>
@@ -206,7 +212,7 @@ export default function EQ() {
           </div>
           <div className="flex flex-col justify-center items-center mr-[10%] relative">
             {randomPrograms.map((program, index) => {
-              // const videoId = extractVideoId(program.content);
+              const videoId = extractVideoId(program.content);
               return (
                 <div className="relative w-[70%] mt-[10px]" key={index}>
                   <img src="../img/box.png" className="w-[110%]" alt="" />
@@ -218,14 +224,18 @@ export default function EQ() {
                       <br />
                       <br />
                       {/* {videoId ? (
-                        <YouTube
-                          // videoId={videoId}
+                        <LiteYouTubeEmbed
+                          videoId={videoId}
                           opts={{ height: '200', width: '340' }}
                         />
                       ) : (
                         <p>{program.content}</p>
-                      )}                         */}
-                      <p>{program.content}</p>
+                      )} */}
+                      {/* <p>{program.content}</p> */}
+                      <LiteYouTubeEmbed
+                        id={videoId} //예시
+                        noCookie={true} //default가 false라서 꼭 명시하기
+                      />
                     </div>
                   </div>
                 </div>
