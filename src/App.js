@@ -19,6 +19,8 @@ import EQ from "./pages/EQ";
 import Producer from "./pages/Producer";
 import SignUpCompleted from "./pages/SignUpCompleted";
 import VoiceTextDisplay from "./pages/VoiceTextDisplay";
+import Warning from "./pages/Warning";
+
 import { AuthProvider } from "./context/AuthContext";
 // const mockData = [
 //   {
@@ -122,6 +124,7 @@ function App() {
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
                 <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
+                <Route path="/warning" element={<Warning />} />
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>
