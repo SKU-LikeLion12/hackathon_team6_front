@@ -168,22 +168,28 @@ export default function Edit() {
   const handleSaveDiary = async () => {
     try {
       const token = getAuthToken();
+      console.log("Token: ", token);
+      console.log("Edited Content: ", editedContent);
+
       const response = await axios.put(
-        `${API_URL}/diary`,
+        `${API_URL}/diary/update`,
         {
           content: editedContent,
-          date: diaryDate,
-          emotion: diary.emotion, // 이 부분은 실제 사용에 맞게 수정 필요
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          params: {
+            date: diaryDate,
           },
         }
       );
 
+      console.log("Response:", response); // 응답 로그 추가
+
       if (response.status === 200) {
-        // 성공적으로 업데이트 되면 추가 작업
         console.log("일기 수정 완료");
         navigate("/calendar");
       } else {

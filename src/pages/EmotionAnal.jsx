@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import InvitePopupField from "../component/InvitePopupField";
 import "./style.css";
 import { useDropzone } from "react-dropzone";
@@ -27,6 +27,7 @@ export default function EmotionAnal() {
 
   const params = useParams();
   const diaryDate = params.id; // 날짜를 쿼리 파라미터로 사용
+  const navigate = useNavigate(); // 페이지 리다이렉션을 위한 useNavigate 훅
 
   const handleInviteUser = (event) => {
     setInvitePopup(true);
@@ -88,15 +89,19 @@ export default function EmotionAnal() {
     setIsDeleting(true); // 삭제 요청 시작
     try {
       const token = getAuthToken();
-      const response = await axios.delete(`${API_URL}/diary/${diaryDate}`, {
+      const response = await axios.delete(`${API_URL}/diary/delete`, {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization 헤더에 'Bearer' 접두사 추가
           "Content-Type": "application/json",
         },
+        params: {
+          date: diaryDate, // 선택된 날짜를 query parameter로 전달
+        },
       });
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         alert("일기가 삭제되었습니다.");
+        navigate("/calendar");
         // 페이지 리다이렉트 또는 상태 업데이트
       } else {
         alert("일기 삭제 중 오류가 발생했습니다.");
