@@ -1,49 +1,36 @@
-import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
-import { useReducer, useRef, createContext } from "react";
+import { BrowserRouter, Route, Routes, useActionData } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useReducer, useRef, createContext } from 'react';
 
-import Nav from "./component/Nav";
+import Nav from './component/Nav';
 
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Home from "./pages/Home";
-import Calendar from "./pages/Calendar";
-import ChatBot from "./pages/ChatBot";
-import Edit from "./pages/Edit";
-import Diary from "./pages/Diary";
-import ChatMain from "./pages/ChatMain";
-import ChatStart from "./pages/ChatStart";
-import ChatEnd from "./pages/ChatEnd";
-import DiaryStart from "./pages/DiaryStart";
-import EmotionAnal from "./pages/EmotionAnal";
-import EQ from "./pages/EQ";
-import Producer from "./pages/Producer";
-import SignUpCompleted from "./pages/SignUpCompleted";
-import VoiceTextDisplay from "./pages/VoiceTextDisplay";
-import { AuthProvider } from "./context/AuthContext";
-// const mockData = [
-//   {
-//     id: 1,
-//     createdDate: new Date().getTime(),
-//     emotionId: 1,
-//     content: '1번 일기 내용',
-//   },
-//   {
-//     id: 2,
-//     createdDate: new Date().getTime(),
-//     emotionId: 2,
-//     content: '2번 일기 내용',
-//   },
-// ];
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import Calendar from './pages/Calendar';
+import ChatBot from './pages/ChatBot';
+import Edit from './pages/Edit';
+import Diary from './pages/Diary';
+import ChatMain from './pages/ChatMain';
+import ChatStart from './pages/ChatStart';
+import ChatEnd from './pages/ChatEnd';
+import DiaryStart from './pages/DiaryStart';
+import EmotionAnal from './pages/EmotionAnal';
+import EQ from './pages/EQ';
+import Producer from './pages/Producer';
+import SignUpCompleted from './pages/SignUpCompleted';
+
+import { AuthProvider } from './context/AuthContext';
 
 function reducer(state, action) {
   switch (action.type) {
-    case "CREATE":
+    case 'CREATE':
       return [action.data, ...state];
-    case "UPDATE":
+    case 'UPDATE':
       return state.map((item) =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
-    case "DELETE":
+    case 'DELETE':
       return state.filter(
         (item) => String(item.id) !== String(useActionData.id)
       );
@@ -63,7 +50,7 @@ function App() {
   // 새로운 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
-      type: "CREATE",
+      type: 'CREATE',
       date: {
         id: idRef.current++,
         createdDate,
@@ -76,7 +63,7 @@ function App() {
   // 기존 일기 수정
   const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: "UPDATE",
+      type: 'UPDATE',
       data: {
         id,
         createdDate,
@@ -89,7 +76,7 @@ function App() {
   // 기존 일기 삭제
   const onDelete = (id) => {
     dispatch({
-      type: "DELETE",
+      type: 'DELETE',
       id,
     });
   };
@@ -119,9 +106,14 @@ function App() {
                 <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
+                <Route path="/Chat" element={<Chat />} />
+                <Route path="/ApiEx" element={<ApiEx />} />
+                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
+                <Route path="/EQ" element={<EQ />} />
+                <Route path="/Edit" element={<Edit />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
-                <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
+                {/* <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} /> */}
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>

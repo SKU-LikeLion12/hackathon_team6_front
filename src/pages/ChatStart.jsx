@@ -1,11 +1,32 @@
-import { React, useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaMicrophone } from 'react-icons/fa';
 import axios from 'axios';
 import './style.css';
+// import Edit from '../pages/Edit';
 
 export default function ChatStart() {
+  const [logValue, setLogValue] = useState('');
+
+  // const logToScreen = (formData) => {
+  //   console.log(formData);
+  //   setLogValue(formData);
+  // };
+
+  // useEffect(() => {
+  //   logToScreen('http://team6ai.sku-sku.com/transcribe/', formData).then(
+  //     (response) => {
+  //       console.log('음성 인식 결과:', response.data);
+  //     }
+  //   );
+  // }, []);
+
   const [recording, setRecording] = useState(false);
+  const [transcription, setTranscription] = useState({
+    refined_text: '',
+    emotions: {},
+    situation: {},
+  });
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -31,7 +52,7 @@ export default function ChatStart() {
       formData.append('file', audioBlob);
 
       axios
-        .post('https://team6ai.sku-sku.com/transcribe/', formData)
+        .post('http://team6ai.sku-sku.com/transcribe/', formData)
         .then((response) => {
           console.log('음성 인식 결과:', response.data);
         })
@@ -52,14 +73,18 @@ export default function ChatStart() {
             이야기를 시작해 볼까요 ?
           </div>
           <div className="relative mt-[90px] flex flex-col items-center justify-center">
-            <img src="../img/ball_2.png" className="h-60 w-60 animate-bounce" />
+            <img
+              src="../img/ball_2.png"
+              className="h-60 w-60 animate-bounce"
+              alt=""
+            />
             <div className="shadow-circle"></div>
           </div>
           <div>
             <div className="flex flex-row">
               <NavLink to="">
                 <button
-                  className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[188px] text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB]"
+                  className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[188px] text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
                   onClick={handleStartRecording}
                   disabled={recording}
                 >
@@ -67,17 +92,23 @@ export default function ChatStart() {
                   대화하기
                 </button>
               </NavLink>
-              <NavLink to="">
+              <NavLink to="/ChatEnd">
                 <button
-                  className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[188px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)]"
+                  className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[188px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] cursor-pointer"
                   onClick={handleStopRecording}
                   disabled={!recording}
                 >
-                  <img src="../img/end.png" className="w-[25px]" />
+                  <img src="../img/end.png" className="w-[25px]" alt="" />
                   종료하기
                 </button>
               </NavLink>
             </div>
+            {/* <div>{transcription}</div> */}
+            {/* <Edit transcription={transcription} /> */}
+            {/* <div>
+              <span className="font-bold">콘솔 값 화면 출력: </span>
+              <span>dd{logValue}</span>
+            </div> */}
           </div>
         </div>
       </div>

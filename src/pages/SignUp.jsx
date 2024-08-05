@@ -137,6 +137,9 @@ export default function SignUp() {
       try {
         const response = await axios.post(`${API_URL}/user/signup`, userData);
         if (response.status === 201) {
+          // const { id } = response.data;
+          // signup({ username: id }); // 회원가입 후 username을 로컬 저장소에 저장하고 상태 업데이트
+          alert('회원가입에 성공했습니다.');
           navigate('/signupcompleted');
         } else if (response.status === 409) {
           alert('중복된 아이디입니다.');

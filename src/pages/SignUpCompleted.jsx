@@ -1,19 +1,21 @@
-import React from "react";
-import Footer from "../component/Footer";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import Footer from '../component/Footer';
+import { useNavigate } from 'react-router-dom';
 
-import { LiaHomeSolid } from "react-icons/lia";
-import { IoArrowForward } from "react-icons/io5";
+import { LiaHomeSolid } from 'react-icons/lia';
+import { IoArrowForward } from 'react-icons/io5';
 
 export default function SignUpCompleted() {
   const navigate = useNavigate();
+  // const username = localStorage.getItem('username') || '"guest"';
+  // const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   const onLogin = () => {
-    navigate("/login");
+    navigate('/login');
   };
 
   const onHome = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -21,7 +23,7 @@ export default function SignUpCompleted() {
       <div className="pt-52 h-[1000px] bg-[url('./img/SignUpCompleted_Back.png')] bg-[length:1500px_1200px] bg-no-repeat">
         <div className="flex flex-col items-center mb-60">
           <h3 className="text-[#292525] text-center text-5xl mb-4 font-bold grid place-items-center">
-            김금쪽 회원님
+            {/* {displayName} 회원님 */}안녕하세요 :)
           </h3>
           <h3 className="text-[#292525] text-center text-5xl mb-12 font-bold grid place-items-center">
             회원가입을 환영합니다!

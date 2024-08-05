@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useContext } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Nav() {
   const { isLoggedIn, logout } = useContext(AuthContext);
@@ -9,8 +9,8 @@ export default function Nav() {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
-    console.log("정상 로그아웃 되었습니다.");
+    navigate('/');
+    console.log('정상 로그아웃 되었습니다.');
   };
 
   return (
@@ -28,7 +28,7 @@ export default function Nav() {
               to="/ChatMain"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? "text-teal-500" : "text-black"
+                  isActive ? 'text-teal-500' : 'text-black'
                 }`
               }
             >
@@ -40,7 +40,7 @@ export default function Nav() {
               to="/EQ"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? "text-teal-500" : "text-black"
+                  isActive ? 'text-teal-500' : 'text-black'
                 }`
               }
             >
@@ -52,7 +52,7 @@ export default function Nav() {
               to="/Calendar"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? "text-teal-500" : "text-black"
+                  isActive ? 'text-teal-500' : 'text-black'
                 }`
               }
             >
