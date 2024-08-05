@@ -1,9 +1,11 @@
 import { FaCaretRight } from "react-icons/fa";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import InvitePopupField from "../component/InvitePopupField";
 import { useDropzone } from "react-dropzone";
+import axios from "axios"; // axios 임포트
 import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
 
 // Helper function to highlight changes in "수정전"
 const highlightChangesBefore = (oldText, newText) => {
@@ -50,7 +52,6 @@ const highlightChangesBefore = (oldText, newText) => {
   return diff;
 };
 
-// Helper function to highlight changes in "수정후"
 const highlightChangesAfter = (oldText, newText) => {
   const diff = [];
   const oldWords = oldText.split(" ");
@@ -65,10 +66,18 @@ const highlightChangesAfter = (oldText, newText) => {
       j < newWords.length &&
       oldWords[i] === newWords[j]
     ) {
-      diff.push(newWords[j] + " ");
+      diff.push(oldWords[i] + " ");
       i++;
       j++;
     } else {
+      if (
+        i < oldWords.length &&
+        (j >= newWords.length || oldWords[i] !== newWords[j])
+      ) {
+        // Skip removed word in oldText
+        i++;
+      }
+
       if (
         j < newWords.length &&
         (i >= oldWords.length || oldWords[i] !== newWords[j])
@@ -80,8 +89,6 @@ const highlightChangesAfter = (oldText, newText) => {
           </span>
         );
         j++;
-      } else {
-        i++;
       }
     }
   }
@@ -95,6 +102,7 @@ export default function Edit() {
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const date = String(now.getDate()).padStart(2, "0");
 
+  const { getAuthToken } = useContext(AuthContext); // AuthContext 사용
   const [image, setImage] = useState(null);
   const [content, setContent] = useState(
     "오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰으쌰 하니 금방 끝났다. 뿌듯했다."
@@ -127,12 +135,13 @@ export default function Edit() {
   };
 
   const handleSaveDiary = async () => {
-    const token = "your_token_here"; // 실제 토큰으로 교체하세요.
+    const token = getAuthToken(); // AuthContext에서 토큰 가져오기
 
     const diaryData = {
+      id: `${params.id}`,
       token: token,
       content: editedContent,
-      date: `${params.id}`, // `params.id`가 올바른 날짜 형식인지 확인하세요.
+      date: `${params.id}`,
       emotion: {
         emotionId: 0,
         user: {
@@ -160,26 +169,23 @@ export default function Edit() {
     };
 
     try {
-      const response = await fetch(`${API_URL}/${params.diaryId}`, {
-        method: "PUT",
+      const response = await axios.put(`${API_URL}/${params.id}`, diaryData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Token ${token}`, // 가져온 토큰 사용
         },
-        body: JSON.stringify(diaryData),
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         // 성공적인 업데이트 처리
         alert("일기가 성공적으로 업데이트되었습니다.");
         navigate("/calendar"); // 일기 목록 페이지 또는 다른 페이지로 리다이렉트
       } else {
         // 서버 응답에 대한 상세 정보를 로그에 기록
-        const errorData = await response.json();
-        console.error("서버 오류:", errorData);
+        console.error("서버 오류:", response.data);
         alert(
           `일기 업데이트에 실패했습니다. 서버 응답: ${
-            errorData.message || "알 수 없는 오류"
+            response.data.message || "알 수 없는 오류"
           }`
         );
       }
@@ -277,7 +283,7 @@ export default function Edit() {
                   <div className="flex justify-center text-center my-[10%]">
                     <button
                       className="bg-[#5BCBAB] font-bold	text-white py-3 px-28 rounded-full"
-                      onClick={handleSaveDiary}
+                      onClick={() => setInvitePopup(true)}
                     >
                       일기장 저장
                     </button>
