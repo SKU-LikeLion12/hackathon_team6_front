@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../config";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { API_URL } from '../config';
 
 export default function SignUp() {
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const [pwConfirm, setPwConfirm] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [birthYear, setBirthYear] = useState("");
-  const [birthMonth, setBirthMonth] = useState("");
-  const [birthDay, setBirthDay] = useState("");
-  const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [job, setJob] = useState("");
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+  const [pwConfirm, setPwConfirm] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [birthYear, setBirthYear] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [gender, setGender] = useState('');
+  const [phone, setPhone] = useState('');
+  const [job, setJob] = useState('');
 
-  const [idMessage, setIdMessage] = useState("");
-  const [pwMessage, setPwMessage] = useState("");
-  const [pwConfirmMessage, setPwConfirmMessage] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [nameMessage, setNameMessage] = useState("");
-  const [phoneMessage, setPhoneMessage] = useState("");
+  const [idMessage, setIdMessage] = useState('');
+  const [pwMessage, setPwMessage] = useState('');
+  const [pwConfirmMessage, setPwConfirmMessage] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+  const [nameMessage, setNameMessage] = useState('');
+  const [phoneMessage, setPhoneMessage] = useState('');
 
   const [isId, setIsId] = useState(false);
   const [isPw, setIsPw] = useState(false);
@@ -39,10 +39,10 @@ export default function SignUp() {
     const regex = /^(?=.*[A-Za-z])(?=.*?[0-9]).{6,}$/;
 
     if (regex.test(e.target.value)) {
-      setIdMessage("사용 가능한 아이디 입니다.");
+      setIdMessage('사용 가능한 아이디 입니다.');
       setIsId(true);
     } else {
-      setIdMessage("ID를 영문, 숫자 포함 6자 이상 입력해주세요");
+      setIdMessage('ID를 영문, 숫자 포함 6자 이상 입력해주세요');
       setIsId(false);
     }
   };
@@ -53,10 +53,10 @@ export default function SignUp() {
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
     if (regex.test(e.target.value)) {
-      setPwMessage("사용 가능한 비밀번호 입니다.");
+      setPwMessage('사용 가능한 비밀번호 입니다.');
       setIsPw(true);
     } else {
-      setPwMessage("PW를 영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.");
+      setPwMessage('PW를 영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.');
       setIsPw(false);
     }
   };
@@ -64,10 +64,10 @@ export default function SignUp() {
   const handlePwConfirm = (e) => {
     setPwConfirm(e.target.value);
     if (pw !== e.target.value) {
-      setPwConfirmMessage("비밀번호가 일치하지 않습니다.");
+      setPwConfirmMessage('비밀번호가 일치하지 않습니다.');
       setIsPwConfirm(false);
     } else {
-      setPwConfirmMessage("비밀번호가 일치합니다.");
+      setPwConfirmMessage('비밀번호가 일치합니다.');
       setIsPwConfirm(true);
     }
   };
@@ -77,10 +77,10 @@ export default function SignUp() {
     const emailReExp =
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailReExp.test(e.target.value)) {
-      setEmailMessage("이메일 형식이 올바르지 않습니다.");
+      setEmailMessage('이메일 형식이 올바르지 않습니다.');
       setIsEmail(false);
     } else {
-      setEmailMessage("사용 가능한 이메일 입니다.");
+      setEmailMessage('사용 가능한 이메일 입니다.');
       setIsEmail(true);
     }
   };
@@ -88,10 +88,10 @@ export default function SignUp() {
   const handleName = (e) => {
     setName(e.target.value);
     if (e.target.value.length < 2 || e.target.value.length > 5) {
-      setNameMessage("이름은 2글자 이상, 5글자 이하로 입력해주세요");
+      setNameMessage('이름은 2글자 이상, 5글자 이하로 입력해주세요');
       setIsName(false);
     } else {
-      setNameMessage("사용 가능한 이름입니다");
+      setNameMessage('사용 가능한 이름입니다');
       setIsName(true);
     }
   };
@@ -100,10 +100,10 @@ export default function SignUp() {
     setPhone(e.target.value);
     const phoneReExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
     if (!phoneReExp.test(e.target.value)) {
-      setPhoneMessage("올바른 형식이 아닙니다");
+      setPhoneMessage('올바른 형식이 아닙니다');
       setIsPhone(false);
     } else {
-      setPhoneMessage("사용 가능한 번호입니다");
+      setPhoneMessage('사용 가능한 번호입니다');
       setIsPhone(true);
     }
   };
@@ -137,13 +137,13 @@ export default function SignUp() {
       try {
         const response = await axios.post(`${API_URL}/user/signup`, userData);
         if (response.status === 201) {
-          navigate("/signupcompleted");
+          navigate('/signupcompleted');
         } else if (response.status === 409) {
-          alert("중복된 아이디입니다.");
+          alert('중복된 아이디입니다.');
         }
       } catch (error) {
-        console.error("There was an error submitting the form!", error);
-        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+        console.error('There was an error submitting the form!', error);
+        alert('회원가입에 실패했습니다. 다시 시도해주세요.');
       }
     }
   };
@@ -168,7 +168,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isId ? "text-green-600" : "text-red-600"
+                  isId ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {idMessage}
@@ -185,7 +185,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isPw ? "text-green-600" : "text-red-600"
+                  isPw ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {pwMessage}
@@ -202,7 +202,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isPwConfirm ? "text-green-600" : "text-red-600"
+                  isPwConfirm ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {pwConfirmMessage}
@@ -219,7 +219,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isEmail ? "text-green-600" : "text-red-600"
+                  isEmail ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {emailMessage}
@@ -235,7 +235,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isName ? "text-green-600" : "text-red-600"
+                  isName ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {nameMessage}
@@ -269,12 +269,50 @@ export default function SignUp() {
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
-                <input
+                <select
+                  className="w-[30%] border mt-1 p-3 rounded-lg"
+                  value={birthDay}
+                  onChange={(e) => setBirthDay(e.target.value)}
+                >
+                  <option value="">일</option>
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="01">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                {/* <input
                   className="border mt-1 p-3 rounded-lg w-[30%]"
                   placeholder="일"
                   value={birthDay}
                   onChange={(e) => setBirthDay(e.target.value)}
-                />
+                /> */}
               </div>
             </div>
             <div className="mt-5 flex flex-col">
@@ -300,7 +338,7 @@ export default function SignUp() {
               />
               <p
                 className={`message ${
-                  isPhone ? "text-green-600" : "text-red-600"
+                  isPhone ? 'text-green-600' : 'text-red-600'
                 }`}
               >
                 {phoneMessage}
