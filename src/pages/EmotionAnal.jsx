@@ -18,9 +18,11 @@ export default function EmotionAnal() {
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [InvitePopup, setInvitePopup] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false); // 삭제 요청 상태
-  const [error, setError] = useState(null); // 오류 상태
   const [image, setImage] = useState(null);
+
+  // 일기 상태,날짜 관리
   const [diary, setDiary] = useState(null); // 일기 상태
+  const [error, setError] = useState(null); // 오류 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
 
   const params = useParams();
@@ -81,6 +83,7 @@ export default function EmotionAnal() {
     fetchDiary();
   }, [diaryDate]);
 
+  // 일기 삭제
   const deleteDiary = async () => {
     setIsDeleting(true); // 삭제 요청 시작
     try {
@@ -331,6 +334,9 @@ export default function EmotionAnal() {
                       </div>
                     </div>
                   </InvitePopupField>
+                  <div>
+                    {diary && diary.emotion ? diary.emotion.sadness : "N/A"}%
+                  </div>
                 </div>
               </div>
             </div>
