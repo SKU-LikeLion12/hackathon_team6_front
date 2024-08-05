@@ -21,6 +21,8 @@ import Producer from "./pages/Producer";
 import SignUpCompleted from "./pages/SignUpCompleted";
 import VoiceTextDisplay from "./pages/VoiceTextDisplay";
 import Warning from "./pages/Warning";
+import ApiEx from "./pages/ApiEx";
+import Chat from "./pages/Chat";
 
 import { AuthProvider } from "./context/AuthContext";
 // const mockData = [

@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useContext } from 'react';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import './style.css';
-import axios from 'axios';
-import programs from '../programs.json';
-import { API_URL } from '../config';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState, useEffect, useContext } from "react";
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import "./style.css";
+import axios from "axios";
+import programs from "../programs.json";
+import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
 
 export default function EQ() {
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [emotion, setEmotion] = useState(null);
-  const [emotionType, setEmotionType] = useState(''); // 현재 감정 유형을 설정합니다.
+  const [emotionType, setEmotionType] = useState(""); // 현재 감정 유형을 설정
   const [randomPrograms, setRandomPrograms] = useState([]);
-  const [error, setError] = useState(null); // 오류 상태
-  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [situation, setSituation] = useState(null);
+  // const [error, setError] = useState(null); // 오류 상태
+  // const [loading, setLoading] = useState(true); // 로딩 상태
 
-  const username = localStorage.getItem('username') || '"guest"';
+  const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   //유튜브 미리보기
@@ -43,21 +44,21 @@ export default function EQ() {
 
   const data = emotion
     ? [
-        { name: '행복', value: emotion.happiness },
-        { name: '불안', value: emotion.anxiety },
-        { name: '중립', value: emotion.neutral },
-        { name: '슬픔', value: emotion.sadness },
-        { name: '분노', value: emotion.anger },
+        { name: "행복", value: emotion.happiness },
+        { name: "불안", value: emotion.anxiety },
+        { name: "중립", value: emotion.neutral },
+        { name: "슬픔", value: emotion.sadness },
+        { name: "분노", value: emotion.anger },
       ]
     : [
-        { name: '행복', value: 0 },
-        { name: '불안', value: 0 },
-        { name: '중립', value: 0 },
-        { name: '슬픔', value: 0 },
-        { name: '분노', value: 0 },
+        { name: "행복", value: 0 },
+        { name: "불안", value: 0 },
+        { name: "중립", value: 0 },
+        { name: "슬픔", value: 0 },
+        { name: "분노", value: 0 },
       ];
 
-  const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
+  const COLORS = ["#FFF2B2", "#F1E5FF", "#5BCBAB", "#A9D6E5", "#FFA07A"];
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -65,10 +66,10 @@ export default function EQ() {
         <div
           className="custom-tooltip"
           style={{
-            borderRadius: '10px',
-            backgroundColor: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            padding: "10px",
+            border: "1px solid #ccc",
           }}
         >
           <p>{`${payload[0].name} : ${payload[0].value}%`}</p>
@@ -85,14 +86,14 @@ export default function EQ() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/post`, {
           headers: {
             token: token,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setRandomPrograms(response.data);
       } catch (error) {
         if (error.response) {
@@ -102,46 +103,70 @@ export default function EQ() {
     fetchProgram();
   }, [getAuthToken]);
 
-  //감정 웅앵,,
+  //감정별 상황 불러오기
+  useEffect(() => {
+    const fetchAt = async () => {
+      try {
+        const token = getAuthToken();
+        if (!token) {
+          throw new Error("Authorization token is missing");
+        }
+        const response = await axios.get(`${API_URL}/situation`, {
+          headers: {
+            token: token,
+          },
+        });
+        // console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        setSituation(response.data);
+      } catch (error) {
+        console.error("There was an error fetching the emotion data!", error);
+        if (error.response) {
+        }
+      }
+    };
+    fetchAt();
+  }, [getAuthToken]);
+
+  //감정 퍼센트 불러오기
   useEffect(() => {
     const fetchEmotion = async () => {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/emotion/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
+        console.error("There was an error fetching the emotion data!", error);
       }
     };
 
     fetchEmotion();
   }, [getAuthToken]);
 
-  //추천 프러그램
+  //추천 프로그램
   useEffect(() => {
     const fetchProgram = async () => {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/post/{userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
+        console.error("There was an error fetching the emotion data!", error);
       }
     };
 
@@ -149,7 +174,7 @@ export default function EQ() {
   }, [getAuthToken]);
 
   return (
-    <div className="eqbg flex flex-col min-h-fit">
+    <div className="eqbg flex flex-col">
       <div className="text-center font-thin text-[#495057] text-[30px] z-1 relative">
         <div className="pt-16">
           <span>나의 감정을 직면</span>
@@ -176,16 +201,16 @@ export default function EQ() {
         </div>
       </div>
 
-      <div className="flex flex-row text-[#495057] min-h-fit">
-        <div className="w-[50%] relative">
+      <div className="flex flex-row text-[#495057]">
+        <div className="w-[50%] relative h-[1350px]">
           <div className="relative mt-[50px]">
             <img
               src="../img/emotionBox.png"
               className="w-[80%] h-[1170px] mx-auto mt-[10px]  ml-[15%]"
               alt=""
-            ></img>
+            />
           </div>
-
+          {/* 감정보고서 내용 */}
           <div className="relative top-[-1100px] left-[50px] text-center flex flex-col justify-center items-center mx-auto text-[#495057]">
             <div className="font-normal text-[24px] mb-[25px] underline underline-offset-4">
               {displayName}님의 감정 보고서
@@ -218,11 +243,11 @@ export default function EQ() {
               {displayName}님의 주요 감정은 '
               {emotion ? (
                 <span>
-                  {emotion.topEmotion === 'happiness' && '행복'}
-                  {emotion.topEmotion === 'sadness' && '슬픔'}
-                  {emotion.topEmotion === 'anxiety' && '불안'}
-                  {emotion.topEmotion === 'neutral' && '중립'}
-                  {emotion.topEmotion === 'anger' && '분노'}
+                  {emotion.topEmotion === "happiness" && "행복"}
+                  {emotion.topEmotion === "sadness" && "슬픔"}
+                  {emotion.topEmotion === "anxiety" && "불안"}
+                  {emotion.topEmotion === "neutral" && "중립"}
+                  {emotion.topEmotion === "anger" && "분노"}
                 </span>
               ) : (
                 <span>Loading...</span>
@@ -232,67 +257,78 @@ export default function EQ() {
             <div className="border-[1.5px] w-[55%] my-6"></div>
 
             <div>
-              <div className="relative rounded-lg mt-[30px] h-[130px] w-[350px] bg-[#FFF2B2] p-[15px]">
+              <div className="relative rounded-3xl mt-[30px] h-[130px] w-[350px] bg-[#FFF2B2] p-[15px]">
                 <img
                   src="../img/happy.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                   alt=""
                 />
-                <div>{displayName}님이 행복할 때는 이런 경우였어요.</div>
-                <div className="내용">
-                  {/* <div>• {emotionData.happinessAt}</div> */}
-                  <div>
-                    {' '}
-                    {loading
-                      ? '로딩 중...'
-                      : emotion
-                      ? emotion.user.happiness
-                      : error || 'error'}
-                  </div>
-                  <div>• 넣을거</div>
-                  <div>• 생각</div>
+                <div className="text-[17px] font-semibold mt-[6px]">
+                  {displayName}님이 행복할 때는 이런 경우였어요.
+                </div>
+                <div className="내용 mt-[18px]">
+                  {situation ? (
+                    <span>• {situation.happinessAt}</span>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
                 </div>
               </div>
             </div>
             <div>
-              <div className="relative rounded-lg mt-[30px] h-[130px] w-[350px] bg-[#F1E5FF] p-[15px]">
+              <div className="relative rounded-3xl mt-[30px] h-[130px] w-[350px] bg-[#F1E5FF] p-[15px]">
                 <img
                   src="../img/anxiety.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                   alt=""
                 />
-                <div>{displayName}님이 불안할 때는 이런 경우였어요.</div>
-                <div className="내용">
-                  <div>• 넣을거</div>
-                  <div>• 생각</div>
+                <div className="text-[17px] font-semibold mt-[6px]">
+                  {displayName}님이 불안할 때는 이런 경우였어요.
+                </div>
+                <div className="내용 mt-[18px]">
+                  {situation ? (
+                    <span>• {situation.anxietyAt}</span>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
                 </div>
               </div>
             </div>
             <div>
-              <div className="relative rounded-lg mt-[30px] h-[130px] w-[350px] bg-[#A9D6E5] p-[15px]">
+              <div className="relative rounded-3xl mt-[30px] h-[130px] w-[350px] bg-[#A9D6E5] p-[15px]">
                 <img
                   src="../img/sad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                   alt=""
                 />
-                <div>{displayName}님이 슬플 때는 이런 경우였어요.</div>
-                <div className="내용">
-                  <div>• 넣을거</div>
-                  <div>• 생각</div>
+                <div className="text-[17px] font-semibold mt-[6px]">
+                  {displayName}님이 슬플 때는 이런 경우였어요.
+                </div>
+                <div className="mt-[18px]">
+                  {situation ? (
+                    <span>• {situation.sadnessAt}</span>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
                 </div>
               </div>
             </div>
             <div>
-              <div className="relative rounded-lg my-[30px] h-[130px] w-[350px] bg-[#FFA07A] p-[15px]">
+              <div className="relative rounded-3xl my-[30px] h-[130px] w-[350px] bg-[#FFA07A] p-[15px]">
                 <img
                   src="../img/mad.png"
                   className="absolute z-10 top-[-13px] w-[26px] h-[26px]"
                   alt=""
                 />
-                <div>{displayName}님이 분노할 때는 이런 경우였어요.</div>
-                <div className="내용">
-                  <div>• 넣을거</div>
-                  <div>• 생각</div>
+                <div className="text-[17px] font-semibold mt-[6px]">
+                  {displayName}님이 분노할 때는 이런 경우였어요.
+                </div>
+                <div className="내용 mt-[18px]">
+                  {situation ? (
+                    <span>• {situation.angerAt}</span>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
                 </div>
               </div>
             </div>
@@ -320,7 +356,7 @@ export default function EQ() {
                       </strong>
                       <br />
                       <br />
-                      <div style={{ width: '90%' }} className="mx-auto">
+                      <div style={{ width: "90%" }} className="mx-auto">
                         <LiteYouTubeEmbed
                           id={videoId}
                           noCookie={true} //default가 false라서 꼭 명시하기
