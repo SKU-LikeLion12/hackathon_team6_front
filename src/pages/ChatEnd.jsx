@@ -31,7 +31,7 @@ export default function ChatEnd() {
       formData.append('file', audioBlob);
 
       axios
-        .post('https://team6ai.sku-sku.com/transcribe/', formData)
+        .post('http://team6ai.sku-sku.com/transcribe/', formData)
         .then((response) => {
           console.log('음성 인식 결과:', response.data);
         })

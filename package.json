@@ -56,5 +56,5 @@
   "devDependencies": {
     "tailwindcss": "^3.4.6"
   },
-  "proxy": "https://team6back.sku-sku.com"
+  "proxy": "http://team6back.sku-sku.com"
 }

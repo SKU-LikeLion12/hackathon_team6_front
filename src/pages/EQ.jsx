@@ -233,7 +233,7 @@ export default function EQ() {
                       )} */}
                       {/* <p>{program.content}</p> */}
                       <LiteYouTubeEmbed
-                        id={videoId} //예시
+                        id={videoId}
                         noCookie={true} //default가 false라서 꼭 명시하기
                       />
                     </div>

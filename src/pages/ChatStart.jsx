@@ -1,11 +1,32 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaMicrophone } from 'react-icons/fa';
 import axios from 'axios';
 import './style.css';
+// import Edit from '../pages/Edit';
 
 export default function ChatStart() {
+  const [logValue, setLogValue] = useState('');
+
+  // const logToScreen = (formData) => {
+  //   console.log(formData);
+  //   setLogValue(formData);
+  // };
+
+  // useEffect(() => {
+  //   logToScreen('http://team6ai.sku-sku.com/transcribe/', formData).then(
+  //     (response) => {
+  //       console.log('음성 인식 결과:', response.data);
+  //     }
+  //   );
+  // }, []);
+
   const [recording, setRecording] = useState(false);
+  const [transcription, setTranscription] = useState({
+    refined_text: '',
+    emotions: {},
+    situation: {},
+  });
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -31,7 +52,7 @@ export default function ChatStart() {
       formData.append('file', audioBlob);
 
       axios
-        .post('https://team6ai.sku-sku.com/transcribe/', formData)
+        .post('http://team6ai.sku-sku.com/transcribe/', formData)
         .then((response) => {
           console.log('음성 인식 결과:', response.data);
         })
@@ -81,6 +102,12 @@ export default function ChatStart() {
                   종료하기
                 </button>
               </NavLink>
+            </div>
+            {/* <div>{transcription}</div> */}
+            {/* <Edit transcription={transcription} /> */}
+            <div>
+              <span className="font-bold">콘솔 값 화면 출력: </span>
+              <span>dd{logValue}</span>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { FaCaretRight } from 'react-icons/fa';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import InvitePopupField from '../component/InvitePopupField';
 import { useDropzone } from 'react-dropzone';
@@ -120,6 +121,10 @@ export default function Edit() {
                   <div className="text-center text-[#495057]">
                     <div className="rounded-tl-[0px] rounded-tr-[150px] rounded-bl-[150px] rounded-br-[150px] bg-[#FFF2B2] p-5 h-auto mt-[7%] mx-[15px]">
                       <h1 className="mb-2 font-bold">수정전</h1>
+                      <div>
+                        인식된 테스트:
+                        {/* {refinedText ? <p>{refinedText}</p> : <p>Loading...</p>} */}
+                      </div>
                       <span>
                         오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다.
                         혼자 할 때는 어려웠는데 다 같이{' '}
@@ -130,9 +135,12 @@ export default function Edit() {
                     <div className="rounded-tl-[150px] rounded-tr-[150px] rounded-bl-[150px] rounded-br-[0px] bg-[#C6E2F1] p-5 mt-[10%] h-auto mx-[15px]">
                       <h1 className="mb-2 font-bold	">수정후</h1>
                       <span>
+                        <hr />
                         오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다.
                         혼자 할 때는 어려웠는데 다 같이{' '}
-                        <span className="text-red-700 font-bold">열심히</span>{' '}
+                        <span className="text-red-700 font-bold">
+                          열심히
+                        </span>{' '}
                         하니 금방 끝났다. 뿌듯했다.
                       </span>
                     </div>
@@ -172,6 +180,28 @@ export default function Edit() {
                         </div>
                       </div>
                     </InvitePopupField>
+                  </div>
+                  <div className="mt-10 text-center">
+                    <div className="text-xl">감정 분석</div>
+                    {/* <ul>
+                      {Object.entries(transcription.emotions).map(
+                        ([emotion, value]) => (
+                          <li key={emotion} className="text-lg">
+                            {emotion}: {value}
+                          </li>
+                        )
+                      )}
+                    </ul> */}
+                    <div className="text-xl mt-5">상황 분석</div>
+                    {/* <ul>
+                      {Object.entries(transcription.situation).map(
+                        ([situationKey, situationValue]) => (
+                          <li key={situationKey} className="text-lg">
+                            {situationKey}: {situationValue}
+                          </li>
+                        )
+                      )}
+                    </ul> */}
                   </div>
                 </div>
               </div>

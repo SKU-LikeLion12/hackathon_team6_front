@@ -21,6 +21,7 @@ import SignUpCompleted from './pages/SignUpCompleted';
 import ApiEx from './pages/ApiEx';
 import { AuthProvider } from './context/AuthContext';
 import Chat from './pages/Chat';
+import Voice from './pages/Voice';
 
 // const mockData = [
 //   {
@@ -59,6 +60,7 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
+  // const userId = 'joy002208!';
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
@@ -126,6 +128,8 @@ function App() {
                 <Route path="ApiEx" element={<ApiEx />} />
                 <Route path="EmotionAnal" element={<EmotionAnal />} />
                 <Route path="Chat" element={<Chat />} />
+                <Route path="Voice" element={<Voice />} />
+                {/* <ApiEx userId={userId} /> */}
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>
