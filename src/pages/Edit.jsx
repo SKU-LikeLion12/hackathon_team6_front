@@ -98,40 +98,6 @@ const highlightChangesAfter = (oldText, newText) => {
 };
 
 export default function Edit() {
-  const chatId = 1;
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const date = String(now.getDate()).padStart(2, '0');
-
-  const { getAuthToken } = useContext(AuthContext); // AuthContext 사용
-  const [image, setImage] = useState(null);
-  const [content, setContent] = useState(''); // 초기값을 빈 문자열로 설정
-  const [editedContent, setEditedContent] = useState('');
-
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      'image/png': ['.png', '.jpeg'],
-    },
-  });
-
-  const params = useParams();
-  const navigate = useNavigate();
-
   const { getAuthToken } = useContext(AuthContext); // AuthContext 사용
   const [diary, setDiary] = useState(null); // 일기 상태
   const [content, setContent] = useState(''); // 일기 내용을 저장하는 상태
@@ -237,85 +203,6 @@ export default function Edit() {
   const handleCloseInvitePopup = () => {
     setInvitePopup(false);
   };
-
-  const handleSaveDiary = async () => {
-    const token = getAuthToken(); // AuthContext에서 토큰 가져오기
-
-    const diaryData = {
-      id: `${params.id}`,
-      token: token,
-      content: editedContent,
-      date: `${params.id}`,
-      emotion: {
-        emotionId: 0,
-        user: {
-          userId: 0,
-          userName: 'string',
-          id: 'string',
-          email: 'string',
-          password: 'string',
-          phoneNumber: 'string',
-          birthDate: '2024-08-05',
-          gender: 'M',
-          createdAt: '2024-08-05T01:53:12.073Z',
-          updatedAt: '2024-08-05T01:53:12.073Z',
-          job: 'string',
-        },
-        happiness: 0,
-        anxiety: 0,
-        neutral: 0,
-        sadness: 0,
-        anger: 0,
-        createAt: '2024-08-05T01:53:12.073Z',
-        updateAt: '2024-08-05T01:53:12.073Z',
-        topEmotion: 'string',
-      },
-    };
-
-    try {
-      const response = await axios.put(`${API_URL}/${params.id}`, diaryData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${token}`, // 가져온 토큰 사용
-        },
-      });
-
-      if (response.status === 200) {
-        // 성공적인 업데이트 처리
-        alert('일기가 성공적으로 업데이트되었습니다.');
-        navigate('/calendar'); // 일기 목록 페이지 또는 다른 페이지로 리다이렉트
-      } else {
-        // 서버 응답에 대한 상세 정보를 로그에 기록
-        console.error('서버 오류:', response.data);
-        alert(
-          `일기 업데이트에 실패했습니다. 서버 응답: ${
-            response.data.message || '알 수 없는 오류'
-          }`
-        );
-      }
-    } catch (error) {
-      console.error('일기 업데이트 중 오류 발생:', error);
-      alert('일기 업데이트 중 오류가 발생했습니다.');
-    }
-  };
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await axios.get(`${API_URL}/chat/${chatId}`);
-        setData(response.data);
-        setContent(response.data.message || ''); // 데이터가 로드된 후 상태 초기화
-        setEditedContent(response.data.message || ''); // 데이터가 로드된 후 상태 초기화
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getData();
-  }, [chatId]);
 
   return (
     <div className="editbg">
