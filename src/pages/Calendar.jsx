@@ -201,24 +201,15 @@ export default function Attendance() {
       </div>
 
       {/* 감정 분석 (오) */}
-      {/* <div className="w-[45%] relative">
-        <img className="h-[full]" src="../img/spring.png" alt="" />
-        <h3 className="absolute top-12 ">김금쪽님의 월별 감정 보고서</h3>
-      </div> */}
-      <div
-        className="w-[47%] static items-center mt-0"
-        // ref={reportContainerRef}
-      >
-        <div className="rounded-3xl p-5 bg-sky-100 w-full">
-          <div className="rounded-2xl p-10 bg-[white]">
+      <div className="w-[47%] static items-center mt-0">
+        <div className="rounded-3xl p-5 bg-sky-100 w-full shadow-md">
+          <div className="rounded-2xl p-10 bg-[white] shadow-md">
             <div className="block text-center underline underline-offset-4 decoration-1.3">
-              <span className="block text-gray-500 text-xl">
-                김금쪽님의 월별
-              </span>
-              <span className="block text-gray-500 text-xl">감정 보고서</span>
+              <span className="block text-[24px]">김금쪽님의 월별</span>
+              <span className="block text-[24px]">감정 보고서</span>
             </div>
             <div className="mt-5">
-              <div className="rounded-xl bg-gray-100 w-[75%] mx-auto py-6 my-[40px] h-auto flex justify-center items-center">
+              <div className="rounded-xl bg-gray-100 w-[75%] mx-auto py-6 my-[30px] h-auto flex justify-center items-center">
                 <PieChart width={175} height={175}>
                   <Pie
                     data={data}
@@ -239,31 +230,31 @@ export default function Attendance() {
                   <Tooltip content={<CustomTooltip />} />
                 </PieChart>
               </div>
-              <div className="my-5">
-                <span className="text-black">
-                  8월의 {displayName}님의 대표 감정은 '
-                  {emotion ? (
-                    <span>
-                      {emotion.topEmotion === 'happiness' && '행복'}
-                      {emotion.topEmotion === 'sadness' && '슬픔'}
-                      {emotion.topEmotion === 'anxiety' && '불안'}
-                      {emotion.topEmotion === 'neutral' && '중립'}
-                      {emotion.topEmotion === 'anger' && '분노'}
-                    </span>
-                  ) : (
-                    <span>Loading...</span>
-                  )}
-                  '이 75%에요!{' '}
-                </span>
-                <span className="text-black">
-                  이외에 분노와 불안이 25%씩 나타났어요.
-                </span>
-              </div>
-              <div className="border-y-2 py-5">
-                <span className="text-[#5BCBAB]">
-                  자신의 감정을 알아보고, 직면하는 것만으로도 감정지수(EQ)를
-                  높일 수 있다고 하네요. FeelInsight는 당신을 응원합니다.
-                </span>
+              <div className="text-center text-[16px]">
+                <div className="my-5">
+                  <span className="text-black">
+                    8월의 {displayName}님의 대표 감정은 '
+                    {emotion ? (
+                      <span>
+                        {emotion.topEmotion === 'happiness' && '행복'}
+                        {emotion.topEmotion === 'sadness' && '슬픔'}
+                        {emotion.topEmotion === 'anxiety' && '불안'}
+                        {emotion.topEmotion === 'neutral' && '중립'}
+                        {emotion.topEmotion === 'anger' && '분노'}
+                      </span>
+                    ) : (
+                      <span>Loading...</span>
+                    )}
+                    '이 {emotion ? `${emotion[emotion.topEmotion]}%` : '0%'}
+                    이에요 !{' '}
+                  </span>
+                </div>
+                <div className="border-y-2 py-5">
+                  <span className="text-[#5BCBAB]">
+                    자신의 감정을 알아보고, 직면하는 것만으로도 감정지수(EQ)를
+                    높일 수 있다고 하네요. FeelInsight는 당신을 응원합니다.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
