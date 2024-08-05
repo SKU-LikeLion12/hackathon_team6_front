@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useReducer, useRef, createContext } from "react";
 
 import Nav from "./component/Nav";
@@ -118,6 +119,11 @@ function App() {
                 <Route path="/ChatStart" element={<ChatStart />} />
                 <Route path="/ChatEnd" element={<ChatEnd />} />
                 <Route path="/DiaryStart" element={<DiaryStart />} />
+                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
+                <Route path="/EQ" element={<EQ />} />
+                <Route path="/Edit" element={<Edit />} />
+                <Route path="/Chat" element={<Chat />} />
+                <Route path="/ApiEx" element={<ApiEx />} />
                 <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
