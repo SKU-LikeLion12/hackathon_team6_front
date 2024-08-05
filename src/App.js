@@ -109,14 +109,14 @@ function App() {
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/calendar/diary/:diaryId" element={<Diary />} />
-                <Route path="/calendar/edit/:diaryId" element={<Edit />} />
+                <Route path="/calendar/diary/:id" element={<Diary />} />
+                <Route path="/calendar/edit/:id" element={<Edit />} />
                 <Route path="/chatbot" element={<ChatBot />} />
                 <Route path="/ChatMain" element={<ChatMain />} />
                 <Route path="/ChatStart" element={<ChatStart />} />
                 <Route path="/ChatEnd" element={<ChatEnd />} />
                 <Route path="/DiaryStart" element={<DiaryStart />} />
-                <Route path="/EmotionAnal/:diaryId" element={<EmotionAnal />} />
+                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
 
                 <Route path="/producer" element={<Producer />} />

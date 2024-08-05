@@ -1,12 +1,11 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import InvitePopupField from "../component/InvitePopupField";
 import "./style.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-
-const API_URL = "http://team6back.sku-sku.com"; // API URL
+import { API_URL } from "../config";
 
 export default function EmotionAnal() {
   const now = new Date();
@@ -21,8 +20,11 @@ export default function EmotionAnal() {
   const [isDeleting, setIsDeleting] = useState(false); // 삭제 요청 상태
   const [error, setError] = useState(null); // 오류 상태
   const [image, setImage] = useState(null);
+  const [diary, setDiary] = useState(null); // 일기 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
 
   const params = useParams();
+  const diaryDate = params.id; // 날짜를 쿼리 파라미터로 사용
 
   const handleInviteUser = (event) => {
     setInvitePopup(true);
@@ -50,11 +52,40 @@ export default function EmotionAnal() {
     },
   });
 
+  const fetchDiary = async () => {
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(`${API_URL}/diary`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          date: diaryDate, // 선택된 날짜를 query parameter로 전달
+        },
+      });
+
+      if (response.status === 200) {
+        setDiary(response.data);
+      } else {
+        setError("일기를 불러오는데 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("일기 조회 중 오류 발생:", error);
+      setError("일기 조회 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiary();
+  }, [diaryDate]);
+
   const deleteDiary = async () => {
     setIsDeleting(true); // 삭제 요청 시작
     try {
-      const token = localStorage.getItem("authToken"); // AuthContext를 통해 가져온 토큰 사용
-      const response = await axios.delete(`${API_URL}/diary/${params.id}`, {
+      const token = getAuthToken();
+      const response = await axios.delete(`${API_URL}/diary/${diaryDate}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization 헤더에 'Bearer' 접두사 추가
           "Content-Type": "application/json",
@@ -62,11 +93,9 @@ export default function EmotionAnal() {
       });
 
       if (response.status === 200) {
-        // 삭제 성공
         alert("일기가 삭제되었습니다.");
         // 페이지 리다이렉트 또는 상태 업데이트
       } else {
-        // 기타 오류
         alert("일기 삭제 중 오류가 발생했습니다.");
       }
     } catch (error) {
@@ -124,9 +153,11 @@ export default function EmotionAnal() {
                         </div>
                         <div className="border-t-2 py-5 mt-5">
                           <span className="text-[#495057]">
-                            오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을
-                            하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰으쌰
-                            하니 금방 끝났다. 뿌듯했다.
+                            {loading
+                              ? "로딩 중..."
+                              : diary
+                              ? diary.content
+                              : error || "일기 내용이 없습니다."}
                           </span>
                         </div>
                         <button

@@ -1,5 +1,5 @@
 import { FaCaretRight } from "react-icons/fa";
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import InvitePopupField from "../component/InvitePopupField";
 import { useDropzone } from "react-dropzone";
@@ -43,7 +43,12 @@ const highlightChangesBefore = (oldText, newText) => {
         j < newWords.length &&
         (i >= oldWords.length || oldWords[i] !== newWords[j])
       ) {
-        // Skip added word in newText
+        // Highlight added word in newText
+        // diff.push(
+        //   <span className="text-red-700 font-bold" key={`new-${j}`}>
+        //     {newWords[j] + " "}
+        //   </span>
+        // );
         j++;
       }
     }
@@ -97,6 +102,11 @@ const highlightChangesAfter = (oldText, newText) => {
 };
 
 export default function Edit() {
+  const chatId = 1;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -104,10 +114,8 @@ export default function Edit() {
 
   const { getAuthToken } = useContext(AuthContext); // AuthContext 사용
   const [image, setImage] = useState(null);
-  const [content, setContent] = useState(
-    "오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을 하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰으쌰 하니 금방 끝났다. 뿌듯했다."
-  );
-  const [editedContent, setEditedContent] = useState(content);
+  const [content, setContent] = useState(""); // 초기값을 빈 문자열로 설정
+  const [editedContent, setEditedContent] = useState("");
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -195,18 +203,45 @@ export default function Edit() {
     }
   };
 
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await axios.get(`${API_URL}/chat/${chatId}`);
+        setData(response.data);
+        setContent(response.data.message || ""); // 데이터가 로드된 후 상태 초기화
+        setEditedContent(response.data.message || ""); // 데이터가 로드된 후 상태 초기화
+      } catch (error) {
+        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getData();
+  }, [chatId]);
+
   return (
     <div className="flex justify-center items-center bg-[url('./img/edit_back.png')] bg-[length:3000px_1000px] h-[700px] bg-no-repeat ">
       {/* 왼 */}
       <div className="w-[45%]">
-        <span className="flex justify-center mb-10 text-xl">
+        <span className="flex justify-center mb-6 text-xl">
           일기장 미리보기
         </span>
         <div className="flex justify-center">
-          <div className="w-[75%] h-auto">
+          <div className="w-[75%] h-[600px]">
             <div className="rounded-3xl p-5 bg-zinc-300 w-full h-full drop-shadow-md">
-              <div className="rounded-2xl p-8 bg-white h-full drop-shadow-md">
-                <span className="block text-gray-500 text-xl">{params.id}</span>
+              <div className="rounded-2xl px-8 pt-4 pb-8 bg-white h-full drop-shadow-md">
+                <span className="block text-gray-500 text-xl">
+                  {data ? (
+                    <div>
+                      <p>{data.startTime.substring(0, 10)}</p>
+                    </div>
+                  ) : (
+                    <p>No data available</p>
+                  )}
+                  {/* //녹음된 날짜 불러옴 */}
+                </span>
                 <div className="mt-3">
                   <div className="my-6">
                     {image ? (
@@ -236,6 +271,7 @@ export default function Edit() {
                     value={editedContent}
                     onChange={(e) => setEditedContent(e.target.value)}
                   />
+
                   <button className="mt-2" onClick={() => setImage(null)}>
                     <img
                       src="../img/changeImage.png"
@@ -257,12 +293,12 @@ export default function Edit() {
 
       {/* 오 */}
       <div className="w-[45%]">
-        <span className="flex justify-center mb-10 text-xl">
+        <span className="flex justify-center mb-6 text-xl">
           <span className="text-red-700 font-bold">잘못된 내용</span>이 있다면
           수정해주세요!
         </span>
         <div className="flex justify-center ">
-          <div className="w-[75%] h-auto">
+          <div className="w-[75%] h-[600px]">
             <div className="rounded-3xl p-5 bg-sky-100 w-full h-full drop-shadow-md">
               <div className="rounded-2xl p-5 bg-white h-full drop-shadow-md">
                 <div>
