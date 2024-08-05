@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
 export default function Attendance() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '');
   const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
-  const data = [
-    { name: '행복', value: 10 },
-    { name: '불안', value: 10 },
-    { name: '중립', value: 10 },
-    { name: '슬픔', value: 10 },
-    { name: '분노', value: 10 },
-  ];
+  const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
+  const [emotion, setEmotion] = useState(null);
+
+  const data = emotion
+    ? [
+        { name: '행복', value: emotion.happiness },
+        { name: '불안', value: emotion.anxiety },
+        { name: '중립', value: emotion.neutral },
+        { name: '슬픔', value: emotion.sadness },
+        { name: '분노', value: emotion.anger },
+      ]
+    : [
+        { name: '행복', value: 0 },
+        { name: '불안', value: 0 },
+        { name: '중립', value: 0 },
+        { name: '슬픔', value: 0 },
+        { name: '분노', value: 0 },
+      ];
 
   const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
 
@@ -30,13 +42,36 @@ export default function Attendance() {
             border: '1px solid #ccc',
           }}
         >
-          <p>{`${payload[0].name} : ${payload[0].value}`}</p>
+          <p>{`${payload[0].name} : ${payload[0].value}%`}</p>
         </div>
       );
     }
 
     return null;
   };
+
+  //감정 웅앵,,
+  useEffect(() => {
+    const fetchEmotion = async () => {
+      try {
+        const token = getAuthToken();
+        if (!token) {
+          throw new Error('Authorization token is missing');
+        }
+        const response = await axios.get(`${API_URL}/emotion/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        setEmotion(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the emotion data!', error);
+      }
+    };
+
+    fetchEmotion();
+  }, [getAuthToken]);
 
   const nav = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -72,12 +107,19 @@ export default function Attendance() {
     return new Date(year, month + 1, 0).getDate();
   };
 
+  // const handleDayClick = (date) => {
+  //   const formattedDate = `${date.getFullYear()}-${
+  //     date.getMonth() + 1
+  //   }-${date.getDate()}`;
+  //   // nav(`/calendar/edit/${formattedDate}`);
+  //   nav(`/EmotionAnal/formattedDate`);
+  // };
+
   const handleDayClick = (date) => {
-    const formattedDate = `${date.getFullYear()}-${
+    const formattedDate = `${date.getFullYear()}-${String(
       date.getMonth() + 1
-    }-${date.getDate()}`;
-    // nav(`/calendar/edit/${formattedDate}`);
-    nav(`/calendar/EmotionAnal/${formattedDate}`);
+    ).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    nav(`/EmotionAnal/${formattedDate}`);
   };
 
   const renderDays = () => {
@@ -125,7 +167,7 @@ export default function Attendance() {
   return (
     <div className="flex justify-around p-12 bg-[url('./img/cal_back.png')] bg-[length:3000px_100px] bg-no-repeat">
       {/* 캘린더 (왼) */}
-      <div className="w-[45%] mt-6">
+      <div className="w-[45%] mt-2">
         <div className="p-6 bg-white rounded-lg shadow-md bg-transparent">
           {/* 캘린더 헤더 */}
           <div className="flex items-center justify-between mb-4">
@@ -144,7 +186,7 @@ export default function Attendance() {
             {daysOfWeek.map((day, index) => (
               <div
                 key={day}
-                className={`flex items-center justify-center h-40 font-bold ${
+                className={`flex items-center justify-center h-36 font-bold my-[10px] ${
                   index % 7 === 0 || index % 7 === 6
                     ? 'text-sky-500'
                     : 'text-gray-500'
@@ -156,14 +198,6 @@ export default function Attendance() {
             {renderDays()}
           </div>
         </div>
-        {/* <div className="border rounded-xl w-[100%] h-10 flex items-center mt-6"></div> */}
-        {/* <div className="flex flex-row justify-around mt-4">
-          <img className="object-contain" src="/img/005.png" alt="" />
-          <img className="object-contain" src="/img/004.png" alt="" />
-          <img className="object-contain" src="/img/003.png" alt="" />
-          <img className="object-contain" src="/img/002.png" alt="" />
-          <img className="object-contain" src="/img/001.png" alt="" />
-        </div> */}
       </div>
 
       {/* 감정 분석 (오) */}
@@ -172,17 +206,19 @@ export default function Attendance() {
         <h3 className="absolute top-12 ">김금쪽님의 월별 감정 보고서</h3>
       </div> */}
       <div
-        className="w-[47%] static items-center mt-6"
+        className="w-[47%] static items-center mt-0"
         // ref={reportContainerRef}
       >
         <div className="rounded-3xl p-5 bg-sky-100 w-full">
           <div className="rounded-2xl p-10 bg-[white]">
-            <div className="block text-center underline underline-offset-4 decoration-1.3 text-2xl">
-              <span className="block">{displayName}님의 월별</span>
-              <span className="block">감정 보고서</span>
+            <div className="block text-center underline underline-offset-4 decoration-1.3">
+              <span className="block text-gray-500 text-xl">
+                김금쪽님의 월별
+              </span>
+              <span className="block text-gray-500 text-xl">감정 보고서</span>
             </div>
             <div className="mt-5">
-              <div className="rounded-xl bg-gray-100 w-[400px] mx-auto py-6 h-auto flex justify-center items-center">
+              <div className="rounded-xl bg-gray-100 w-[75%] mx-auto py-6 my-[40px] h-auto flex justify-center items-center">
                 <PieChart width={175} height={175}>
                   <Pie
                     data={data}
@@ -205,7 +241,19 @@ export default function Attendance() {
               </div>
               <div className="my-5">
                 <span className="text-black">
-                  {month}월의 {displayName}님의 대표 감정은 '행복'이 75%에요!{' '}
+                  8월의 {displayName}님의 대표 감정은 '
+                  {emotion ? (
+                    <span>
+                      {emotion.topEmotion === 'happiness' && '행복'}
+                      {emotion.topEmotion === 'sadness' && '슬픔'}
+                      {emotion.topEmotion === 'anxiety' && '불안'}
+                      {emotion.topEmotion === 'neutral' && '중립'}
+                      {emotion.topEmotion === 'anger' && '분노'}
+                    </span>
+                  ) : (
+                    <span>Loading...</span>
+                  )}
+                  '이 75%에요!{' '}
                 </span>
                 <span className="text-black">
                   이외에 분노와 불안이 25%씩 나타났어요.
@@ -214,7 +262,7 @@ export default function Attendance() {
               <div className="border-y-2 py-5">
                 <span className="text-[#5BCBAB]">
                   자신의 감정을 알아보고, 직면하는 것만으로도 감정지수(EQ)를
-                  높일 수 있다고 합니다. FeelInsight는 당신을 응원합니다.
+                  높일 수 있다고 하네요. FeelInsight는 당신을 응원합니다.
                 </span>
               </div>
             </div>

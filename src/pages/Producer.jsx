@@ -1,36 +1,36 @@
-import React from "react";
-import Footer from "../component/Footer";
+import React from 'react';
+import Footer from '../component/Footer';
 
 const teamMembers = [
   {
-    name: "이승은",
-    role: "PM/Design",
-    email: "1emdtmddms44@gmail.com",
-    avatar: "/img/se.png",
+    name: '이승은',
+    role: 'PM/Design',
+    email: '1emdtmddms44@gmail.com',
+    avatar: '/img/se.png',
   },
   {
-    name: "이호연",
-    role: "Frontend",
-    email: "lhy020313@gmail.com",
-    avatar: "/img/hoyeon.png",
+    name: '이호연',
+    role: 'Frontend',
+    email: 'lhy020313@gmail.com',
+    avatar: '/img/hoyeon.png',
   },
   {
-    name: "안하서",
-    role: "Frontend",
-    email: "sojun109822@gmail.com",
-    avatar: "/img/haseo.png",
+    name: '안하서',
+    role: 'Frontend',
+    email: 'sojun109822@gmail.com',
+    avatar: '/img/haseo.png',
   },
   {
-    name: "박지우",
-    role: "Backend",
-    email: "joy002208@gmail.com",
-    avatar: "/img/jiu.png",
+    name: '박지우',
+    role: 'Backend',
+    email: 'joy002208@gmail.com',
+    avatar: '/img/jiu.png',
   },
   {
-    name: "권오현",
-    role: "Backend",
-    email: "bada4446@gmail.com",
-    avatar: "/img/ohyeon.png",
+    name: '권오현',
+    role: 'Backend',
+    email: 'bada4446@gmail.com',
+    avatar: '/img/ohyeon.png',
   },
 ];
 
@@ -38,7 +38,7 @@ const Team = () => {
   return (
     <div className="pt-36 bg-[url('./img/home.png')] bg-[length:2000px_500px] bg-contain bg-no-repeat">
       <div className="flex flex-col items-center mb-24">
-        <h3 className="text-[#495057] text-6xl mb-16 font-bold grid place-items-center">
+        <h3 className="text-[#495057] text-6xl mb-16 font-bold grid place-items-center drop-shadow-md">
           The Team
         </h3>
 

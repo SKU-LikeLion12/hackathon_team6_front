@@ -3,19 +3,14 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 export default function Nav() {
-  // const { isLoggedIn, logout } = useContext(AuthContext);
-  const { isLoggedIn, user, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate('/');
-    console.log('로그아웃 되었습니다.');
-  };
-
-  const handleLogin = () => {
-    isLoggedIn(true);
+    console.log('정상 로그아웃 되었습니다.');
   };
 
   return (
@@ -24,7 +19,7 @@ export default function Nav() {
         <div className="container flex justify-evenly w-[100%] h-28 items-center">
           <Link to="/">
             <div className="left flex ml-2">
-              <img src="../img/mainLogo.png" className="w-48" alt="" />
+              <img src="../../img/mainLogo.png" className="w-48" />
             </div>
           </Link>
 

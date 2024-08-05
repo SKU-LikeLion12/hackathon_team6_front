@@ -1,8 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import InvitePopupField from '../component/InvitePopupField';
 import './style.css';
 import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 export default function EmotionAnal() {
   const now = new Date();
@@ -12,7 +15,16 @@ export default function EmotionAnal() {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
   const day = days[now.getDay()];
 
+  const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [InvitePopup, setInvitePopup] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false); // 삭제 요청 상태
+  const [error, setError] = useState(null); // 오류 상태
+  const [image, setImage] = useState(null);
+  const [diary, setDiary] = useState(null); // 일기 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+
+  const params = useParams();
+  const diaryDate = params.id; // 날짜를 쿼리 파라미터로 사용
 
   const handleInviteUser = (event) => {
     setInvitePopup(true);
@@ -21,8 +33,6 @@ export default function EmotionAnal() {
   const handleCloseInvitePopup = (event) => {
     setInvitePopup(false);
   };
-
-  const [image, setImage] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
@@ -42,27 +52,79 @@ export default function EmotionAnal() {
     },
   });
 
-  const params = useParams();
-  // const { year, month, day } = useParams();
+  const fetchDiary = async () => {
+    try {
+      const token = getAuthToken();
+      const response = await axios.get(`${API_URL}/diary`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          date: diaryDate, // 선택된 날짜를 query parameter로 전달
+        },
+      });
+
+      if (response.status === 200) {
+        setDiary(response.data);
+      } else {
+        setError('일기를 불러오는데 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('일기 조회 중 오류 발생:', error);
+      setError('일기를 불러오는데 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiary();
+  }, [diaryDate]);
+
+  const deleteDiary = async () => {
+    setIsDeleting(true); // 삭제 요청 시작
+    try {
+      const token = getAuthToken();
+      const response = await axios.delete(`${API_URL}/diary/${diaryDate}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization 헤더에 'Bearer' 접두사 추가
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        alert('일기가 삭제되었습니다.');
+        // 페이지 리다이렉트 또는 상태 업데이트
+      } else {
+        alert('일기 삭제 중 오류가 발생했습니다.');
+      }
+    } catch (error) {
+      console.error('삭제 요청 중 오류 발생:', error);
+      alert('삭제 요청 중 오류가 발생했습니다.');
+    } finally {
+      setIsDeleting(false); // 요청 완료 후 상태 초기화
+      setInvitePopup(false); // 팝업 닫기
+    }
+  };
 
   return (
     <>
       <div className="min-h-[900px]">
         <div className="diarybg text-[#495057]">
           <div className="flex flex-row">
-            <div className="w-[45%]">
+            <div className="w-[50%]">
               <NavLink to="/Calendar">
                 <div className="text-[20px] font-medium ml-[15%] mt-[60px] mb-[20px] mr-0 hover:underline">
                   ← 캘린더로 돌아가기
                 </div>
               </NavLink>
-              <div className="flex justify-center ">
+              <div className="flex justify-center h-[750px]">
                 <div className="w-[80%] h-auto ml-[30px] mt-[4%]">
                   <div className="rounded-3xl p-5 bg-sky-100 w-full h-full drop-shadow-md">
                     <div className="rounded-2xl p-5 bg-white h-full drop-shadow-md">
                       <div className="p-4 h-auto">
                         <div className="text-[20px] font-semibold">
-                          {params.id} {year}. {month}. {date} ({day})
+                          {params.id}
                         </div>
                         <div>
                           <div className="my-6">
@@ -91,9 +153,11 @@ export default function EmotionAnal() {
                         </div>
                         <div className="border-t-2 py-5 mt-5">
                           <span className="text-[#495057]">
-                            오늘은 성결대학교 6팀 팀원들과 함께 앱 개발을
-                            하였다. 혼자 할 때는 어려웠는데 다 같이 으쌰으쌰
-                            하니 금방 끝났다. 뿌듯했다.
+                            {loading
+                              ? '로딩 중...'
+                              : diary
+                              ? diary.content
+                              : error || '일기 내용이 없습니다 !'}
                           </span>
                         </div>
                         <button
@@ -210,12 +274,12 @@ export default function EmotionAnal() {
                 </div>
 
                 <div className="flex justify-between mr-[10%] mb-12">
-                  <NavLink to="">
+                  <NavLink to={`/calendar/edit/${params.id}`}>
                     <button
                       className="bg-[#5BCBAB] h-[52px] w-[188px] font-semibold text-xl text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] flex items-center justify-around"
                       onClick={handleInviteUser}
                     >
-                      일기 저장
+                      일기 수정
                       <img
                         src="../img/diaryIcon.png"
                         className="w-[17px]"
@@ -247,11 +311,17 @@ export default function EmotionAnal() {
                         </span>
                       </div>
                       <div className="flex justify-around h-12 mt-8">
-                        <button className="bg-[#D9D9D9] font-bold text-xl w-[50%] h-[20%] absolute left-0 bottom-0 rounded-bl-3xl ">
+                        <button
+                          onClick={handleCloseInvitePopup}
+                          className="bg-[#D9D9D9] font-bold text-xl w-[50%] h-[20%] absolute left-0 bottom-0 rounded-bl-3xl "
+                        >
                           취소
                         </button>
-                        <button className="bg-[#D64A38] font-bold text-xl text-white w-[50%] h-[20%] absolute right-0 bottom-0 rounded-br-3xl">
-                          게시
+                        <button
+                          onClick={deleteDiary}
+                          className="bg-[#D64A38] font-bold text-xl text-white w-[50%] h-[20%] absolute right-0 bottom-0 rounded-br-3xl"
+                        >
+                          삭제
                         </button>
                       </div>
                     </div>

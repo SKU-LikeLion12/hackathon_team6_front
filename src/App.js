@@ -18,11 +18,9 @@ import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
-import ApiEx from './pages/ApiEx';
-import { AuthProvider } from './context/AuthContext';
 import Chat from './pages/Chat';
-import Voice from './pages/Voice';
-
+// import VoiceTextDisplay from './pages/VoiceTextDisplay';
+import { AuthProvider } from './context/AuthContext';
 // const mockData = [
 //   {
 //     id: 1,
@@ -60,7 +58,6 @@ const DiaryStateContext = createContext();
 const DiaryDispatchContext = createContext();
 
 function App() {
-  // const userId = 'joy002208!';
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(3);
 
@@ -107,9 +104,8 @@ function App() {
               value={{ onCreate, onUpdate, onDelete }}
             >
               <Nav />
-              {/* <Content /> */}
+
               <Routes>
-                {/* {location.pathname === '/' ? <HomeNav /> : <Nav />} */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/" element={<Home />} />
@@ -121,15 +117,13 @@ function App() {
                 <Route path="/ChatStart" element={<ChatStart />} />
                 <Route path="/ChatEnd" element={<ChatEnd />} />
                 <Route path="/DiaryStart" element={<DiaryStart />} />
+                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
+                <Route path="/Chat" element={<Chat />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
-                <Route path="ApiEx" element={<ApiEx />} />
-                <Route path="EmotionAnal" element={<EmotionAnal />} />
-                <Route path="Chat" element={<Chat />} />
-                <Route path="Voice" element={<Voice />} />
-                {/* <ApiEx userId={userId} /> */}
+                {/* <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} /> */}
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>

@@ -1,5 +1,5 @@
 .chatbg {
-  background-image: url("../img/chatbg.png");
+  background-image: url('../img/chatbg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -8,7 +8,7 @@
 }
 
 .diarybg {
-  background-image: url("../img/diary.png");
+  background-image: url('../img/diary.png');
   background-size: cover;
   /* background-position: bottom; */
   background-repeat: no-repeat;
@@ -17,7 +17,7 @@
 }
 
 .eqbg {
-  background-image: url("../img/eqbg.png");
+  background-image: url('../img/eqbg.png');
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;

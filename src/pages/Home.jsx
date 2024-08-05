@@ -1,17 +1,15 @@
-
 import React from 'react';
 import { FaArrowRightLong } from 'react-icons/fa6';
 import { NavLink } from 'react-router-dom';
 
-import Footer from "../component/Footer";
-
+import Footer from '../component/Footer';
 
 export default function Home() {
   return (
     <div className="h-auto">
       <div className="pt-60 bg-[url('./img/home.png')] bg-[length:1700px_800px] bg-no-repeat">
         <div className="flex flex-col items-center mb-60">
-          <h3 className="text-[#495057] text-6xl mb-16 font-bold grid place-items-center">
+          <h3 className="text-[#495057] text-6xl mb-16 font-bold grid place-items-center drop-shadow-md">
             오늘 나의 감정은 어땠을까?
           </h3>
 
@@ -27,8 +25,6 @@ export default function Home() {
                 <FaArrowRightLong className="ml-2" />
               </button>
             </NavLink>
-
-
           </div>
         </div>
 

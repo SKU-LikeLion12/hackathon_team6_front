@@ -43,14 +43,20 @@ const highlightChangesBefore = (oldText, newText) => {
         j < newWords.length &&
         (i >= oldWords.length || oldWords[i] !== newWords[j])
       ) {
+        // Highlight added word in newText
+        // diff.push(
+        //   <span className="text-red-700 font-bold" key={`new-${j}`}>
+        //     {newWords[j] + " "}
+        //   </span>
+        // );
         j++;
       }
     }
   }
+
   return diff;
 };
 
-// 수정 후
 const highlightChangesAfter = (oldText, newText) => {
   const diff = [];
   const oldWords = oldText.split(' ');

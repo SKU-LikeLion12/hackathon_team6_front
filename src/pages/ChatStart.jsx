@@ -105,10 +105,10 @@ export default function ChatStart() {
             </div>
             {/* <div>{transcription}</div> */}
             {/* <Edit transcription={transcription} /> */}
-            <div>
+            {/* <div>
               <span className="font-bold">콘솔 값 화면 출력: </span>
               <span>dd{logValue}</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
