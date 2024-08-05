@@ -9,7 +9,6 @@ import { API_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 
 export default function EQ() {
-  // const [program, setProgram] = useState(null);
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [emotion, setEmotion] = useState(null);
   const [emotionType, setEmotionType] = useState(''); // 현재 감정 유형을 설정합니다.
@@ -20,7 +19,7 @@ export default function EQ() {
   const username = localStorage.getItem('username') || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
-  //유뷰트 미리보기
+  //유튜브 미리보기
   function extractVideoId(url) {
     const regExp =
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -80,6 +79,29 @@ export default function EQ() {
     return null;
   };
 
+  //개인별 추천 프로그램
+  useEffect(() => {
+    const fetchProgram = async () => {
+      try {
+        const token = getAuthToken();
+        if (!token) {
+          throw new Error('Authorization token is missing');
+        }
+        const response = await axios.get(`${API_URL}/post`, {
+          headers: {
+            token: token,
+          },
+        });
+        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        setRandomPrograms(response.data);
+      } catch (error) {
+        if (error.response) {
+        }
+      }
+    };
+    fetchProgram();
+  }, [getAuthToken]);
+
   //감정 웅앵,,
   useEffect(() => {
     const fetchEmotion = async () => {
@@ -101,6 +123,29 @@ export default function EQ() {
     };
 
     fetchEmotion();
+  }, [getAuthToken]);
+
+  //추천 프러그램
+  useEffect(() => {
+    const fetchProgram = async () => {
+      try {
+        const token = getAuthToken();
+        if (!token) {
+          throw new Error('Authorization token is missing');
+        }
+        const response = await axios.get(`${API_URL}/post/{userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        setEmotion(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the emotion data!', error);
+      }
+    };
+
+    fetchProgram();
   }, [getAuthToken]);
 
   return (

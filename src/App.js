@@ -16,6 +16,7 @@ import ChatEnd from './pages/ChatEnd';
 import DiaryStart from './pages/DiaryStart';
 import EmotionAnal from './pages/EmotionAnal';
 import EQ from './pages/EQ';
+import ApiEx from './pages/ApiEx';
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
 import Chat from './pages/Chat';
@@ -121,6 +122,7 @@ function App() {
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
                 <Route path="/Chat" element={<Chat />} />
+                <Route path="/ApiEx" element={<ApiEx />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
                 {/* <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} /> */}
