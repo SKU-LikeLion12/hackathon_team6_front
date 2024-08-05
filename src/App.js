@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { useReducer, useRef, createContext } from "react";
 
 import Nav from "./component/Nav";
@@ -19,23 +18,22 @@ import EmotionAnal from "./pages/EmotionAnal";
 import EQ from "./pages/EQ";
 import Producer from "./pages/Producer";
 import SignUpCompleted from "./pages/SignUpCompleted";
-
+import VoiceTextDisplay from "./pages/VoiceTextDisplay";
 import { AuthProvider } from "./context/AuthContext";
-
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date().getTime(),
-    emotionId: 1,
-    content: "1번 일기 내용",
-  },
-  {
-    id: 2,
-    createdDate: new Date().getTime(),
-    emotionId: 2,
-    content: "2번 일기 내용",
-  },
-];
+// const mockData = [
+//   {
+//     id: 1,
+//     createdDate: new Date().getTime(),
+//     emotionId: 1,
+//     content: '1번 일기 내용',
+//   },
+//   {
+//     id: 2,
+//     createdDate: new Date().getTime(),
+//     emotionId: 2,
+//     content: '2번 일기 내용',
+//   },
+// ];
 
 function reducer(state, action) {
   switch (action.type) {
@@ -119,11 +117,12 @@ function App() {
                 <Route path="/ChatStart" element={<ChatStart />} />
                 <Route path="/ChatEnd" element={<ChatEnd />} />
                 <Route path="/DiaryStart" element={<DiaryStart />} />
-                <Route path="/EmotionAnal" element={<EmotionAnal />} />
-                <Route path="EQ" element={<EQ />} />
+                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
+                <Route path="/EQ" element={<EQ />} />
 
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
+                <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>

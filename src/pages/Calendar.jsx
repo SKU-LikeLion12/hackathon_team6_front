@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 export default function Attendance() {
   const data = [
-    { name: '행복', value: 10 },
-    { name: '불안', value: 10 },
-    { name: '중립', value: 10 },
-    { name: '슬픔', value: 10 },
-    { name: '분노', value: 10 },
+    { name: "행복", value: 10 },
+    { name: "불안", value: 10 },
+    { name: "중립", value: 10 },
+    { name: "슬픔", value: 10 },
+    { name: "분노", value: 10 },
   ];
 
-  const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
+  const COLORS = ["#FFF2B2", "#F1E5FF", "#5BCBAB", "#A9D6E5", "#FFA07A"];
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -19,10 +19,10 @@ export default function Attendance() {
         <div
           className="custom-tooltip"
           style={{
-            borderRadius: '10px',
-            backgroundColor: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            padding: "10px",
+            border: "1px solid #ccc",
           }}
         >
           <p>{`${payload[0].name} : ${payload[0].value}`}</p>
@@ -36,20 +36,20 @@ export default function Attendance() {
   const nav = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const months = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ];
-  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
   const handlePreviousMonth = () => {
     setCurrentDate(
@@ -67,11 +67,19 @@ export default function Attendance() {
     return new Date(year, month + 1, 0).getDate();
   };
 
+  // const handleDayClick = (date) => {
+  //   const formattedDate = `${date.getFullYear()}-${
+  //     date.getMonth() + 1
+  //   }-${date.getDate()}`;
+  //   // nav(`/calendar/edit/${formattedDate}`);
+  //   nav(`/EmotionAnal/formattedDate`);
+  // };
+
   const handleDayClick = (date) => {
-    const formattedDate = `${date.getFullYear()}-${
+    const formattedDate = `${date.getFullYear()}-${String(
       date.getMonth() + 1
-    }-${date.getDate()}`;
-    nav(`/calendar/edit/${formattedDate}`);
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    nav(`/EmotionAnal/${formattedDate}`);
   };
 
   const renderDays = () => {
@@ -100,10 +108,10 @@ export default function Attendance() {
             <span
               className={`w-8 h-8 rounded-full flex items-center justify-center ${
                 isToday
-                  ? 'text-sky-500 font-bold'
+                  ? "text-sky-500 font-bold"
                   : isWeekend
-                  ? 'text-sky-500'
-                  : 'text-black'
+                  ? "text-sky-500"
+                  : "text-black"
               }`}
             >
               {date}
@@ -140,8 +148,8 @@ export default function Attendance() {
                 key={day}
                 className={`flex items-center justify-center h-10 font-bold ${
                   index % 7 === 0 || index % 7 === 6
-                    ? 'text-sky-500'
-                    : 'text-gray-500'
+                    ? "text-sky-500"
+                    : "text-gray-500"
                 }`}
               >
                 {day}

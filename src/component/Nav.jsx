@@ -19,7 +19,7 @@ export default function Nav() {
         <div className="container flex justify-evenly w-[100%] h-28 items-center">
           <Link to="/">
             <div className="left flex ml-2">
-              <img src="./img/mainLogo.png" className="w-48" />
+              <img src="../img/mainLogo.png" className="w-48" />
             </div>
           </Link>
 
