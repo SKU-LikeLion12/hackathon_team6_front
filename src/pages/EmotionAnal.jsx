@@ -71,7 +71,7 @@ export default function EmotionAnal() {
       }
     } catch (error) {
       console.error("일기 조회 중 오류 발생:", error);
-      setError("일기 조회 중 오류가 발생했습니다.");
+      setError("일기를 불러오는데 실패했습니다.");
     } finally {
       setLoading(false);
     }
@@ -157,7 +157,7 @@ export default function EmotionAnal() {
                               ? "로딩 중..."
                               : diary
                               ? diary.content
-                              : error || "일기 내용이 없습니다."}
+                              : error || "일기 내용이 없습니다 !"}
                           </span>
                         </div>
                         <button
@@ -175,7 +175,6 @@ export default function EmotionAnal() {
                   </div>
                 </div>
               </div>
-
               <div className="relative"></div>
             </div>
 
@@ -188,7 +187,9 @@ export default function EmotionAnal() {
                       className="mr-[10%] text-[22px] font-black text-[#FFF1B2]"
                       style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.8) " }}
                     >
-                      행복 40%
+                      행복{" "}
+                      {diary && diary.emotion ? diary.emotion.happiness : "N/A"}
+                      %
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
@@ -207,7 +208,8 @@ export default function EmotionAnal() {
                           "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
-                      불안 25%
+                      불안{" "}
+                      {diary && diary.emotion ? diary.emotion.anxiety : "N/A"}%
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
@@ -226,7 +228,8 @@ export default function EmotionAnal() {
                           "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
-                      중립 7%
+                      중립{" "}
+                      {diary && diary.emotion ? diary.emotion.neutral : "N/A"}%
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
@@ -245,7 +248,8 @@ export default function EmotionAnal() {
                           "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
-                      슬픔 3%
+                      슬픔{" "}
+                      {diary && diary.emotion ? diary.emotion.sadness : "N/A"}%
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
@@ -264,7 +268,8 @@ export default function EmotionAnal() {
                           "2px 2px 6px rgba(0, 0, 0, 0.25), -2px 2px 6px rgba(0, 0, 0, 0.25), 2px -2px 6px rgba(0, 0, 0, 0.25), -2px -2px 6px rgba(0, 0, 0, 0.25)",
                       }}
                     >
-                      분노 25%
+                      분노{" "}
+                      {diary && diary.emotion ? diary.emotion.anxiety : "N/A"}%
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
