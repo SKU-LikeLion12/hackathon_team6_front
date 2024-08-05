@@ -27,6 +27,16 @@
   position: relative;
 }
 
+.editbg {
+  background-image: url("../img/edit_back.png");
+  background-size: cover;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-position: bottom;
+  width: 100%;
+  height: 100vh;
+}
+
 .lgBtn {
   background-color: white;
   border: none;

@@ -118,7 +118,7 @@ function App() {
                 <Route path="/DiaryStart" element={<DiaryStart />} />
                 <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
-
+                <Route path="/Edit" element={<Edit />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
                 <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />

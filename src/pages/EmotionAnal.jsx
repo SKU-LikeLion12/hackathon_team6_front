@@ -197,7 +197,16 @@ export default function EmotionAnal() {
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
                     <div className="absolute border-[0.2px] border-[#495057] w-[90%] h-[20px] bg-[#F8F9FA] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
-                    <div className="absolute border-[0.2px] border-[#495057] bg-[#FFF2B2] border w-[36%] h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
+                    <div
+                      className="absolute border-[0.2px] border-[#495057] bg-[#FFF2B2] border h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"
+                      style={{
+                        width: `${
+                          (diary && diary.emotion
+                            ? diary.emotion.happiness
+                            : 0) * 0.9
+                        }%`,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
@@ -217,7 +226,16 @@ export default function EmotionAnal() {
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
                     <div className="absolute border-[0.2px] border-[#495057] w-[90%] h-[20px] bg-[#F8F9FA] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
-                    <div className="absolute border-[0.2px] border-[#495057] bg-[#F1E4FF] border w-[22.5%] h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
+                    <div
+                      className="absolute border-[0.2px] border-[#495057] bg-[#F1E4FF] border h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"
+                      style={{
+                        width: `${
+                          (diary && diary.emotion
+                            ? diary.emotion.happiness
+                            : 0) * 0.9
+                        }%`,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
@@ -237,7 +255,16 @@ export default function EmotionAnal() {
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
                     <div className="absolute border-[0.2px] border-[#495057] w-[90%] h-[20px] bg-[#F8F9FA] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
-                    <div className="absolute border-[0.2px] border-[#495057] bg-[#5ACBAB] border w-[6.3%] h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
+                    <div
+                      className="absolute border-[0.2px] border-[#495057] bg-[#5ACBAB] border h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"
+                      style={{
+                        width: `${
+                          (diary && diary.emotion
+                            ? diary.emotion.happiness
+                            : 0) * 0.9
+                        }%`,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
@@ -257,7 +284,16 @@ export default function EmotionAnal() {
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
                     <div className="absolute border-[0.2px] border-[#495057] w-[90%] h-[20px] bg-[#F8F9FA] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
-                    <div className="absolute border-[0.2px] border-[#495057] bg-[#A9D6E5] border w-[2.7%] h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
+                    <div
+                      className="absolute border-[0.2px] border-[#495057] bg-[#A9D6E5] border h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"
+                      style={{
+                        width: `${
+                          (diary && diary.emotion
+                            ? diary.emotion.happiness
+                            : 0) * 0.9
+                        }%`,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
@@ -277,7 +313,16 @@ export default function EmotionAnal() {
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
                     <div className="absolute border-[0.2px] border-[#495057] w-[90%] h-[20px] bg-[#F8F9FA] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
-                    <div className="absolute border-[0.2px] border-[#495057] bg-[#FF9F7A] border w-[22.5%] h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"></div>
+                    <div
+                      className="absolute border-[0.2px] border-[#495057] bg-[#FF9F7A] border h-[20px] rounded-full mt-[15px] mb-[60px] shadow-md"
+                      style={{
+                        width: `${
+                          (diary && diary.emotion
+                            ? diary.emotion.happiness
+                            : 0) * 0.9
+                        }%`,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
@@ -334,9 +379,6 @@ export default function EmotionAnal() {
                       </div>
                     </div>
                   </InvitePopupField>
-                  <div>
-                    {diary && diary.emotion ? diary.emotion.sadness : "N/A"}%
-                  </div>
                 </div>
               </div>
             </div>
