@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Fellinsight✨
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 팀원 소개
 
-## Available Scripts
+이승은 : 
+<br />
+이호연 : https://github.com/dlghdus9949
+<br /> 
+안하서 : https://github.com/haaseoo
+<br />
+박지우 : https://github.com/parkjiu0208
+<br />
+권오현 : https://github.com/GOH01
 
-In the project directory, you can run:
+### 프로젝트 설명
+> 💗 음성인식 챗봇을 활용한 일기 기록 및 감정 기록, 더 나아가 행복, 슬픔, 분노, 불안을 느끼는 상황까지 분석해주는 서비스. 좋지 않은 감정을 극복하는데 도움을 주는 서비스
 
-### `npm start`
+# 목차
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Fellinsight ✨]
+    + [팀원 소개](#팀원-소개)
+    + [프로젝트 설명](#프로젝트-설명)
+- [프로젝트 정보](#프로젝트-정보)
+    + [기술 스택](#기술-스택)
+  * [시스템 아키텍쳐](#시스템-아키텍쳐)
+  * [구현 목록](#구현-목록)
+  
+- [프로젝트 결과물](#프로젝트-결과물)
+  * [메인페이지](#메인페이지)
+  * [일기 작성 페이지](#일기-작성-페이지)
+  * [일기 수정 페이지](#일기-수정-페이지)
+  * [달력 페이지](#달력-페이지)
+  * [일기 상세 페이지](#일기-상세-페이지)
+  * [개인 페이지](#개인-분석-페이지)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+# 프로젝트 정보
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 기술 스택
+<p align="center">
+<img src="style=for-the-badge&logo=amazonlightsail&logoColor=white">
+<img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white">
+</p>
+<p align="center">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+</p>
+<p align="center">
+<img src="style=for-the-badge&logo=reactquery&logoColor=white">
+<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
+</p>
+<p align="center">
+<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+</p>
 
-### `npm run build`
+## 시스템 아키텍쳐
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 구현 목록
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### - 인공지능 음성인식 모델을 통한 STT서비스
+- openAI의 whisper 모델을 사용하여 음성인식을 구현하였습니다.
 
-### `npm run eject`
+#### - 자연어처리 모델을 통한 다중감정분석 서비스
+- Google의 goemotions 데이터셋을 학습한 distilbert 모델을 사용하여 다중감정분석을 구현하였습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# 프로젝트 결과물
+## 메인페이지
+#### 메인페이지는 서비스 설명과 소개로 이루어져 있어요.
+![KakaoTalk_Photo_2024-08-06-22-00-44 003](https://github.com/user-attachments/assets/b96a4a38-99d6-46a5-b06d-ed554fc02cb5)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 챗봇 상담하기 페이지
+#### 여기는 수정해줘여
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## EQ 높이기 페이지
+#### 기록된 일기들로 감정을 파악하고, 감정에 따른 추천 활동을 보여줍니다.
+![KakaoTalk_Photo_2024-08-06-22-00-43 001](https://github.com/user-attachments/assets/529eff8b-6f4f-43a6-be61-5ca8cf7b08c7)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 일기 작성 페이지
+#### 일기 작성 페이지는 챗봇과 대화하며 일기를 작성해보세요.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 달력 페이지
+#### 달력 페이지는 작성한 일기들을 확인할 수 있어요.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 일기 상세 페이지
+#### 일기 상세 페이지에서는 작성한 일기를 토대로 다중 감정 분석을 통해 작성자의 감정을 분석합니다. 이후 분석한 감정데이터를 게이지 바로 제공합니다. 또한 완성된 일기장을 이미지로 저장할 수 있습니다.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 일기 수정 페이지
+#### 일기 수정 페이지에서는 대화 종료 후 STT 데이터를 불러와 내용을 수정할 수 있어요.
+#### 수정된 텍스트는 빨간 강조 글씨로 쉽게 확인할 수 있어요.
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/1dadbd0c-1a84-4d5f-8d5c-67d2db669c52">
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
