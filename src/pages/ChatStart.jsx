@@ -43,7 +43,7 @@ export default function ChatStart() {
       formData.append("file", audioBlob, "recording.webm");
       const authToken = localStorage.getItem("authToken");
 
-      axios.post("http://team6back.sku-sku.com/upload-audio/", formData, {
+      axios.post("http://team6ai.sku-sku.com/upload-audio/", formData, {
         headers: {
           Authorization: `${authToken}`,
           "Content-Type": "multipart/form-data",
