@@ -14,19 +14,26 @@ export default function EQ() {
   const [emotionType, setEmotionType] = useState(""); // 현재 감정 유형을 설정
   const [randomPrograms, setRandomPrograms] = useState([]);
   const [situation, setSituation] = useState(null);
-  // const [error, setError] = useState(null); // 오류 상태
-  // const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 오류 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
 
   const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   //유튜브 미리보기
-  function extractVideoId(url) {
+  // function extractVideoId(url) {
+  //   const regExp =
+  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  //   const match = url.match(regExp);
+  //   return match && match[] ? match[1] : null;
+  // }
+
+  const extractVideoId = (url) => {
     const regExp =
-      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|watch\?.*?\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
-    return match && match[1] ? match[1] : null;
-  }
+    return match && match[2].length === 11 ? match[2] : null;
+  };
 
   //랜덤 프로그램 추천
   useEffect(() => {
@@ -341,7 +348,10 @@ export default function EQ() {
           </div>
           <div className="flex flex-col justify-center items-center mr-[10%] relative">
             {randomPrograms.map((program, index) => {
-              const videoId = extractVideoId(program.content);
+              const isVideo =
+                program.content.startsWith("http://") ||
+                program.content.startsWith("https://");
+              const videoId = isVideo ? extractVideoId(program.content) : null;
               return (
                 <div className="relative w-[70%] mt-[-10px]" key={index}>
                   <img
@@ -356,12 +366,16 @@ export default function EQ() {
                       </strong>
                       <br />
                       <br />
-                      <div style={{ width: "90%" }} className="mx-auto">
-                        <LiteYouTubeEmbed
-                          id={videoId}
-                          noCookie={true} //default가 false라서 꼭 명시하기
-                        />
-                      </div>
+                      {isVideo && videoId ? (
+                        <div style={{ width: "90%" }} className="mx-auto">
+                          <LiteYouTubeEmbed
+                            id={videoId}
+                            noCookie={true} // default가 false라서 꼭 명시하기
+                          />
+                        </div>
+                      ) : (
+                        <div className="text-content">{program.content}</div>
+                      )}
                     </div>
                   </div>
                 </div>
