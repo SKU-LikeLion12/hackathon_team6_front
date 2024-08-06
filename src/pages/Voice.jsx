@@ -93,4 +93,4 @@ export default function Edit() {
   );
 }
 
-// git push때문에 씁니당
+// git push때문에 씁니다요
