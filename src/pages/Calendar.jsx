@@ -115,6 +115,14 @@ export default function Attendance() {
   //   nav(`/EmotionAnal/formattedDate`);
   // };
 
+  // const handleDayClick = (date) => {
+  //   const formattedDate = `${date.getFullYear()}-${
+  //     date.getMonth() + 1
+  //   }-${date.getDate()}`;
+  //   // nav(`/calendar/edit/${formattedDate}`);
+  //   nav(`/EmotionAnal/formattedDate`);
+  // };
+
   const handleDayClick = (date) => {
     const formattedDate = `${date.getFullYear()}-${String(
       date.getMonth() + 1

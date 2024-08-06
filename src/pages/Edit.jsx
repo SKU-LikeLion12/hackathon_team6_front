@@ -8,11 +8,12 @@ import { API_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
 import './style.css';
 
+
 // Helper function to highlight changes in "수정전"
 const highlightChangesBefore = (oldText, newText) => {
   const diff = [];
-  const oldWords = oldText.split(' ');
-  const newWords = newText.split(' ');
+  const oldWords = oldText.split(" ");
+  const newWords = newText.split(" ");
 
   let i = 0;
   let j = 0;
@@ -23,7 +24,7 @@ const highlightChangesBefore = (oldText, newText) => {
       j < newWords.length &&
       oldWords[i] === newWords[j]
     ) {
-      diff.push(oldWords[i] + ' ');
+      diff.push(oldWords[i] + " ");
       i++;
       j++;
     } else {
@@ -34,7 +35,7 @@ const highlightChangesBefore = (oldText, newText) => {
         // Highlight removed word in oldText
         diff.push(
           <span className="text-red-700 font-bold" key={`old-${i}`}>
-            {oldWords[i] + ' '}
+            {oldWords[i] + " "}
           </span>
         );
         i++;
@@ -55,8 +56,8 @@ const highlightChangesBefore = (oldText, newText) => {
 // 수정 후
 const highlightChangesAfter = (oldText, newText) => {
   const diff = [];
-  const oldWords = oldText.split(' ');
-  const newWords = newText.split(' ');
+  const oldWords = oldText.split(" ");
+  const newWords = newText.split(" ");
 
   let i = 0;
   let j = 0;
@@ -67,7 +68,7 @@ const highlightChangesAfter = (oldText, newText) => {
       j < newWords.length &&
       oldWords[i] === newWords[j]
     ) {
-      diff.push(oldWords[i] + ' ');
+      diff.push(oldWords[i] + " ");
       i++;
       j++;
     } else {
@@ -86,7 +87,7 @@ const highlightChangesAfter = (oldText, newText) => {
         // Highlight added word in newText
         diff.push(
           <span className="text-red-700 font-bold" key={`new-${j}`}>
-            {newWords[j] + ' '}
+            {newWords[j] + " "}
           </span>
         );
         j++;
@@ -102,6 +103,7 @@ export default function Edit() {
   const [diary, setDiary] = useState(null); // 일기 상태
   const [content, setContent] = useState(''); // 일기 내용을 저장하는 상태
   const [editedContent, setEditedContent] = useState(''); // 수정된 일기 내용을 저장하는 상태
+
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -123,7 +125,7 @@ export default function Edit() {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      'image/png': ['.png', '.jpeg'],
+      "image/png": [".png", ".jpeg"],
     },
   });
 
@@ -149,6 +151,7 @@ export default function Edit() {
     } catch (error) {
       console.error('일기 조회 중 오류 발생:', error);
       setError('일기를 불러오는데 실패했습니다.');
+
     } finally {
       setLoading(false);
     }
@@ -171,6 +174,7 @@ export default function Edit() {
       console.log('Token: ', token);
       console.log('Edited Content: ', editedContent);
 
+
       const response = await axios.put(
         `${API_URL}/diary/update`,
         {
@@ -180,6 +184,7 @@ export default function Edit() {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
+
           },
           params: {
             date: diaryDate,
@@ -197,6 +202,7 @@ export default function Edit() {
       }
     } catch (error) {
       console.error('일기 수정 중 오류 발생:', error);
+
     }
   };
 
@@ -323,6 +329,7 @@ export default function Edit() {
               <p>게시 후 수정이 가능합니다.</p>
               <p>
                 게시된 일기장은{' '}
+
                 <span className="underline">사용자 감정 분석에 사용</span>
                 됩니다.
               </p>

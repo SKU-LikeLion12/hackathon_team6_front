@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from "react";
+import axios from "axios";
 
 export default function Edit() {
   const [recording, setRecording] = useState(false);
@@ -12,7 +12,7 @@ export default function Edit() {
       mediaRecorderRef.current.start();
       setRecording(true);
 
-      mediaRecorderRef.current.addEventListener('dataavailable', (event) => {
+      mediaRecorderRef.current.addEventListener("dataavailable", (event) => {
         audioChunksRef.current.push(event.data);
       });
     });
@@ -21,27 +21,30 @@ export default function Edit() {
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
 
-    mediaRecorderRef.current.addEventListener('stop', async () => {
+    mediaRecorderRef.current.addEventListener("stop", () => {
       const audioBlob = new Blob(audioChunksRef.current, {
-        type: 'audio/webm',
+        type: "audio/webm",
       });
-      const audioBytes = await audioBlob.arrayBuffer();
-      const authToken = localStorage.getItem('authToken');
 
-      const token = authToken;
+      const formData = new FormData();
+      formData.append("file", audioBlob);
+      const authToken = localStorage.getItem("authToken"); //토큰
 
       axios
-        .post('http://team6back.sku-sku/upload-audio', audioBytes, {
+        .post("http://team6back.sku-sku.com/transcribe/", formData, {
+
           headers: {
             Authorization: `${token}`,
             'Content-Type': 'application/octet-stream',
           },
         })
         .then((response) => {
-          console.log('Server response:', response.data);
+
+          console.log("음성 인식 결과:", response.data);
+          // console.log('토큰:', `${authToken}`);
         })
         .catch((error) => {
-          console.error('Error uploading file:', error);
+          console.error("오류가 발생했습니다:", error);
         });
 
       audioChunksRef.current = [];

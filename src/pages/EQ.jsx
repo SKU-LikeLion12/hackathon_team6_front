@@ -1,23 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import './style.css';
-import axios from 'axios';
-import programs from '../programs.json';
-import { API_URL } from '../config';
-import { AuthContext } from '../context/AuthContext';
+import React, { useState, useEffect, useContext } from "react";
+import LiteYouTubeEmbed from "react-lite-youtube-embed";
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import "./style.css";
+import axios from "axios";
+import programs from "../programs.json";
+import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
 
 export default function EQ() {
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [emotion, setEmotion] = useState(null);
   const [emotionType, setEmotionType] = useState(''); // 현재 감정 유형을 설정
+
   const [randomPrograms, setRandomPrograms] = useState([]);
   const [situation, setSituation] = useState(null);
   const [error, setError] = useState(null); // 오류 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
 
-  const username = localStorage.getItem('username') || '"guest"';
+  const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   //유튜브 미리보기
@@ -51,21 +52,21 @@ export default function EQ() {
 
   const data = emotion
     ? [
-        { name: '행복', value: emotion.happiness },
-        { name: '불안', value: emotion.anxiety },
-        { name: '중립', value: emotion.neutral },
-        { name: '슬픔', value: emotion.sadness },
-        { name: '분노', value: emotion.anger },
+        { name: "행복", value: emotion.happiness },
+        { name: "불안", value: emotion.anxiety },
+        { name: "중립", value: emotion.neutral },
+        { name: "슬픔", value: emotion.sadness },
+        { name: "분노", value: emotion.anger },
       ]
     : [
-        { name: '행복', value: 0 },
-        { name: '불안', value: 0 },
-        { name: '중립', value: 0 },
-        { name: '슬픔', value: 0 },
-        { name: '분노', value: 0 },
+        { name: "행복", value: 0 },
+        { name: "불안", value: 0 },
+        { name: "중립", value: 0 },
+        { name: "슬픔", value: 0 },
+        { name: "분노", value: 0 },
       ];
 
-  const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
+  const COLORS = ["#FFF2B2", "#F1E5FF", "#5BCBAB", "#A9D6E5", "#FFA07A"];
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -73,10 +74,10 @@ export default function EQ() {
         <div
           className="custom-tooltip"
           style={{
-            borderRadius: '10px',
-            backgroundColor: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            padding: "10px",
+            border: "1px solid #ccc",
           }}
         >
           <p>{`${payload[0].name} : ${payload[0].value}%`}</p>
@@ -93,14 +94,14 @@ export default function EQ() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/post`, {
           headers: {
             token: token,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setRandomPrograms(response.data);
       } catch (error) {
         if (error.response) {
@@ -127,6 +128,7 @@ export default function EQ() {
         setSituation(response.data);
       } catch (error) {
         console.error('There was an error fetching the emotion data!', error);
+
         if (error.response) {
         }
       }
@@ -140,17 +142,17 @@ export default function EQ() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/emotion/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
+        console.error("There was an error fetching the emotion data!", error);
       }
     };
 
@@ -163,17 +165,17 @@ export default function EQ() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/post/{userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
+        console.error("There was an error fetching the emotion data!", error);
       }
     };
 
@@ -250,11 +252,11 @@ export default function EQ() {
               {displayName}님의 주요 감정은 '
               {emotion ? (
                 <span>
-                  {emotion.topEmotion === 'happiness' && '행복'}
-                  {emotion.topEmotion === 'sadness' && '슬픔'}
-                  {emotion.topEmotion === 'anxiety' && '불안'}
-                  {emotion.topEmotion === 'neutral' && '중립'}
-                  {emotion.topEmotion === 'anger' && '분노'}
+                  {emotion.topEmotion === "happiness" && "행복"}
+                  {emotion.topEmotion === "sadness" && "슬픔"}
+                  {emotion.topEmotion === "anxiety" && "불안"}
+                  {emotion.topEmotion === "neutral" && "중립"}
+                  {emotion.topEmotion === "anger" && "분노"}
                 </span>
               ) : (
                 <span>Loading...</span>
@@ -351,6 +353,7 @@ export default function EQ() {
               const isVideo =
                 program.content.startsWith('http://') ||
                 program.content.startsWith('https://');
+
               const videoId = isVideo ? extractVideoId(program.content) : null;
               return (
                 <div className="relative w-[70%] mt-[-10px]" key={index}>
@@ -368,6 +371,7 @@ export default function EQ() {
                       <br />
                       {isVideo && videoId ? (
                         <div style={{ width: '90%' }} className="mx-auto">
+
                           <LiteYouTubeEmbed
                             id={videoId}
                             noCookie={true} // default가 false라서 꼭 명시하기

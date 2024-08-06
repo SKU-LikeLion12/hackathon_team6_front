@@ -1,56 +1,52 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(
-    localStorage.getItem('authToken') || ''
+    localStorage.getItem("authToken") || ""
   );
-
-  const getAuthToken = () => {
-    return authToken;
-  };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('username');
+    const token = localStorage.getItem("authToken");
+    const userData = localStorage.getItem("username");
 
-    if (token && userData) {
+    if (token) {
       try {
-        const parsedUserData = JSON.parse(userData);
+        const decodedToken = jwtDecode(token);
+        const parsedUserData = { user_name: decodedToken.sub }; // 수정된 부분
         setIsLoggedIn(true);
-        // setUser(parsedUserData);
-        setAuthToken(token); // authToken을 설정
+        setUser(parsedUserData); // 수정된 부분
+        setAuthToken(token);
+
       } catch (error) {
-        console.error('Failed to parse user data:', error);
-        localStorage.removeItem('username');
+        console.error("Failed to decode token:", error);
+        localStorage.removeItem("authToken");
       }
     }
   }, []);
 
   const login = (token, userData) => {
-    // console.log('로그인 데이터:', token, userData);
-
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('username', JSON.stringify(userData));
+    localStorage.setItem("authToken", token);
+    localStorage.setItem("username", JSON.stringify(userData));
     setIsLoggedIn(true);
     setUser(userData);
-    setAuthToken(token); // authToken을 설정
+    setAuthToken(token);
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('username');
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
     setIsLoggedIn(false);
     setUser(null);
   };
 
-  const signup = (userData) => {
-    localStorage.setItem('username', JSON.stringify(userData));
-    setUser(userData);
+  const getAuthToken = () => {
+    return localStorage.getItem("authToken");
   };
 
   return (

@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FaPlay } from 'react-icons/fa';
-import axios from 'axios';
-import './style.css';
+import React, { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import { FaPlay } from "react-icons/fa";
+import axios from "axios";
+import "./style.css";
 
 export default function ChatEnd() {
   const [recording, setRecording] = useState(false);
@@ -15,7 +15,7 @@ export default function ChatEnd() {
       mediaRecorderRef.current.start();
       setRecording(true);
 
-      mediaRecorderRef.current.addEventListener('dataavailable', (event) => {
+      mediaRecorderRef.current.addEventListener("dataavailable", (event) => {
         audioChunksRef.current.push(event.data);
       });
     });
@@ -24,28 +24,22 @@ export default function ChatEnd() {
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
 
-    mediaRecorderRef.current.addEventListener('stop', async () => {
+    mediaRecorderRef.current.addEventListener("stop", () => {
+
       const audioBlob = new Blob(audioChunksRef.current, {
-        type: 'audio/webm',
+        type: "audio/webm",
       });
-      const audioBytes = await audioBlob.arrayBuffer(); // 파일을 바이트 배열로 변환
-      const authToken = localStorage.getItem('authToken');
 
-      const token = authToken; // 실제 JWT 토큰 값을 사용
+      const formData = new FormData();
+      formData.append("file", audioBlob, "recording.webm"); // 파일 이름 추가
+      const authToken = localStorage.getItem("authToken");
 
-      axios
-        .post('http://team6back.sku-sku/upload-audio', audioBytes, {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/octet-stream', // 바이트 스트림 전송을 위한 MIME 타입
-          },
-        })
-        .then((response) => {
-          console.log('Server response:', response.data);
-        })
-        .catch((error) => {
-          console.error('Error uploading file:', error);
-        });
+      axios.post("http://team6back.sku-sku.com/upload-audio/", formData, {
+        headers: {
+          Authorization: `${authToken}`, // 토큰을 적절히 설정
+          "Content-Type": "multipart/form-data", // 파일 업로드를 위한 콘텐츠 타입
+        },
+      });
 
       audioChunksRef.current = [];
       setRecording(false);

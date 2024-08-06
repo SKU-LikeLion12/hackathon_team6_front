@@ -1,7 +1,9 @@
-import { BrowserRouter, Route, Routes, useActionData } from 'react-router-dom';
-import { useReducer, useRef, createContext } from 'react';
+import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useReducer, useRef, createContext } from "react";
 
-import Nav from './component/Nav';
+import Nav from "./component/Nav";
+
 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -24,6 +26,7 @@ import SignUpCompleted from './pages/SignUpCompleted';
 // import ApiEx from './pages/ApiEx';
 // import Voice from './pages/Voice';
 import { AuthProvider } from './context/AuthContext';
+
 // const mockData = [
 //   {
 //     id: 1,
@@ -41,13 +44,13 @@ import { AuthProvider } from './context/AuthContext';
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'CREATE':
+    case "CREATE":
       return [action.data, ...state];
-    case 'UPDATE':
+    case "UPDATE":
       return state.map((item) =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
-    case 'DELETE':
+    case "DELETE":
       return state.filter(
         (item) => String(item.id) !== String(useActionData.id)
       );
@@ -67,7 +70,7 @@ function App() {
   // 새로운 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
-      type: 'CREATE',
+      type: "CREATE",
       date: {
         id: idRef.current++,
         createdDate,
@@ -80,7 +83,7 @@ function App() {
   // 기존 일기 수정
   const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: 'UPDATE',
+      type: "UPDATE",
       data: {
         id,
         createdDate,
@@ -93,7 +96,7 @@ function App() {
   // 기존 일기 삭제
   const onDelete = (id) => {
     dispatch({
-      type: 'DELETE',
+      type: "DELETE",
       id,
     });
   };
@@ -125,9 +128,11 @@ function App() {
                 <Route path="/Edit" element={<Edit />} />
                 {/* <Route path="/Voice" element={<Voice />} /> */}
                 {/* <Route path="/ApiEx" element={<ApiEx />} /> */}
+ 
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
-                {/* <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} /> */}
+                <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />
+                <Route path="/warning" element={<Warning />} />
               </Routes>
             </DiaryDispatchContext.Provider>
           </DiaryStateContext.Provider>
