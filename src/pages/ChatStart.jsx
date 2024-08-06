@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FaMicrophone } from 'react-icons/fa';
-import axios from 'axios';
-import './style.css';
+import React, { useState, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { FaMicrophone } from "react-icons/fa";
+import axios from "axios";
+import "./style.css";
 // import Edit from '../pages/Edit';
 
 export default function ChatStart() {
-  const [logValue, setLogValue] = useState('');
+  const [logValue, setLogValue] = useState("");
 
   // const logToScreen = (formData) => {
   //   console.log(formData);
@@ -23,7 +23,7 @@ export default function ChatStart() {
 
   const [recording, setRecording] = useState(false);
   const [transcription, setTranscription] = useState({
-    refined_text: '',
+    refined_text: "",
     emotions: {},
     situation: {},
   });
@@ -36,7 +36,7 @@ export default function ChatStart() {
       mediaRecorderRef.current.start();
       setRecording(true);
 
-      mediaRecorderRef.current.addEventListener('dataavailable', (event) => {
+      mediaRecorderRef.current.addEventListener("dataavailable", (event) => {
         audioChunksRef.current.push(event.data);
       });
     });
@@ -44,21 +44,20 @@ export default function ChatStart() {
 
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
-    mediaRecorderRef.current.addEventListener('stop', () => {
+    mediaRecorderRef.current.addEventListener("stop", () => {
       const audioBlob = new Blob(audioChunksRef.current, {
-        type: 'audio/webm',
+        type: "audio/webm",
       });
       const formData = new FormData();
-      formData.append('file', audioBlob);
+      formData.append("file", audioBlob, "recording.webm"); // 파일 이름 추가
+      const authToken = localStorage.getItem("authToken");
 
-      axios
-        .post('http://team6ai.sku-sku.com/transcribe/', formData)
-        .then((response) => {
-          console.log('음성 인식 결과:', response.data);
-        })
-        .catch((error) => {
-          console.error('오류가 발생했습니다:', error);
-        });
+      axios.post("http://team6back.sku-sku.com/upload-audio/", formData, {
+        headers: {
+          Authorization: `${authToken}`, // 토큰을 적절히 설정
+          "Content-Type": "multipart/form-data", // 파일 업로드를 위한 콘텐츠 타입
+        },
+      });
 
       audioChunksRef.current = [];
       setRecording(false);
