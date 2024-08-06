@@ -33,10 +33,12 @@ export default function ChatStart() {
 
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
+
     mediaRecorderRef.current.addEventListener("stop", () => {
       const audioBlob = new Blob(audioChunksRef.current, {
         type: "audio/webm",
       });
+
       const formData = new FormData();
       formData.append("file", audioBlob, "recording.webm");
       const authToken = localStorage.getItem("authToken");

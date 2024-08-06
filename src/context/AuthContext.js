@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(true);
         setUser(parsedUserData); // 수정된 부분
         setAuthToken(token);
+
       } catch (error) {
         console.error("Failed to decode token:", error);
         localStorage.removeItem("authToken");
@@ -55,8 +56,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

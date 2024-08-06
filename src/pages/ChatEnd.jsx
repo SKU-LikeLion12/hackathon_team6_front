@@ -23,10 +23,13 @@ export default function ChatEnd() {
 
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
+
     mediaRecorderRef.current.addEventListener("stop", () => {
+
       const audioBlob = new Blob(audioChunksRef.current, {
         type: "audio/webm",
       });
+
       const formData = new FormData();
       formData.append("file", audioBlob, "recording.webm"); // 파일 이름 추가
       const authToken = localStorage.getItem("authToken");

@@ -4,27 +4,29 @@ import { useReducer, useRef, createContext } from "react";
 
 import Nav from "./component/Nav";
 
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import Home from "./pages/Home";
-import Calendar from "./pages/Calendar";
-import ChatBot from "./pages/ChatBot";
-import Edit from "./pages/Edit";
-import Diary from "./pages/Diary";
-import ChatMain from "./pages/ChatMain";
-import ChatStart from "./pages/ChatStart";
-import ChatEnd from "./pages/ChatEnd";
-import DiaryStart from "./pages/DiaryStart";
-import EmotionAnal from "./pages/EmotionAnal";
-import EQ from "./pages/EQ";
-import Producer from "./pages/Producer";
-import SignUpCompleted from "./pages/SignUpCompleted";
-import VoiceTextDisplay from "./pages/VoiceTextDisplay";
-import Warning from "./pages/Warning";
-import ApiEx from "./pages/ApiEx";
-import Chat from "./pages/Chat";
 
-import { AuthProvider } from "./context/AuthContext";
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import Calendar from './pages/Calendar';
+import ChatBot from './pages/ChatBot';
+import Edit from './pages/Edit';
+import Diary from './pages/Diary';
+import ChatMain from './pages/ChatMain';
+import ChatStart from './pages/ChatStart';
+import ChatEnd from './pages/ChatEnd';
+import DiaryStart from './pages/DiaryStart';
+import EmotionAnal from './pages/EmotionAnal';
+import EQ from './pages/EQ';
+import ApiEx from './pages/ApiEx';
+import Producer from './pages/Producer';
+import SignUpCompleted from './pages/SignUpCompleted';
+// import Chat from './pages/Chat';
+// // import VoiceTextDisplay from './pages/VoiceTextDisplay';
+// import ApiEx from './pages/ApiEx';
+// import Voice from './pages/Voice';
+import { AuthProvider } from './context/AuthContext';
+
 // const mockData = [
 //   {
 //     id: 1,
@@ -124,11 +126,9 @@ function App() {
                 <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
-                <Route path="/Chat" element={<Chat />} />
-                <Route path="/ApiEx" element={<ApiEx />} />
-                <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
-                <Route path="/EQ" element={<EQ />} />
-                <Route path="/Edit" element={<Edit />} />
+                {/* <Route path="/Voice" element={<Voice />} /> */}
+                {/* <Route path="/ApiEx" element={<ApiEx />} /> */}
+ 
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
                 <Route path="VoiceTextDisplay" element={<VoiceTextDisplay />} />

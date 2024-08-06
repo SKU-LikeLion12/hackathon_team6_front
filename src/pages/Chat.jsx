@@ -1,57 +1,48 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
-export default function Chat() {
-  const username = localStorage.getItem('username') || '"guest"';
-  const displayName = username.length > 2 ? username.slice(1, -1) : username;
+const extractVideoId = (url) => {
+  const regExp =
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|watch\?.*?\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+};
 
-  const [emotion, setEmotion] = useState(null);
-  const { getAuthToken } = useContext(AuthContext);
-
-  useEffect(() => {
-    const fetchEmotion = async () => {
-      try {
-        const token = getAuthToken();
-        if (!token) {
-          throw new Error('Authorization token is missing');
-        }
-        const response = await axios.get(
-          `http://team6back.sku-sku.com/emotion/user`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
-        setEmotion(response.data);
-      } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
-      }
-    };
-
-    fetchEmotion();
-  }, [getAuthToken]);
-
+const chat = ({ randomPrograms }) => {
   return (
-    <div>
-      <p>Username: {displayName}</p>
-      <div>
-        <h3>Emotion Data</h3>
-        {emotion ? (
-          <>
-            <p>Happiness: {emotion.happiness}%</p>
-            <p>Anxiety: {emotion.anxiety}%</p>
-            <p>Neutral: {emotion.neutral}%</p>
-            <p>Sadness: {emotion.sadness}%</p>
-            <p>Anger: {emotion.anger}%</p>
-            <p>Top Emotion: {emotion.topEmotion}</p>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </div>
+    <>
+      {randomPrograms.map((program, index) => {
+        const isVideo =
+          program.content.startsWith('http://') ||
+          program.content.startsWith('https://');
+        const videoId = isVideo ? extractVideoId(program.content) : null;
+        return (
+          <div className="relative w-[70%] mt-[-10px]" key={index}>
+            <img src="../img/box.png" className="w-[100%] h-[100%]" alt="" />
+            <div className="absolute top-[-15px] left-[-2px] w-full h-full flex flex-col justify-center items-center text-center text-black z-10">
+              <div className="w-[90%] p-4 text-[#495057]">
+                <strong className="text-[18px] text-[#262626] mt-4">
+                  {program.title}
+                </strong>
+                <br />
+                <br />
+                {isVideo && videoId ? (
+                  <div style={{ width: '90%' }} className="mx-auto">
+                    <LiteYouTubeEmbed
+                      id={videoId}
+                      noCookie={true} // default가 false라서 꼭 명시하기
+                    />
+                  </div>
+                ) : (
+                  <div className="text-content">{program.content}</div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
-}
+};
+
+export default Chat;

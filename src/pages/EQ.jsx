@@ -11,7 +11,8 @@ import { AuthContext } from "../context/AuthContext";
 export default function EQ() {
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [emotion, setEmotion] = useState(null);
-  const [emotionType, setEmotionType] = useState(""); // 현재 감정 유형을 설정
+  const [emotionType, setEmotionType] = useState(''); // 현재 감정 유형을 설정
+
   const [randomPrograms, setRandomPrograms] = useState([]);
   const [situation, setSituation] = useState(null);
   const [error, setError] = useState(null); // 오류 상태
@@ -116,7 +117,7 @@ export default function EQ() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error("Authorization token is missing");
+          throw new Error('Authorization token is missing');
         }
         const response = await axios.get(`${API_URL}/situation`, {
           headers: {
@@ -126,7 +127,8 @@ export default function EQ() {
         // console.log('Response data:', response.data); // 응답 데이터 로그 출력
         setSituation(response.data);
       } catch (error) {
-        console.error("There was an error fetching the emotion data!", error);
+        console.error('There was an error fetching the emotion data!', error);
+
         if (error.response) {
         }
       }
@@ -349,8 +351,9 @@ export default function EQ() {
           <div className="flex flex-col justify-center items-center mr-[10%] relative">
             {randomPrograms.map((program, index) => {
               const isVideo =
-                program.content.startsWith("http://") ||
-                program.content.startsWith("https://");
+                program.content.startsWith('http://') ||
+                program.content.startsWith('https://');
+
               const videoId = isVideo ? extractVideoId(program.content) : null;
               return (
                 <div className="relative w-[70%] mt-[-10px]" key={index}>
@@ -367,7 +370,8 @@ export default function EQ() {
                       <br />
                       <br />
                       {isVideo && videoId ? (
-                        <div style={{ width: "90%" }} className="mx-auto">
+                        <div style={{ width: '90%' }} className="mx-auto">
+
                           <LiteYouTubeEmbed
                             id={videoId}
                             noCookie={true} // default가 false라서 꼭 명시하기
