@@ -33,7 +33,7 @@ export default function ChatEnd() {
       formData.append("file", audioBlob, "recording.webm"); // 파일 이름 추가
       const authToken = localStorage.getItem("authToken");
 
-      axios.post("http://team6ai.sku-sku.com/upload-audio/", formData, {
+      axios.post("http://team6ai.sku-sku.com/transcribe/", formData, {
         headers: {
           Authorization: `${authToken}`, // 토큰을 적절히 설정
           "Content-Type": "multipart/form-data", // 파일 업로드를 위한 콘텐츠 타입
