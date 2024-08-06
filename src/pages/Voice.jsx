@@ -31,15 +31,13 @@ export default function Edit() {
       const authToken = localStorage.getItem("authToken"); //토큰
 
       axios
-        .post("http://team6back.sku-sku.com/transcribe/", formData, {
-
+        .post("http://team6ai.sku-sku.com/transcribe/", formData, {
           headers: {
             Authorization: `${token}`,
-            'Content-Type': 'application/octet-stream',
+            "Content-Type": "application/octet-stream",
           },
         })
         .then((response) => {
-
           console.log("음성 인식 결과:", response.data);
           // console.log('토큰:', `${authToken}`);
         })
