@@ -1,16 +1,25 @@
-import React, { useContext } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import React, { useContext } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { Warning } from "../pages/Warning"; // Warning 컴포넌트 임포트
 
 export default function Nav() {
   const { isLoggedIn, logout } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/');
-    console.log('정상 로그아웃 되었습니다.');
+    navigate("/");
+    console.log("정상 로그아웃 되었습니다.");
+  };
+
+  const handleNavigation = (e, path) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      navigate("/warning"); // 로그인 필요 경고 페이지로 이동
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -19,7 +28,11 @@ export default function Nav() {
         <div className="container flex justify-evenly w-[100%] h-28 items-center">
           <Link to="/">
             <div className="left flex ml-2">
-              <img src="../../img/mainLogo.png" className="w-48" />
+              <img
+                src="../../img/mainLogo.png"
+                className="w-48"
+                alt="main logo"
+              />
             </div>
           </Link>
 
@@ -28,9 +41,12 @@ export default function Nav() {
               to="/ChatMain"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? 'text-teal-500' : 'text-black'
+                  isActive ? "text-teal-500" : "text-black"
                 }`
               }
+              onClick={(e) => {
+                handleNavigation(e, "/ChatMain");
+              }}
             >
               <span className="text-base font-medium tracking-[.005em] px-[20px]">
                 챗봇 상담하기
@@ -40,9 +56,10 @@ export default function Nav() {
               to="/EQ"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? 'text-teal-500' : 'text-black'
+                  isActive ? "text-teal-500" : "text-black"
                 }`
               }
+              onClick={(e) => handleNavigation(e, "/EQ")}
             >
               <span className="text-base font-medium tracking-[.005em] px-[20px]">
                 EQ 높이기
@@ -52,9 +69,10 @@ export default function Nav() {
               to="/Calendar"
               className={({ isActive }) =>
                 `flex flex-col items-center ${
-                  isActive ? 'text-teal-500' : 'text-black'
+                  isActive ? "text-teal-500" : "text-black"
                 }`
               }
+              onClick={(e) => handleNavigation(e, "/Calendar")}
             >
               <span className="text-base font-medium tracking-[.005em] px-[20px]">
                 캘린더
