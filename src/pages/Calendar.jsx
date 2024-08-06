@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config';
-import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 export default function Attendance() {
-  const username = localStorage.getItem('username') || '"guest"';
+  const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
@@ -14,21 +14,21 @@ export default function Attendance() {
 
   const data = emotion
     ? [
-        { name: '행복', value: emotion.happiness },
-        { name: '불안', value: emotion.anxiety },
-        { name: '중립', value: emotion.neutral },
-        { name: '슬픔', value: emotion.sadness },
-        { name: '분노', value: emotion.anger },
+        { name: "행복", value: emotion.happiness },
+        { name: "불안", value: emotion.anxiety },
+        { name: "중립", value: emotion.neutral },
+        { name: "슬픔", value: emotion.sadness },
+        { name: "분노", value: emotion.anger },
       ]
     : [
-        { name: '행복', value: 0 },
-        { name: '불안', value: 0 },
-        { name: '중립', value: 0 },
-        { name: '슬픔', value: 0 },
-        { name: '분노', value: 0 },
+        { name: "행복", value: 0 },
+        { name: "불안", value: 0 },
+        { name: "중립", value: 0 },
+        { name: "슬픔", value: 0 },
+        { name: "분노", value: 0 },
       ];
 
-  const COLORS = ['#FFF2B2', '#F1E5FF', '#5BCBAB', '#A9D6E5', '#FFA07A'];
+  const COLORS = ["#FFF2B2", "#F1E5FF", "#5BCBAB", "#A9D6E5", "#FFA07A"];
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -36,10 +36,10 @@ export default function Attendance() {
         <div
           className="custom-tooltip"
           style={{
-            borderRadius: '10px',
-            backgroundColor: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            padding: "10px",
+            border: "1px solid #ccc",
           }}
         >
           <p>{`${payload[0].name} : ${payload[0].value}%`}</p>
@@ -56,17 +56,17 @@ export default function Attendance() {
       try {
         const token = getAuthToken();
         if (!token) {
-          throw new Error('Authorization token is missing');
+          throw new Error("Authorization token is missing");
         }
         const response = await axios.get(`${API_URL}/emotion/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('Response data:', response.data); // 응답 데이터 로그 출력
+        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
-        console.error('There was an error fetching the emotion data!', error);
+        console.error("There was an error fetching the emotion data!", error);
       }
     };
 
@@ -76,20 +76,20 @@ export default function Attendance() {
   const nav = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const months = [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ];
-  const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
   const handlePreviousMonth = () => {
     setCurrentDate(
@@ -126,7 +126,7 @@ export default function Attendance() {
   const handleDayClick = (date) => {
     const formattedDate = `${date.getFullYear()}-${String(
       date.getMonth() + 1
-    ).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
     nav(`/EmotionAnal/${formattedDate}`);
   };
 
@@ -156,10 +156,10 @@ export default function Attendance() {
             <span
               className={`w-8 h-8 rounded-full flex items-center justify-center ${
                 isToday
-                  ? 'text-sky-500 font-bold'
+                  ? "text-sky-500 font-bold"
                   : isWeekend
-                  ? 'text-sky-500'
-                  : 'text-black'
+                  ? "text-sky-500"
+                  : "text-black"
               }`}
             >
               {date}
@@ -176,9 +176,9 @@ export default function Attendance() {
     <div className="flex justify-around p-12 bg-[url('./img/cal_back.png')] bg-[length:3000px_100px] bg-no-repeat">
       {/* 캘린더 (왼) */}
       <div className="w-[45%] mt-2">
-        <div className="p-6 bg-white rounded-lg shadow-md bg-transparent">
+        <div className="p-6 h-[600px] bg-white rounded-lg shadow-md bg-transparent">
           {/* 캘린더 헤더 */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between my-4">
             <button onClick={handlePreviousMonth} className="text-gray-500">
               &lt;
             </button>
@@ -190,14 +190,14 @@ export default function Attendance() {
             </button>
           </div>
           {/* Cells */}
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-y-7">
             {daysOfWeek.map((day, index) => (
               <div
                 key={day}
-                className={`flex items-center justify-center h-36 font-bold my-[10px] ${
+                className={`flex items-center justify-center h-24 font-bold my-[10px] ${
                   index % 7 === 0 || index % 7 === 6
-                    ? 'text-sky-500'
-                    : 'text-gray-500'
+                    ? "text-sky-500"
+                    : "text-gray-500"
                 }`}
               >
                 {day}
@@ -244,17 +244,17 @@ export default function Attendance() {
                     {displayName}님의 대표 감정은 '
                     {emotion ? (
                       <span>
-                        {emotion.topEmotion === 'happiness' && '행복'}
-                        {emotion.topEmotion === 'sadness' && '슬픔'}
-                        {emotion.topEmotion === 'anxiety' && '불안'}
-                        {emotion.topEmotion === 'neutral' && '중립'}
-                        {emotion.topEmotion === 'anger' && '분노'}
+                        {emotion.topEmotion === "happiness" && "행복"}
+                        {emotion.topEmotion === "sadness" && "슬픔"}
+                        {emotion.topEmotion === "anxiety" && "불안"}
+                        {emotion.topEmotion === "neutral" && "중립"}
+                        {emotion.topEmotion === "anger" && "분노"}
                       </span>
                     ) : (
                       <span>Loading...</span>
                     )}
-                    '이 {emotion ? `${emotion[emotion.topEmotion]}%` : '0%'}
-                    이에요 !{' '}
+                    '이 {emotion ? `${emotion[emotion.topEmotion]}%` : "0%"}
+                    이에요 !{" "}
                   </span>
                 </div>
                 <div className="border-y-2 py-5">
