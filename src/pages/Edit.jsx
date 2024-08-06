@@ -130,7 +130,72 @@ export default function Edit() {
   const params = useParams();
   const navigate = useNavigate();
 
+<<<<<<< Updated upstream
   const [InvitePopup, setInvitePopup] = useState(false);
+=======
+      if (response.status === 200) {
+        setDiary(response.data);
+        setContent(response.data.content); // 일기의 기존 내용으로 상태를 설정
+        setEditedContent(response.data.content); // 수정된 내용을 초기화
+      } else {
+        setError(
+          '저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!'
+        );
+      }
+    } catch (error) {
+      console.error('일기 조회 중 오류 발생:', error);
+      setError('저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDiary();
+  }, [diaryDate]);
+
+  useEffect(() => {
+    if (diary) {
+      setContent(diary.content); // 일기 내용이 변경될 때 content 상태 업데이트
+      setEditedContent(diary.content); // 일기 내용이 변경될 때 editedContent 상태 업데이트
+    }
+  }, [diary]);
+
+  const handleSaveDiary = async () => {
+    try {
+      const token = getAuthToken();
+      console.log('Token: ', token);
+      console.log('Edited Content: ', editedContent);
+
+      const response = await axios.put(
+        `${API_URL}/diary/update`,
+        {
+          content: editedContent,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          params: {
+            date: diaryDate,
+          },
+        }
+      );
+
+      console.log('Response:', response); // 응답 로그 추가
+
+      if (response.status === 200) {
+        console.log('일기 수정 완료');
+        navigate('/calendar');
+      } else {
+        console.error('일기 수정 실패:', response.data);
+      }
+    } catch (error) {
+      console.error('일기 수정 중 오류 발생:', error);
+    }
+  };
+>>>>>>> Stashed changes
 
   const handleCloseInvitePopup = () => {
     setInvitePopup(false);

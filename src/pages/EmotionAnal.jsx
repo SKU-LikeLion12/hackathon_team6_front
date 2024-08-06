@@ -67,11 +67,13 @@ export default function EmotionAnal() {
       if (response.status === 200) {
         setDiary(response.data);
       } else {
-        setError('일기를 불러오는데 실패했습니다.');
+        setError(
+          '저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!'
+        );
       }
     } catch (error) {
       console.error('일기 조회 중 오류 발생:', error);
-      setError('일기를 불러오는데 실패했습니다.');
+      setError('저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!');
     } finally {
       setLoading(false);
     }

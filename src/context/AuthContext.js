@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const parsedUserData = JSON.parse(userData);
         setIsLoggedIn(true);
-        setUser(parsedUserData);
+        // setUser(parsedUserData);
         setAuthToken(token); // authToken을 설정
       } catch (error) {
         console.error('Failed to parse user data:', error);
@@ -60,8 +60,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

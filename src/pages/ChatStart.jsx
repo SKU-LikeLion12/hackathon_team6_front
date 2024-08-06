@@ -44,20 +44,28 @@ export default function ChatStart() {
 
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
-    mediaRecorderRef.current.addEventListener('stop', () => {
+
+    mediaRecorderRef.current.addEventListener('stop', async () => {
       const audioBlob = new Blob(audioChunksRef.current, {
         type: 'audio/webm',
       });
-      const formData = new FormData();
-      formData.append('file', audioBlob);
+      const audioBytes = await audioBlob.arrayBuffer(); // 파일을 바이트 배열로 변환
+      const authToken = localStorage.getItem('authToken');
 
+      const token = authToken; // 실제 JWT 토큰 값을 사용
+      console.log(audioBytes);
       axios
-        .post('http://team6ai.sku-sku.com/transcribe/', formData)
+        .post('http://team6back.sku-sku/upload-audio', audioBytes, {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/octet-stream', // 바이트 스트림 전송을 위한 MIME 타입
+          },
+        })
         .then((response) => {
-          console.log('음성 인식 결과:', response.data);
+          console.log('Server response:', response.data);
         })
         .catch((error) => {
-          console.error('오류가 발생했습니다:', error);
+          console.error('Error uploading file:', error);
         });
 
       audioChunksRef.current = [];
@@ -84,7 +92,7 @@ export default function ChatStart() {
             <div className="flex flex-row">
               <NavLink to="">
                 <button
-                  className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[188px] text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
+                  className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[188px] text-xl font-semibold text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
                   onClick={handleStartRecording}
                   disabled={recording}
                 >
@@ -92,14 +100,19 @@ export default function ChatStart() {
                   대화하기
                 </button>
               </NavLink>
-              <NavLink to="/ChatEnd">
-                <button
-                  className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[188px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] cursor-pointer"
-                  onClick={handleStopRecording}
-                  disabled={!recording}
-                >
-                  <img src="../img/end.png" className="w-[25px]" alt="" />
-                  종료하기
+              {/* <NavLink to="/DiaryStart"> */}
+              <button
+                className="flex items-center mr-[35px] justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[188px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
+                onClick={handleStopRecording}
+                disabled={!recording}
+              >
+                <img src="../img/end.png" className="w-[25px]" alt="" />
+                종료하기
+              </button>
+              {/* </NavLink> */}
+              <NavLink to="/DiaryStart">
+                <button className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[25px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] cursor-pointer">
+                  {/* <img src="../img/end.png" className="w-[25px]" alt="" /> */}
                 </button>
               </NavLink>
             </div>
@@ -109,6 +122,7 @@ export default function ChatStart() {
               <span className="font-bold">콘솔 값 화면 출력: </span>
               <span>dd{logValue}</span>
             </div> */}
+            <div></div>
           </div>
         </div>
       </div>

@@ -23,20 +23,28 @@ export default function ChatEnd() {
 
   const handleStopRecording = () => {
     mediaRecorderRef.current.stop();
-    mediaRecorderRef.current.addEventListener('stop', () => {
+
+    mediaRecorderRef.current.addEventListener('stop', async () => {
       const audioBlob = new Blob(audioChunksRef.current, {
         type: 'audio/webm',
       });
-      const formData = new FormData();
-      formData.append('file', audioBlob);
+      const audioBytes = await audioBlob.arrayBuffer(); // 파일을 바이트 배열로 변환
+      const authToken = localStorage.getItem('authToken');
+
+      const token = authToken; // 실제 JWT 토큰 값을 사용
 
       axios
-        .post('http://team6ai.sku-sku.com/transcribe/', formData)
+        .post('http://team6back.sku-sku/upload-audio', audioBytes, {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/octet-stream', // 바이트 스트림 전송을 위한 MIME 타입
+          },
+        })
         .then((response) => {
-          console.log('음성 인식 결과:', response.data);
+          console.log('Server response:', response.data);
         })
         .catch((error) => {
-          console.error('오류가 발생했습니다:', error);
+          console.error('Error uploading file:', error);
         });
 
       audioChunksRef.current = [];

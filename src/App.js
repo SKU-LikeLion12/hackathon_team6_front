@@ -19,8 +19,13 @@ import EQ from './pages/EQ';
 import ApiEx from './pages/ApiEx';
 import Producer from './pages/Producer';
 import SignUpCompleted from './pages/SignUpCompleted';
+<<<<<<< Updated upstream
 import Chat from './pages/Chat';
 // import VoiceTextDisplay from './pages/VoiceTextDisplay';
+=======
+import ApiEx from './pages/ApiEx';
+import Voice from './pages/Voice';
+>>>>>>> Stashed changes
 import { AuthProvider } from './context/AuthContext';
 // const mockData = [
 //   {
@@ -121,7 +126,7 @@ function App() {
                 <Route path="/EmotionAnal/:id" element={<EmotionAnal />} />
                 <Route path="/EQ" element={<EQ />} />
                 <Route path="/Edit" element={<Edit />} />
-                <Route path="/Chat" element={<Chat />} />
+                <Route path="/Voice" element={<Voice />} />
                 <Route path="/ApiEx" element={<ApiEx />} />
                 <Route path="/producer" element={<Producer />} />
                 <Route path="/signupcompleted" element={<SignUpCompleted />} />
