@@ -35,11 +35,10 @@ export default function Edit() {
 
           headers: {
             Authorization: `${token}`,
-            'Content-Type': 'application/octet-stream',
+            "Content-Type": "application/octet-stream",
           },
         })
         .then((response) => {
-
           console.log("음성 인식 결과:", response.data);
           // console.log('토큰:', `${authToken}`);
         })
@@ -61,3 +60,5 @@ export default function Edit() {
     </div>
   );
 }
+
+// git push때문에 씁니다요
