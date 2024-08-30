@@ -121,7 +121,7 @@ export default function EQ() {
         }
         const response = await axios.get(`${API_URL}/situation`, {
           headers: {
-            token: token,
+            Authorization: `Bearer ${token}`,
           },
         });
         // console.log('Response data:', response.data); // 응답 데이터 로그 출력
@@ -149,7 +149,6 @@ export default function EQ() {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Response data:", response.data); // 응답 데이터 로그 출력
         setEmotion(response.data);
       } catch (error) {
         console.error("There was an error fetching the emotion data!", error);

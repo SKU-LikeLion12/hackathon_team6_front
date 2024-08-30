@@ -9,7 +9,7 @@ export default function Attendance() {
   const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;
 
-  const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
+  const { getAuthToken } = useContext(AuthContext);
   const [emotion, setEmotion] = useState(null);
 
   const data = emotion
@@ -21,11 +21,11 @@ export default function Attendance() {
         { name: "분노", value: emotion.anger },
       ]
     : [
-        { name: "행복", value: 0 },
-        { name: "불안", value: 0 },
-        { name: "중립", value: 0 },
-        { name: "슬픔", value: 0 },
-        { name: "분노", value: 0 },
+        { name: "행복", value: 20 },
+        { name: "불안", value: 20 },
+        { name: "중립", value: 20 },
+        { name: "슬픔", value: 20 },
+        { name: "분노", value: 20 },
       ];
 
   const COLORS = ["#FFF2B2", "#F1E5FF", "#5BCBAB", "#A9D6E5", "#FFA07A"];
@@ -50,7 +50,7 @@ export default function Attendance() {
     return null;
   };
 
-  //감정 웅앵,,
+  //감정 
   useEffect(() => {
     const fetchEmotion = async () => {
       try {
@@ -58,6 +58,7 @@ export default function Attendance() {
         if (!token) {
           throw new Error("Authorization token is missing");
         }
+        console.log(`Bearer ${token}`);
         const response = await axios.get(`${API_URL}/emotion/user`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -107,21 +108,6 @@ export default function Attendance() {
     return new Date(year, month + 1, 0).getDate();
   };
 
-  // const handleDayClick = (date) => {
-  //   const formattedDate = `${date.getFullYear()}-${
-  //     date.getMonth() + 1
-  //   }-${date.getDate()}`;
-  //   // nav(`/calendar/edit/${formattedDate}`);
-  //   nav(`/EmotionAnal/formattedDate`);
-  // };
-
-  // const handleDayClick = (date) => {
-  //   const formattedDate = `${date.getFullYear()}-${
-  //     date.getMonth() + 1
-  //   }-${date.getDate()}`;
-  //   // nav(`/calendar/edit/${formattedDate}`);
-  //   nav(`/EmotionAnal/formattedDate`);
-  // };
 
   const handleDayClick = (date) => {
     const formattedDate = `${date.getFullYear()}-${String(

@@ -1,1 +1,1 @@
-export const API_URL = 'http://team6back.sku-sku.com';
+export const API_URL = 'http://localhost:8080';

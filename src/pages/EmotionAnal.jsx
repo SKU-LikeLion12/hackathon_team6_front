@@ -243,7 +243,7 @@ export default function EmotionAnal() {
                       style={{
                         width: `${
                           (diary && diary.emotion
-                            ? diary.emotion.happiness
+                            ? diary.emotion.anxiety
                             : 0) * 0.9
                         }%`,
                       }}
@@ -272,7 +272,7 @@ export default function EmotionAnal() {
                       style={{
                         width: `${
                           (diary && diary.emotion
-                            ? diary.emotion.happiness
+                            ? diary.emotion.neutral
                             : 0) * 0.9
                         }%`,
                       }}
@@ -301,7 +301,7 @@ export default function EmotionAnal() {
                       style={{
                         width: `${
                           (diary && diary.emotion
-                            ? diary.emotion.happiness
+                            ? diary.emotion.sadness
                             : 0) * 0.9
                         }%`,
                       }}
@@ -320,7 +320,7 @@ export default function EmotionAnal() {
                       }}
                     >
                       분노{" "}
-                      {diary && diary.emotion ? diary.emotion.anxiety : "N/A"}%
+                      {diary && diary.emotion ? diary.emotion.anger : "N/A"}%
                     </div>
                   </div>
                   <div className="relative h-[20px] rounded-full mt-[15px] mb-[60px]">
@@ -330,7 +330,7 @@ export default function EmotionAnal() {
                       style={{
                         width: `${
                           (diary && diary.emotion
-                            ? diary.emotion.happiness
+                            ? diary.emotion.anger
                             : 0) * 0.9
                         }%`,
                       }}

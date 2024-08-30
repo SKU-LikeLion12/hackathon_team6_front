@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { FaMicrophone } from "react-icons/fa";
 import axios from "axios";
@@ -6,9 +7,10 @@ import "./style.css";
 import { FaRegCircleStop } from "react-icons/fa6";
 import { IoHome } from "react-icons/io5";
 
-// import Edit from '../pages/Edit';
-
 export default function ChatStart() {
+  const today = new Date();
+  const formattedDate = today.toISOString().slice(0, 10); 
+
   const [logValue, setLogValue] = useState("");
   const [recording, setRecording] = useState(false);
   const [transcription, setTranscription] = useState({
@@ -18,9 +20,12 @@ export default function ChatStart() {
   });
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const audioStreamRef = useRef(null);  
+  const navigate = useNavigate();
 
   const handleStartRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      audioStreamRef.current = stream;  
       mediaRecorderRef.current = new MediaRecorder(stream);
       mediaRecorderRef.current.start();
       setRecording(true);
@@ -32,27 +37,39 @@ export default function ChatStart() {
   };
 
   const handleStopRecording = () => {
-    mediaRecorderRef.current.stop();
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
 
-    mediaRecorderRef.current.addEventListener("stop", () => {
-      const audioBlob = new Blob(audioChunksRef.current, {
-        type: "audio/webm",
+      mediaRecorderRef.current.addEventListener("stop", async () => {
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/webm",
+        });
+
+        const formData = new FormData();
+        formData.append("file", audioBlob, "recording.webm");
+        const authToken = localStorage.getItem("authToken");
+
+        try {
+          await axios.post("http://localhost:8000/transcribe/", formData, {
+            headers: {
+              Authorization: `${authToken}`,
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          navigate(`/EmotionAnal/${formattedDate}`);
+        } catch (error) {
+          console.error("Error during transcription:", error);
+        }
+
+        audioChunksRef.current = [];
+        setRecording(false);
+
+        if (audioStreamRef.current) {
+          audioStreamRef.current.getTracks().forEach((track) => track.stop());
+          audioStreamRef.current = null; 
+        }
       });
-
-      const formData = new FormData();
-      formData.append("file", audioBlob, "recording.webm");
-      const authToken = localStorage.getItem("authToken");
-
-      axios.post("http://team6ai.sku-sku.com/upload-audio/", formData, {
-        headers: {
-          Authorization: `${authToken}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      audioChunksRef.current = [];
-      setRecording(false);
-    });
+    }
   };
 
   return (
@@ -77,26 +94,12 @@ export default function ChatStart() {
               {recording ? (
                 <>
                   <button
-                    className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[188px] text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
+                    className="flex items-center mr-[35px] justify-around mt-[100px] bg-white h-[52px] w-[350px] text-xl text-[#5BCBAB] py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] border-2 border-[#5BCBAB] cursor-pointer"
                     onClick={handleStopRecording}
                   >
                     <FaRegCircleStop size={24} />
-                    종료하기
+                    종료하고 일기 확인하기
                   </button>
-
-                  <NavLink to="/EmotionAnal/:id">
-                    <button
-                      className="flex items-center justify-around mt-[100px] bg-[#5BCBAB] h-[52px] w-[210px] text-xl font-semibold text-white py-2 px-8 rounded-full shadow-lg hover:shadow-[0_20px_30px_rgba(56,217,169,0.4)] cursor-pointer"
-                      disabled={recording}
-                    >
-                      일기 확인하기
-                      <img
-                        src="../img/diaryIcon.png"
-                        className="w-[17px] ml-1"
-                        alt=""
-                      />
-                    </button>
-                  </NavLink>
                 </>
               ) : (
                 <>
