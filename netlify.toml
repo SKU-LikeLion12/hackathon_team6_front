@@ -4,4 +4,4 @@ to = "/index.html"
 status = 200
 
 [build]
-node_version = "16"
+node_version = "18"
