@@ -11,13 +11,7 @@ export default function ChatStart() {
   const today = new Date();
   const formattedDate = today.toISOString().slice(0, 10); 
 
-  const [logValue, setLogValue] = useState("");
   const [recording, setRecording] = useState(false);
-  const [transcription, setTranscription] = useState({
-    refined_text: "",
-    emotions: {},
-    situation: {},
-  });
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioStreamRef = useRef(null);  

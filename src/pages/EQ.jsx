@@ -11,12 +11,12 @@ import { AuthContext } from "../context/AuthContext";
 export default function EQ() {
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [emotion, setEmotion] = useState(null);
-  const [emotionType, setEmotionType] = useState(''); // 현재 감정 유형을 설정
+  const [emotionType] = useState(''); // 현재 감정 유형을 설정
 
   const [randomPrograms, setRandomPrograms] = useState([]);
   const [situation, setSituation] = useState(null);
-  const [error, setError] = useState(null); // 오류 상태
-  const [loading, setLoading] = useState(true); // 로딩 상태
+  // const [error, setError] = useState(null); // 오류 상태
+  // const [loading, setLoading] = useState(true); // 로딩 상태
 
   const username = localStorage.getItem("username") || '"guest"';
   const displayName = username.length > 2 ? username.slice(1, -1) : username;

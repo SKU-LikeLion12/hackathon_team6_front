@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes, useActionData } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { useReducer, useRef, createContext } from "react";
 
 import Nav from "./component/Nav";
@@ -21,10 +20,6 @@ import ApiEx from "./pages/ApiEx";
 import Producer from "./pages/Producer";
 import SignUpCompleted from "./pages/SignUpCompleted";
 import Warning from "./pages/Warning";
-// import Chat from './pages/Chat';
-// // import VoiceTextDisplay from './pages/VoiceTextDisplay';
-// import ApiEx from './pages/ApiEx';
-// import Voice from './pages/Voice';
 import { AuthProvider } from "./context/AuthContext";
 
 // const mockData = [

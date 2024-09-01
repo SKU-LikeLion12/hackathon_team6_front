@@ -104,9 +104,9 @@ export default function Edit() {
   const [content, setContent] = useState(''); // 일기 내용을 저장하는 상태
   const [editedContent, setEditedContent] = useState(''); // 수정된 일기 내용을 저장하는 상태
 
-  const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [setImage] = useState(null);
+  const [setLoading] = useState(true);
+  const [setError] = useState(null);
   const [InvitePopup, setInvitePopup] = useState(false);
 
   const params = useParams();
@@ -122,12 +122,12 @@ export default function Edit() {
     reader.readAsDataURL(file);
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      "image/png": [".png", ".jpeg"],
-    },
-  });
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   onDrop,
+  //   accept: {
+  //     "image/png": [".png", ".jpeg"],
+  //   },
+  // });
 
   const fetchDiary = async () => {
     try {

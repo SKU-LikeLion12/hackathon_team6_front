@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { Warning } from "../pages/Warning"; // Warning 컴포넌트 임포트
 
 export default function Nav() {
   const { isLoggedIn, logout } = useContext(AuthContext);

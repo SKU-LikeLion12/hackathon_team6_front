@@ -20,7 +20,7 @@ export default function SignUpCompleted() {
     <div className="h-auto">
       <div className="pt-20 h-[1000px] bg-[url('./img/SignUpCompleted_Back.png')] bg-[length:1500px_1200px] bg-no-repeat">
         <div className="flex flex-col items-center mb-60">
-          <img src="../../img/warning.png" />
+          <img src="../../img/warning.png" alt="접근제한페이지" />
           <h3 className="text-[#292525] text-center text-5xl mb-4 font-bold grid place-items-center">
             로그인 후 이용 가능한
           </h3>

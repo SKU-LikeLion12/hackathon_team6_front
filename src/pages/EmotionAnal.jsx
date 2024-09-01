@@ -8,18 +8,18 @@ import { AuthContext } from "../context/AuthContext";
 import { API_URL } from "../config";
 
 export default function EmotionAnal() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const date = String(now.getDate()).padStart(2, "0");
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const day = days[now.getDay()];
+  // const now = new Date();
+  // const year = now.getFullYear();
+  // const month = String(now.getMonth() + 1).padStart(2, "0");
+  // const date = String(now.getDate()).padStart(2, "0");
+  // const days = ["일", "월", "화", "수", "목", "금", "토"];
+  // const day = days[now.getDay()];
 
   const { getAuthToken } = useContext(AuthContext); // AuthContext에서 getAuthToken 가져오기
   const [InvitePopup, setInvitePopup] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false); // 삭제 요청 상태
+  const [setIsDeleting] = useState(false); // 삭제 요청 상태
 
-  const [image, setImage] = useState(null);
+  const [setImage] = useState(null);
 
   // 일기 상태,날짜 관리
   const [diary, setDiary] = useState(null); // 일기 상태

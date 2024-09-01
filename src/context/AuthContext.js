@@ -1,10 +1,10 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect} from "react";
 import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(
+  const [setAuthToken] = useState(
     localStorage.getItem("authToken") || ""
   );
 
@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    const userData = localStorage.getItem("username");
 
     if (token) {
       try {
