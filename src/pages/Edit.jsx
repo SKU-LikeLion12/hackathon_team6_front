@@ -2,7 +2,6 @@ import { FaCaretRight } from 'react-icons/fa';
 import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import InvitePopupField from '../component/InvitePopupField';
-import { useDropzone } from 'react-dropzone';
 import axios from 'axios'; // axios 임포트
 import { API_URL } from '../config';
 import { AuthContext } from '../context/AuthContext';
@@ -113,14 +112,14 @@ export default function Edit() {
   const diaryDate = params.id; // 날짜를 쿼리 파라미터로 사용
   const navigate = useNavigate();
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }, []);
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   const file = acceptedFiles[0];
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setImage(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // }, [setImage]);
 
   // const { getRootProps, getInputProps } = useDropzone({
   //   onDrop,
@@ -129,17 +128,14 @@ export default function Edit() {
   //   },
   // });
 
-  const fetchDiary = async () => {
+  const fetchDiary = useCallback(async () => {
     try {
       const token = getAuthToken();
       const response = await axios.get(`${API_URL}/diary`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          date: diaryDate,
-        },
+        headers: { Authorization: `Bearer ${token}` },
+        params: { date: diaryDate },
       });
+      setDiary(response.data);
 
       if (response.status === 200) {
         setDiary(response.data);
@@ -151,15 +147,15 @@ export default function Edit() {
     } catch (error) {
       console.error('일기 조회 중 오류 발생:', error);
       setError('일기를 불러오는데 실패했습니다.');
-
+      
     } finally {
       setLoading(false);
     }
-  };
+  }, [diaryDate, getAuthToken, setError, setLoading]);
 
   useEffect(() => {
     fetchDiary();
-  }, [diaryDate]);
+  }, [fetchDiary]);
 
   useEffect(() => {
     if (diary) {

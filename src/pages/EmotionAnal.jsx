@@ -2,7 +2,7 @@ import React, { useState, useCallback, useContext, useEffect } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import InvitePopupField from "../component/InvitePopupField";
 import "./style.css";
-import { useDropzone } from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { API_URL } from "../config";
@@ -39,25 +39,25 @@ export default function EmotionAnal() {
     setInvitePopup(false);
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  }, []);
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   if (acceptedFiles.length > 0) {
+  //     const file = acceptedFiles[0];
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImage(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }, [setImage]);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: {
-      "image/png": [".png", ".jpeg"],
-    },
-  });
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   onDrop,
+  //   accept: {
+  //     "image/png": [".png", ".jpeg"],
+  //   },
+  // });
 
-  const fetchDiary = async () => {
+  const fetchDiary = useCallback(async () => {
     try {
       const token = getAuthToken();
       const response = await axios.get(`${API_URL}/diary`, {
@@ -65,29 +65,27 @@ export default function EmotionAnal() {
           Authorization: `Bearer ${token}`,
         },
         params: {
-          date: diaryDate, // 선택된 날짜를 query parameter로 전달
+          date: diaryDate,
         },
       });
 
       if (response.status === 200) {
         setDiary(response.data);
       } else {
-        setError(
-          '저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!'
-        );
+        setError('저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!');
       }
     } catch (error) {
-      console.error('일기 조회 중 오류 발생:', error);
       setError('저장된 일기가 없습니다. 챗봇을 이용하여 일기를 작성해 주세요!');
-
     } finally {
       setLoading(false);
     }
-  };
+  }, [diaryDate, getAuthToken]);
+
+
 
   useEffect(() => {
     fetchDiary();
-  }, [diaryDate]);
+  }, [fetchDiary]);
 
   // 일기 삭제
 

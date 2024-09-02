@@ -16,7 +16,6 @@ import ChatEnd from "./pages/ChatEnd";
 import DiaryStart from "./pages/DiaryStart";
 import EmotionAnal from "./pages/EmotionAnal";
 import EQ from "./pages/EQ";
-import ApiEx from "./pages/ApiEx";
 import Producer from "./pages/Producer";
 import SignUpCompleted from "./pages/SignUpCompleted";
 import Warning from "./pages/Warning";
